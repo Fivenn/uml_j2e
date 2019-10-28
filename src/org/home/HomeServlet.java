@@ -16,5 +16,27 @@ public class HomeServlet extends HttpServlet {
 		PrintWriter out = resp.getWriter();
 		out.println("<html><body><h1>Hello World Servlet</h1></body></html>");
 	}
+	
+	private void doProcess(HttpServletRequest request, HttpServletResponse response) {
+
+		String pageName="/accueil.jsp";
+
+		RequestDispatcher rd = getServletContext().getRequestDispatcher(pageName);
+
+		try {
+
+			rd.forward(request, response);
+
+		} catch (ServletException e) {
+
+			e.printStackTrace();
+
+		} catch (IOException e) {
+
+			e.printStackTrace();
+
+		}
+
+	}
 }
 
