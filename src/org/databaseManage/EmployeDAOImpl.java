@@ -18,6 +18,8 @@ public class EmployeDAOImpl {
 	private List<Employe> findBy(String query) {
 		Connection conn = null;
 		List<Employe> listEmployes = new ArrayList<Employe>();
+//		List<Employe> listEmployes2 = new ArrayList<Employe>();
+//		listEmployes2.add(new Employe("u","u","u","u",25));
 		Statement stat = null;
 		ResultSet rs = null;
 		try {
@@ -46,13 +48,13 @@ public class EmployeDAOImpl {
 	public List<Employe> findByAll() {
 		// avoid select * queries because of performance issues,
 		// only query the columns you need
-		return findBy("select * from Employes");
+		return findBy("select * from employe");
 	}
 
 	public List<Employe> findByTitle(String searchText) {
 		// watch out : this query is case sensitive. use upper function on title
 		// and searchText to make it case insensitive
-		return findBy("select * from Employes where title like '%" + searchText + "%'");
+		return findBy("select * from employes where name like '%" + searchText + "%'");
 
 	}
 }
