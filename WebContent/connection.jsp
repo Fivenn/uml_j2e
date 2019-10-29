@@ -11,9 +11,9 @@
 		<div>
 			<form>
 			  <label>Identifiant</label><br>
-			  <input type="text" name="firstname"><br>
+			  <input type="text" name="identifier"><br>
 			  <label>Mot de passe</label><br>
-			  <input type="text" name="lastname"><br>
+			  <input type="text" name="password"><br>
 			  <button type="submit">Envoyer</button>
 			</form>
 		</div>
