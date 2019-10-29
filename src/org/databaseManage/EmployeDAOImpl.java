@@ -45,6 +45,18 @@ public class EmployeDAOImpl {
 		return listEmployes;
 	}
 
+	public Employe findByEmail(String email) {
+		List<Employe> listEmployes = findBy("select * from employe where mail = '" + email + "'");
+		System.out.println(listEmployes);
+		return listEmployes != null?listEmployes.get(0):null;
+	}
+	
+	public boolean checkCredentials(String email, String password) {
+		System.out.println(email);
+		System.out.println(password);
+		return findBy("select * from employe where mail = '" + email + "' and pwd = '"+ password+"'").size()>0 ;
+	}
+	
 	public List<Employe> findByAll() {
 		// avoid select * queries because of performance issues,
 		// only query the columns you need
@@ -54,7 +66,8 @@ public class EmployeDAOImpl {
 	public List<Employe> findByTitle(String searchText) {
 		// watch out : this query is case sensitive. use upper function on title
 		// and searchText to make it case insensitive
-		return findBy("select * from employes where name like '%" + searchText + "%'");
+		return findBy("select * from employe where name like '%" + searchText + "%'");
 
 	}
+	
 }

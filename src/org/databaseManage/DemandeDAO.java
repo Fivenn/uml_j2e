@@ -18,8 +18,7 @@ public class DemandeDAO {
 	private List<Demande> findBy(String query) {
 		Connection conn = null;
 		List<Demande> listDemandes = new ArrayList<Demande>();
-//		List<Demande> listDemandes2 = new ArrayList<Demande>();
-//		listDemandes2.add(new Demande("u","u","u","u",25));
+
 		Statement stat = null;
 		ResultSet rs = null;
 		try {

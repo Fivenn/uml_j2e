@@ -9,6 +9,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.databaseManage.EmployeService;
 import org.model.Employe;
@@ -16,15 +17,20 @@ import org.model.Employe;
 public class HomeServlet extends HttpServlet {
 
 	private EmployeService employeService = new EmployeService();
-	
+	private HttpSession session;
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		this.doProcess(req, resp);
+		session = req.getSession();
+		if(session.getAttribute("currentUser")!=null) {
+			this.doProcess(req, resp);
+		}else {
+			this.redirectConnection(req,resp);
+		}
+		
 	}
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		this.doProcess(req, resp);
 	}
 	
@@ -51,6 +57,37 @@ public class HomeServlet extends HttpServlet {
 
 		}
 
+	}
+	private void redirectConnection(HttpServletRequest request, HttpServletResponse response) {
+		String pageName="/Connection";
+
+		RequestDispatcher rd = getServletContext().getRequestDispatcher(pageName);
+
+		try {
+
+			rd.forward(request, response);
+
+		} catch (ServletException e) {
+
+			e.printStackTrace();
+
+		} catch (IOException e) {
+
+			e.printStackTrace();
+
+		}	
+	}
+	
+	private void deconnection(HttpServletRequest request, HttpServletResponse response) {
+        session.invalidate();
+        try {
+            this.getServletContext().getRequestDispatcher("/Connection").forward( request, response );
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ServletException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }
 
