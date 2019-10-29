@@ -18,9 +18,10 @@ public class EmployeService {
 		return employeDao.findByEmail(email);
 	}
 
-	public boolean checkCredentials(String email, String password) {
+	public Employe checkCredentials(String email, String password) {
 		return employeDao.checkCredentials(email, password);
 	}
+	
 	public List<Employe> getEmployesByTitle(String searchText) {
 		List<Employe> listEmployes = employeDao.findByTitle(searchText);
 		return listEmployes;

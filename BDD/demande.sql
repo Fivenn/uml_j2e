@@ -10,16 +10,18 @@ use DaysOffManager;
 -- Structure de la table 'demand'
 --
 
-CREATE TABLE IF NOT EXISTS demand (
+CREATE OR REPLACE TABLE demand (
   id serial NOT NULL, 
+  employe varchar(255) NOT NULL,
   statut varchar(255) NOT NULL,
   beginDate varchar(255) NOT NULL,
-  beginEnd varchar(255) NOT NULL,
+  endDate varchar(255) NOT NULL,
   demandDate varchar(255) NOT NULL,
   reason varchar(255) NOT NULL,
   duree int(11) NOT NULL,
-  
   PRIMARY KEY (id),
+    FOREIGN KEY (employe)
+        REFERENCES employe(mail),
   CONSTRAINT demandUK UNIQUE (beginDate, endDate)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 

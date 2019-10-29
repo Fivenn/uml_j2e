@@ -1,5 +1,7 @@
 package org.databaseManage;
 import org.model.Employe;
+import org.model.EmployeRH;
+import org.model.TeamLeader;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -18,8 +20,6 @@ public class EmployeDAOImpl {
 	private List<Employe> findBy(String query) {
 		Connection conn = null;
 		List<Employe> listEmployes = new ArrayList<Employe>();
-//		List<Employe> listEmployes2 = new ArrayList<Employe>();
-//		listEmployes2.add(new Employe("u","u","u","u",25));
 		Statement stat = null;
 		ResultSet rs = null;
 		try {
@@ -28,12 +28,23 @@ public class EmployeDAOImpl {
 				stat = conn.createStatement();
 				rs = stat.executeQuery(query);
 				while (rs.next()) {
-					listEmployes.add(new Employe(rs.getString("mail"),rs.getString("firstName"),rs.getString("surname"),rs.getString("address"),rs.getInt("nbDays")));
+					switch (rs.getString("fonction")) {
+						case "EmployeRH":
+							listEmployes.add(new EmployeRH(rs.getString("mail"),rs.getString("firstName"),rs.getString("surname"),rs.getString("address"),rs.getInt("nbDays")));												
+							break;
+						case "RespoRH":
+							
+							break;
+						case "TeamLeader":
+							listEmployes.add(new TeamLeader(rs.getString("mail"),rs.getString("firstName"),rs.getString("surname"),rs.getString("address"),rs.getInt("nbDays")));						
+							break;
+						default:
+							listEmployes.add(new Employe(rs.getString("mail"),rs.getString("firstName"),rs.getString("surname"),rs.getString("address"),rs.getInt("nbDays")));
+							break;
+					}
 				}
 			}
 		} catch (Exception e) {
-			// TODO: handle exception : main exception should thrown to servlet
-			// layer to display error message
 			e.printStackTrace();
 
 		} finally {
@@ -47,14 +58,12 @@ public class EmployeDAOImpl {
 
 	public Employe findByEmail(String email) {
 		List<Employe> listEmployes = findBy("select * from employe where mail = '" + email + "'");
-		System.out.println(listEmployes);
 		return listEmployes != null?listEmployes.get(0):null;
 	}
 	
-	public boolean checkCredentials(String email, String password) {
-		System.out.println(email);
-		System.out.println(password);
-		return findBy("select * from employe where mail = '" + email + "' and pwd = '"+ password+"'").size()>0 ;
+	public Employe checkCredentials(String email, String password) {
+		List<Employe> listEmployes = findBy("select * from employe where mail = '" + email + "' and pwd = '"+ password+"'");
+		return listEmployes.size()!=0?listEmployes.get(0):null;
 	}
 	
 	public List<Employe> findByAll() {

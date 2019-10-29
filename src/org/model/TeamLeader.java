@@ -13,4 +13,9 @@ public class TeamLeader extends Employe{
 	public void initTeam() {
 		this.team = new ArrayList<Employe>();
 	}
+	
+	@Override
+	public String getFirstName() {
+		return "Chef d'équipe " + super.getFirstName();
+	}
 }

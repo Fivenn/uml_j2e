@@ -33,25 +33,29 @@ public class ConnectionServlet extends HttpServlet{
 		}else if(!this.isValidPassword(this.getInputValue(req, "password"))){
 			req.setAttribute("connectionNotValid", "Veuillez entrer un mot de passe valide"+this.getInputValue(req, "password"));
 			this.doProcess(req,resp);
-		}else if(!this.employeService.checkCredentials(this.getInputValue(req, "email"), this.getInputValue(req, "password"))) {
-			req.setAttribute("connectionNotValid", "Veuillez vérifier vos identifiants");
-			this.doProcess(req, resp);
 		}else{
-			this.goHome(req, resp);
+			Employe user = this.employeService.checkCredentials(this.getInputValue(req, "email"), this.getInputValue(req, "password"));
+			if(user != null) {
+				this.goHome(req, resp, user);
+			}else {
+				req.setAttribute("connectionNotValid", "Veuillez vérifier vos identifiants");
+				this.doProcess(req, resp);
+			}
+			
 		}
 		
 	}
 	
 	
 	//TO GO HOME
-	private void goHome(HttpServletRequest request, HttpServletResponse response) {
+	private void goHome(HttpServletRequest request, HttpServletResponse response, Employe user) {
 		String pageName="/Home";
 		
         HttpSession session = request.getSession();
 
-		Employe currentUser = employeService.getEmploye(this.getInputValue(request, "email"));
+		//Employe currentUser = employeService.getEmploye(this.getInputValue(request, "email"));
 		
-		session.setAttribute("currentUser", currentUser);
+		session.setAttribute("currentUser", user);
 
 		
 		

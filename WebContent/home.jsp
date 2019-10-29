@@ -5,6 +5,7 @@
 
 <%
 	List<Employe> listEmployes = (List<Employe>)request.getAttribute("listEmployes");
+	Employe currentUser = (Employe)request.getSession().getAttribute("currentUser");
 %>
 
 <html>
@@ -13,7 +14,9 @@
 		<title>Home</title>
 	</head>
 	<body>
-		<h1>Bienvenue les potes</h1>
+		<% if (currentUser != null ){ %>
+			<h1>Bienvenue <%=currentUser.getFirstName()%></h1>
+		<% } %>
 		<% if (listEmployes== null ){//|| listEmployes.size() == 0) { %>
 			<p> no result </p>
 		<% } else { %>
