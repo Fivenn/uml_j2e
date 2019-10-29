@@ -17,52 +17,52 @@ public class Employe {
 	}
 
 
-	private String getAddress() {
+	public String getAddress() {
 		return address;
 	}
 
 
-	private void setAddress(String address) {
+	public void setAddress(String address) {
 		this.address = address;
 	}
 
 
-	private String getMail() {
+	public String getMail() {
 		return mail;
 	}
 
 
-	private void setMail(String mail) {
+	public void setMail(String mail) {
 		this.mail = mail;
 	}
 
 
-	private String getFirstName() {
+	public String getFirstName() {
 		return firstName;
 	}
 
 
-	private void setFirstName(String firstName) {
+	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
 
 
-	private String getSurname() {
+	public String getSurname() {
 		return surname;
 	}
 
 
-	private void setSurname(String surname) {
+	public void setSurname(String surname) {
 		this.surname = surname;
 	}
 
 
-	private int getNbDays() {
+	public int getNbDays() {
 		return nbDays;
 	}
 
 
-	private void setNbDays(int nbDays) {
+	public void setNbDays(int nbDays) {
 		this.nbDays = nbDays;
 	}
 	

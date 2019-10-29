@@ -1,5 +1,21 @@
 package org.databaseManage;
 
-public class EmployeService {
+import java.util.List;
 
+import org.model.Employe;
+
+public class EmployeService {
+	
+	// choose the DAO data source : DB or Mock
+	private EmployeDAOImpl employeDao = new EmployeDAOImpl();  
+
+	public List<Employe> getAllEmployes() {
+		List<Employe> listEmployes = employeDao.findByAll();
+		return listEmployes;
+	}
+
+	public List<Employe> getEmployesByTitle(String searchText) {
+		List<Employe> listEmployes = employeDao.findByTitle(searchText);
+		return listEmployes;
+	}
 }

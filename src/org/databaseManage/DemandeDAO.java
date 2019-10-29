@@ -1,5 +1,5 @@
 package org.databaseManage;
-import org.model.Employe;
+import org.model.Demande;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -7,19 +7,19 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EmployeDAOImpl {
+public class DemandeDAO {
 	/**
 	 * common method used to query DB
 	 * 
 	 * @param query
 	 *            the SQL query to use
-	 * @return a list of Employes built from the SQL query
+	 * @return a list of Demandes built from the SQL query
 	 */
-	private List<Employe> findBy(String query) {
+	private List<Demande> findBy(String query) {
 		Connection conn = null;
-		List<Employe> listEmployes = new ArrayList<Employe>();
-//		List<Employe> listEmployes2 = new ArrayList<Employe>();
-//		listEmployes2.add(new Employe("u","u","u","u",25));
+		List<Demande> listDemandes = new ArrayList<Demande>();
+//		List<Demande> listDemandes2 = new ArrayList<Demande>();
+//		listDemandes2.add(new Demande("u","u","u","u",25));
 		Statement stat = null;
 		ResultSet rs = null;
 		try {
@@ -28,7 +28,7 @@ public class EmployeDAOImpl {
 				stat = conn.createStatement();
 				rs = stat.executeQuery(query);
 				while (rs.next()) {
-					listEmployes.add(new Employe(rs.getString("mail"),rs.getString("firstName"),rs.getString("surname"),rs.getString("address"),rs.getInt("nbDays")));
+					listDemandes.add(new Demande(rs.getString("status"),rs.getString("startDate"),rs.getString("endDate"),rs.getString("requestDate"),rs.getString("motif"),rs.getInt("nbDays")));
 				}
 			}
 		} catch (Exception e) {
@@ -42,19 +42,19 @@ public class EmployeDAOImpl {
 				DBManager.getInstance().cleanup(conn, stat, rs);
 			}
 		}
-		return listEmployes;
+		return listDemandes;
 	}
 
-	public List<Employe> findByAll() {
+	public List<Demande> findByAll() {
 		// avoid select * queries because of performance issues,
 		// only query the columns you need
-		return findBy("select * from employe");
+		return findBy("select * from demande");
 	}
 
-	public List<Employe> findByTitle(String searchText) {
+	public List<Demande> findByTitle(String searchText) {
 		// watch out : this query is case sensitive. use upper function on title
 		// and searchText to make it case insensitive
-		return findBy("select * from employes where name like '%" + searchText + "%'");
+		return findBy("select * from demandes where name like '%" + searchText + "%'");
 
 	}
 }
