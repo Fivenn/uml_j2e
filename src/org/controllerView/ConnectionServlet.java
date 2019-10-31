@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 
 import org.databaseManage.EmployeService;
 import org.model.Employe;
+import org.model.TeamLeader;
 
 public class ConnectionServlet extends HttpServlet{
 	
@@ -52,9 +53,12 @@ public class ConnectionServlet extends HttpServlet{
 		String pageName="/Home";
 		
         HttpSession session = request.getSession();
-
-		//Employe currentUser = employeService.getEmploye(this.getInputValue(request, "email"));
-		
+		if(user.getTitle() == "Leader") {
+			//On initialise user en teamLeader avec son équipe.
+			TeamLeader leader = (TeamLeader) user;
+			leader.initTeam(this.employeService.getMyTeam(user.getMail()));
+			user = leader;
+		}
 		session.setAttribute("currentUser", user);
 
 		

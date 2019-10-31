@@ -13,7 +13,9 @@ public class TeamLeader extends Employe{
 	public void initTeam(List<Employe> team) {
 		this.team = team;
 	}
-	
+	public List<Employe> getTeam() {
+		return team;
+	}
 	@Override
 	public String getFullName() {
 		return this.getTitle() + " " + super.getFullName();

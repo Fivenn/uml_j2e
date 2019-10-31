@@ -28,12 +28,9 @@ public class HomeServlet extends HttpServlet {
 	}
 	protected void doGetOrPost(HttpServletRequest req, HttpServletResponse resp) {
 		if(req.getSession().getAttribute("currentUser")!=null) {
-			System.out.println(req.getAttribute("currentPage")==null);
 			if(req.getAttribute("currentPage") == null) {
 				req.setAttribute("currentPage", "calendar");
 			}
-			System.out.println(req.getAttribute("currentPage"));
-			System.out.println(req.getParameter("currentPage"));
 			this.doProcess(req, resp);
 		}else {
 			this.redirectConnection(req,resp);
