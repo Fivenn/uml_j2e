@@ -31,3 +31,7 @@ CREATE OR REPLACE TABLE employe (
 INSERT INTO employe (mail, firstName, surname, address, nbDays, fonction, pwd) VALUES ('mheyrend@enssat.fr', 'Maëlle', 'Heyrendt', '2 rue de Taiwan', 25, 'TeamLeader', 'mh');
 INSERT INTO employe (mail, firstName, surname, address, nbDays, fonction, pwd) VALUES ('clevan@enssat.fr', 'Clélia', 'Le van', '2 rue du Vietam', 25, 'RespoRH','cv');
 INSERT INTO employe (mail, firstName, surname, address, nbDays, fonction, pwd) VALUES ('a@a.a', 'a', 'a', 'a', 25, 'TeamLeader','a');
+INSERT INTO employe (mail, firstName, surname, address, nbDays, fonction, pwd) VALUES ('b@b.b', 'b', 'b', 'b', 45, 'RespoRH','b');
+INSERT INTO employe (mail, firstName, surname, address, nbDays, fonction, pwd) VALUES ('c@c.c', 'c', 'c', 'c', 45, 'EmployeRH','c');
+INSERT INTO employe (mail, firstName, surname, address, nbDays, fonction, pwd) VALUES ('d@d.d', 'd', 'd', 'd', 15, 'Employe','d');
+INSERT INTO employe (mail, firstName, surname, address, nbDays, fonction, pwd,team) VALUES ('e@e.e', 'e', 'e', 'e', 15, 'Employe','e',1);

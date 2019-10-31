@@ -15,8 +15,15 @@ public class Employe {
 		this.setAddress(address);
 		this.setNbDays(nbDays);
 	}
-
-
+	
+	public String getTitle() {
+		return "Employé";
+	}
+	
+	public String getFullName(){
+		return this.getTitle() + " " + this.getFirstName()+ " " +this.getSurname();
+	};
+	
 	public String getAddress() {
 		return address;
 	}
@@ -65,5 +72,5 @@ public class Employe {
 	public void setNbDays(int nbDays) {
 		this.nbDays = nbDays;
 	}
-	
+
 }

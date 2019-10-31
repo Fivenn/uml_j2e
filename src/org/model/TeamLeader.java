@@ -10,12 +10,16 @@ public class TeamLeader extends Employe{
 		super(mail, firstName, surname, address, nbDays);
 	}
 	
-	public void initTeam() {
-		this.team = new ArrayList<Employe>();
+	public void initTeam(List<Employe> team) {
+		this.team = team;
 	}
 	
 	@Override
-	public String getFirstName() {
-		return "Chef d'équipe " + super.getFirstName();
+	public String getFullName() {
+		return this.getTitle() + " " + super.getFullName();
+	}
+	
+	public String getTitle() {
+		return "Leader";
 	}
 }

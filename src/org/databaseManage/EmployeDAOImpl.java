@@ -1,6 +1,7 @@
 package org.databaseManage;
 import org.model.Employe;
 import org.model.EmployeRH;
+import org.model.RespoRH;
 import org.model.TeamLeader;
 
 import java.sql.Connection;
@@ -33,7 +34,7 @@ public class EmployeDAOImpl {
 							listEmployes.add(new EmployeRH(rs.getString("mail"),rs.getString("firstName"),rs.getString("surname"),rs.getString("address"),rs.getInt("nbDays")));												
 							break;
 						case "RespoRH":
-							
+							listEmployes.add(new RespoRH(rs.getString("mail"),rs.getString("firstName"),rs.getString("surname"),rs.getString("address"),rs.getInt("nbDays")));																			
 							break;
 						case "TeamLeader":
 							listEmployes.add(new TeamLeader(rs.getString("mail"),rs.getString("firstName"),rs.getString("surname"),rs.getString("address"),rs.getInt("nbDays")));						
@@ -72,11 +73,10 @@ public class EmployeDAOImpl {
 		return findBy("select * from employe");
 	}
 
-	public List<Employe> findByTitle(String searchText) {
-		// watch out : this query is case sensitive. use upper function on title
-		// and searchText to make it case insensitive
-		return findBy("select * from employe where name like '%" + searchText + "%'");
-
+	public List<Employe> findMyTeam(String mail) {
+		// avoid select * queries because of performance issues,
+		// only query the columns you need
+		return findBy("	select * from employe where team=(select noTeam from team where leader ='"+mail+"');");
 	}
 	
 }

@@ -15,25 +15,30 @@ import org.databaseManage.EmployeService;
 import org.model.Employe;
 
 public class HomeServlet extends HttpServlet {
-
 	private EmployeService employeService = new EmployeService();
-	private HttpSession session;
+	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		session = req.getSession();
-		if(session.getAttribute("currentUser")!=null) {
-			this.doProcess(req, resp);
-		}else {
-			this.redirectConnection(req,resp);
-		}
-		
+		this.doGetOrPost(req, resp);
 	}
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		this.doProcess(req, resp);
+		this.doGetOrPost(req, resp);
 	}
-	
+	protected void doGetOrPost(HttpServletRequest req, HttpServletResponse resp) {
+		if(req.getSession().getAttribute("currentUser")!=null) {
+			System.out.println(req.getAttribute("currentPage")==null);
+			if(req.getAttribute("currentPage") == null) {
+				req.setAttribute("currentPage", "calendar");
+			}
+			System.out.println(req.getAttribute("currentPage"));
+			System.out.println(req.getParameter("currentPage"));
+			this.doProcess(req, resp);
+		}else {
+			this.redirectConnection(req,resp);
+		}
+	}
 	private void doProcess(HttpServletRequest request, HttpServletResponse response) {
 
 		List<Employe> listEmployes = employeService.getAllEmployes();
@@ -64,22 +69,19 @@ public class HomeServlet extends HttpServlet {
 		RequestDispatcher rd = getServletContext().getRequestDispatcher(pageName);
 
 		try {
-
 			rd.forward(request, response);
-
 		} catch (ServletException e) {
-
 			e.printStackTrace();
-
 		} catch (IOException e) {
-
 			e.printStackTrace();
-
 		}	
 	}
 	
 	private void deconnection(HttpServletRequest request, HttpServletResponse response) {
-        session.invalidate();
+		request.getSession().removeAttribute("currentUser");
+        request.getSession().invalidate();
+        System.out.println(request.getSession());
+        
         try {
             this.getServletContext().getRequestDispatcher("/Connection").forward( request, response );
 		} catch (IOException e) {

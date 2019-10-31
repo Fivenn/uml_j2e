@@ -22,8 +22,8 @@ public class EmployeService {
 		return employeDao.checkCredentials(email, password);
 	}
 	
-	public List<Employe> getEmployesByTitle(String searchText) {
-		List<Employe> listEmployes = employeDao.findByTitle(searchText);
-		return listEmployes;
+	public List<Employe> getMyTeam(String mail){
+		return employeDao.findMyTeam(mail);
 	}
+	
 }
