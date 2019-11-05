@@ -1,6 +1,5 @@
 package org.model;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class TeamLeader extends Employe{

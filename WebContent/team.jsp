@@ -6,6 +6,7 @@
 <%
 	TeamLeader currentUser = (TeamLeader)request.getSession().getAttribute("currentUser");
 %>
+<% if(currentUser!=null){%>
 
 <h1>
 	C'est la teaaam
@@ -27,3 +28,6 @@
 	}
 	%>
 </table>
+	<%
+	}
+	%>

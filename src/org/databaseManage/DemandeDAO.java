@@ -1,5 +1,6 @@
 package org.databaseManage;
 import org.model.Demande;
+import org.model.Statut;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -44,16 +45,27 @@ public class DemandeDAO {
 		return listDemandes;
 	}
 
-	public List<Demande> findByAll() {
+	public List<Demande> findAll() {
 		// avoid select * queries because of performance issues,
 		// only query the columns you need
 		return findBy("select * from demande");
 	}
+	
+	public List<Demande> findAllDemandeFromEmploye(String mail) {
+		// avoid select * queries because of performance issues,
+		// only query the columns you need
+		return findBy("select * from demande where employe='"+mail+"';");
+	}
 
-	public List<Demande> findByTitle(String searchText) {
-		// watch out : this query is case sensitive. use upper function on title
-		// and searchText to make it case insensitive
-		return findBy("select * from demandes where name like '%" + searchText + "%'");
-
+	public List<Demande> findAllDemandeFromTeam(String mail) {
+		// avoid select * queries because of performance issues,
+		// only query the columns you need
+		return findBy("select * from demand where employe in(select mail from employe where team=(select noTeam from team where leader='"+ mail +"'));" );
+	}
+	
+	public List<Demande> findStatutXDemandeFromTeam(String mail,Statut statut) {
+		// avoid select * queries because of performance issues,
+		// only query the columns you need
+		return findBy("select * from demand where statut ='"+statut+"'  and employe in(select mail from employe where team=(select noTeam from team where leader='"+ mail +"'));" );
 	}
 }

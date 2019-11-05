@@ -27,12 +27,15 @@ public class HomeServlet extends HttpServlet {
 		this.doGetOrPost(req, resp);
 	}
 	protected void doGetOrPost(HttpServletRequest req, HttpServletResponse resp) {
-		if(req.getSession().getAttribute("currentUser")!=null) {
+		System.out.println(req.getSession().getAttribute("currentUser"));
+		if(req.getParameter("deconnection")!=null) {
+			this.deconnection(req, resp);
+		}else if(req.getSession().getAttribute("currentUser")!=null) {
 			if(req.getAttribute("currentPage") == null) {
 				req.setAttribute("currentPage", "calendar");
 			}
-			this.doProcess(req, resp);
-		}else {
+			this.doProcess(req, resp);	
+		}else{
 			this.redirectConnection(req,resp);
 		}
 	}
@@ -78,15 +81,7 @@ public class HomeServlet extends HttpServlet {
 		request.getSession().removeAttribute("currentUser");
         request.getSession().invalidate();
         System.out.println(request.getSession());
-        
-        try {
-            this.getServletContext().getRequestDispatcher("/Connection").forward( request, response );
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (ServletException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+        this.redirectConnection(request, response);
 	}
 }
 
