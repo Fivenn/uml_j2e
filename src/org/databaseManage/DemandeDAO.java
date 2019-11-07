@@ -1,7 +1,5 @@
 package org.databaseManage;
 import org.model.Demande;
-import org.model.Statut;
-
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -63,7 +61,7 @@ public class DemandeDAO {
 		return findBy("select * from demand where employe in(select mail from employe where team=(select noTeam from team where leader='"+ mail +"'));" );
 	}
 	
-	public List<Demande> findStatutXDemandeFromTeam(String mail,Statut statut) {
+	public List<Demande> findStatutXDemandeFromTeam(String mail,String statut) {
 		// avoid select * queries because of performance issues,
 		// only query the columns you need
 		return findBy("select * from demand where statut ='"+statut+"'  and employe in(select mail from employe where team=(select noTeam from team where leader='"+ mail +"'));" );
