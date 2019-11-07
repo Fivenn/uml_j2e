@@ -1,7 +1,5 @@
 package org.databaseManage;
 import org.model.Employe;
-import org.model.EmployeRH;
-import org.model.RespoRH;
 import org.model.TeamLeader;
 
 import java.sql.Connection;
@@ -31,10 +29,10 @@ public class EmployeDAOImpl {
 				while (rs.next()) {
 					switch (rs.getString("fonction")) {
 						case "EmployeRH":
-							listEmployes.add(new EmployeRH(rs.getString("mail"),rs.getString("firstName"),rs.getString("surname"),rs.getString("address"),rs.getInt("nbDays")));												
+							listEmployes.add(new Employe(rs.getString("mail"),rs.getString("firstName"),rs.getString("surname"),rs.getString("address"),rs.getInt("nbDays")));												
 							break;
 						case "RespoRH":
-							listEmployes.add(new RespoRH(rs.getString("mail"),rs.getString("firstName"),rs.getString("surname"),rs.getString("address"),rs.getInt("nbDays")));																			
+							listEmployes.add(new TeamLeader(rs.getString("mail"),rs.getString("firstName"),rs.getString("surname"),rs.getString("address"),rs.getInt("nbDays")));																			
 							break;
 						case "TeamLeader":
 							listEmployes.add(new TeamLeader(rs.getString("mail"),rs.getString("firstName"),rs.getString("surname"),rs.getString("address"),rs.getInt("nbDays")));						
