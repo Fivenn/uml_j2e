@@ -5,15 +5,17 @@ public class Employe {
 	private String firstName;
 	private String surname;
 	private String address;
+	private boolean RH;
 	private int nbDays;
 	
 	
-	public Employe(String mail, String firstName,String surname,String address, int nbDays) {
+	public Employe(String mail, String firstName,String surname,String address, int nbDays, boolean RH) {
 		this.setMail(mail);
 		this.setFirstName(firstName);
 		this.setSurname(surname);
 		this.setAddress(address);
 		this.setNbDays(nbDays);
+		this.setRH(RH);
 	}
 	
 	public String getTitle() {
@@ -23,6 +25,14 @@ public class Employe {
 	public String getFullName(){
 		return this.getTitle() + " " + this.getFirstName()+ " " +this.getSurname();
 	};
+	
+	public boolean isRH() {
+		return RH;
+	}
+	
+	public void setRH(boolean rH) {
+		RH = rH;
+	}
 	
 	public String getAddress() {
 		return address;

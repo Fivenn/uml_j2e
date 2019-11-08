@@ -5,8 +5,8 @@ import java.util.List;
 public class TeamLeader extends Employe{
 	private List<Employe> team;
 	
-	public TeamLeader(String mail, String firstName, String surname, String address, int nbDays) {
-		super(mail, firstName, surname, address, nbDays);
+	public TeamLeader(String mail, String firstName, String surname, String address, int nbDays, boolean RH) {
+		super(mail, firstName, surname, address, nbDays, RH);
 	}
 	
 	public void initTeam(List<Employe> team) {

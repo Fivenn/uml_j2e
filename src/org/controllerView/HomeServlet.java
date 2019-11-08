@@ -27,7 +27,6 @@ public class HomeServlet extends HttpServlet {
 		this.doGetOrPost(req, resp);
 	}
 	protected void doGetOrPost(HttpServletRequest req, HttpServletResponse resp) {
-		System.out.println(req.getSession().getAttribute("currentUser"));
 		if(req.getParameter("deconnection")!=null) {
 			this.deconnection(req, resp);
 		}else if(req.getSession().getAttribute("currentUser")!=null) {

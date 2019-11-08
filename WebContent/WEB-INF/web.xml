@@ -43,6 +43,68 @@
 		<servlet-name>TeamServlet</servlet-name>
 		<url-pattern>/Team</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<display-name>HelpServlet</display-name>
+		<servlet-name>HelpServlet</servlet-name>
+		<servlet-class>org.controllerView.HelpServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>HelpServlet</servlet-name>
+		<url-pattern>/Help</url-pattern>
+	</servlet-mapping>	
+	
+	<servlet>
+		<display-name>ManageDemandServlet</display-name>
+		<servlet-name>ManageDemandServlet</servlet-name>
+		<servlet-class>org.controllerView.ManageDemandServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ManageDemandServlet</servlet-name>
+		<url-pattern>/ManageDemand</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<display-name>ManageUserServlet</display-name>
+		<servlet-name>ManageUserServlet</servlet-name>
+		<servlet-class>org.controllerView.ManageUserServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ManageUserServlet</servlet-name>
+		<url-pattern>/ManageUser</url-pattern>
+	</servlet-mapping>	
+	
+	<servlet>
+		<display-name>MyProfilServlet</display-name>
+		<servlet-name>MyProfilServlet</servlet-name>
+		<servlet-class>org.controllerView.MyProfilServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>MyProfilServlet</servlet-name>
+		<url-pattern>/MyProfil</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<display-name>StatsServlet</display-name>
+		<servlet-name>StatsServlet</servlet-name>
+		<servlet-class>org.controllerView.StatsServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>StatsServlet</servlet-name>
+		<url-pattern>/Stats</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<display-name>CreateUserServlet</display-name>
+		<servlet-name>CreateUserServlet</servlet-name>
+		<servlet-class>org.controllerView.CreateUserServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>CreateUserServlet</servlet-name>
+		<url-pattern>/CreateUser</url-pattern>
+	</servlet-mapping>	
+	
+		
 	<welcome-file-list>
 	  <welcome-file>index.html</welcome-file>
 	  <welcome-file>index.htm</welcome-file>
