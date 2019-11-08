@@ -20,6 +20,7 @@ public class CalendarServlet extends HttpServlet{
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		System.out.println("Mode : "  + req.getParameter("goToRHMode"));
 		if(req.getParameter("goToRHMode")!= null) {
 			req.setAttribute("currentMode", "employe");
 		}

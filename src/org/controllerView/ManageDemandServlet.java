@@ -19,15 +19,14 @@ public class ManageDemandServlet extends HttpServlet {
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		System.out.println((String)req.getParameter("goToRHMode"));
-		if(req.getParameter("goToRHMode")!= null) {
-			req.setAttribute("currentMode", "RH");
-		}
+
 		this.doProcess(req, resp);
 	}
 	
 	protected void doProcess(HttpServletRequest req, HttpServletResponse resp) {
 		req.setAttribute("currentPage", "manageDemand");
+		req.setAttribute("currentMode", "RH");
+		
 		try {
             this.getServletContext().getRequestDispatcher("/Home").forward(req, resp);
 		} catch (IOException e) {

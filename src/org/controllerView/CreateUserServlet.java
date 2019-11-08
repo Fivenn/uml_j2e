@@ -29,6 +29,7 @@ HttpServlet httpServlet;
 	}
 	
 	protected void doProcess(HttpServletRequest req, HttpServletResponse resp) {
+		req.setAttribute("currentMode", "RH");
 		req.setAttribute("currentPage", "createUser");
 		try {
             this.getServletContext().getRequestDispatcher("/Home").forward(req, resp);

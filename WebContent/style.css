@@ -1,7 +1,28 @@
+
+/*primary: #110133;
+danger: #00918e;
+success: #5dd599;
+warning: #FFDC34;*/
+
+
 body{
+
 }
 
 form{
 	margin: 0px;
 }
 
+.btn-outline-primary{
+	color: #110133;
+	border-color: #110133;
+}
+
+.btn-primary{
+	background-color: #110133;
+}
+
+.btn-outline-success{
+	color: #5dd599 !important;
+	border-color: #5dd599;
+}

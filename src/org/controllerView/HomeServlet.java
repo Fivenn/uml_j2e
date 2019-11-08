@@ -42,6 +42,8 @@ public class HomeServlet extends HttpServlet {
 
 		List<Employe> listEmployes = employeService.getAllEmployes();
 		
+		
+		
 		request.setAttribute("listEmployes", listEmployes);
 		String pageName="/home.jsp";
 
