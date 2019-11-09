@@ -33,7 +33,7 @@
                                         <input placeholder="Password" type="password" class="form-control" name="password">
 
                                     </div>
-                                    <button type="submit" class="btn btn-primary">Envoyer</button>
+                                    <center><button type="submit" class="btn btn-primary text-center">Envoyer</button></center>
                                 </form>
                                 <% if(connectionNotValid != null){ %>
                                     <p>
