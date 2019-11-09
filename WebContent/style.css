@@ -26,3 +26,20 @@ form{
 	color: #5dd599 !important;
 	border-color: #5dd599;
 }
+
+.connection-image {
+	/* Image used */
+	background-image: url("ressources/connection-image.jpg");
+	
+	/* Blur effect */
+	/*filter: blur(8px);
+	-webkit-filter: blur(8px);*/
+	
+	/* Full height */
+	height: 100%;
+	
+	/* Center and scale the image */
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+}
