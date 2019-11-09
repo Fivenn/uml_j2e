@@ -14,6 +14,11 @@ public class EmployeService {
 		return listEmployes;
 	}
 	
+	public List<Employe> getAllEmployesButRH() {
+		List<Employe> listEmployes = employeDao.findByAllButRH();
+		return listEmployes;
+	}
+	
 	public Employe getEmploye(String email) {
 		return employeDao.findByEmail(email);
 	}

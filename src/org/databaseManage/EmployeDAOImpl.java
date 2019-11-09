@@ -70,6 +70,12 @@ public class EmployeDAOImpl {
 		// only query the columns you need
 		return findBy("select * from employe");
 	}
+	
+	public List<Employe> findByAllButRH() {
+		// avoid select * queries because of performance issues,
+		// only query the columns you need
+		return findBy("select * from employe where fonction != 'EmployeRH' && fonction != 'RespoRH'");
+	}
 
 	public List<Employe> findMyTeam(String mail) {
 		// avoid select * queries because of performance issues,

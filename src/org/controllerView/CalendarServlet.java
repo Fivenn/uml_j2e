@@ -10,8 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 
 public class CalendarServlet extends HttpServlet{
 	
-	HttpServlet httpServlet;
-	
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

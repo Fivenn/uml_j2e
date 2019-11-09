@@ -1,6 +1,6 @@
 package org.model;
 
-public class Demande {
+public class Demand {
 	private String status;
 	private String startDate;
 	private String endDate;
@@ -10,7 +10,7 @@ public class Demande {
 	
 	
 	
-	public Demande(String status, String startDate,String endDate,String requestDate, String motif, int nbDays) {
+	public Demand(String status, String startDate,String endDate,String requestDate, String motif, int nbDays) {
 		this.setStatus(status);
 		this.setStartDate(startDate);
 		this.setEndDate(endDate);

@@ -9,15 +9,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.databaseManage.DemandService;
+import org.databaseManage.EmployeService;
+import org.databaseManage.TeamService;
 import org.model.Employe;
 import org.model.Team;
 import org.model.TeamLeader;
 
 public class ManageDemandServlet extends HttpServlet {
-	HttpServlet httpServlet;
-	ArrayList<Employe> employesList;
-	ArrayList<Team> teamsList;
-	ArrayList<String> statusList;
+	private EmployeService employeService = new EmployeService();
+	private TeamService teamService = new TeamService();
+	private DemandService demandService = new DemandService();
+	private ArrayList<Employe> employesList;
+	private ArrayList<Team> teamsList;
+	private ArrayList<String> statusList;
 	
 	
 	
@@ -34,7 +39,13 @@ public class ManageDemandServlet extends HttpServlet {
 	
 	protected void doProcess(HttpServletRequest req, HttpServletResponse resp) {
 		
-		this.initLists((req.getSession().getAttribute("currentUser")).getClass() == Class.forName("TeamLeader").getClass());
+		try {
+			this.initLists((req.getSession().getAttribute("currentUser")).getClass() == Class.forName("TeamLeader.java").getClass());
+		} catch (ClassNotFoundException e1) {
+			// TODO Auto-generated catch block
+			System.out.print("coucou les potes");
+			e1.printStackTrace();
+		}
 		
 		req.setAttribute("employesList", this.employesList);
 		req.setAttribute("teamsList", this.teamsList);
@@ -52,8 +63,18 @@ public class ManageDemandServlet extends HttpServlet {
 	}
 
 	
-	private void initList(boolean isRespoRH) {
+	private void initLists(boolean isRespoRH) {
 		// TODO Auto-generated method stub
-
+		if(isRespoRH) {
+			this.employesList = (ArrayList<Employe>) this.employeService.getAllEmployes();
+			this.teamsList = (ArrayList<Team>) this.teamService.getAllTeams();
+		}else {
+			this.employesList = (ArrayList<Employe>) this.employeService.getAllEmployesButRH();	
+			this.teamsList = (ArrayList<Team>) this.teamService.getAllTeamsButRH();
+		}
+		
+		this.employesList = (ArrayList<Employe>) this.employeService.getAllEmployes();
+		
+		this.statusList = this.demandService.getStatus();
 	}
 }
