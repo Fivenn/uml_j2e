@@ -4,3 +4,5 @@
 <h1>
 	C'est la table des employés
 </h1>
+
+<a href="CreateUser">Créer un nouvel employé</a>
