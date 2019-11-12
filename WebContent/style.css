@@ -13,6 +13,11 @@ form{
 	margin: 0px;
 }
 
+main{
+	max-width: 90%;
+	margin: auto;
+}
+
 .btn-outline-primary{
 	color: #110133;
 	border-color: #110133;
@@ -30,14 +35,14 @@ form{
 .connection-image {
 	/* Image used */
 	background-image: url("../img/connection-image.jpg");
-	
+
 	/* Blur effect */
 	/*filter: blur(8px);
 	-webkit-filter: blur(8px);*/
-	
+
 	/* Full height */
 	height: 100%;
-	
+
 	/* Center and scale the image */
 	background-position: center;
 	background-repeat: no-repeat;
