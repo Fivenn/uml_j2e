@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.databaseManage.DemandService;
 import org.databaseManage.EmployeService;
 import org.databaseManage.TeamService;
+import org.model.Demand;
 import org.model.Employe;
 import org.model.Team;
 import org.model.TeamLeader;
@@ -20,9 +21,11 @@ public class ManageDemandServlet extends HttpServlet {
 	private EmployeService employeService = new EmployeService();
 	private TeamService teamService = new TeamService();
 	private DemandService demandService = new DemandService();
+	
 	private ArrayList<Employe> employesList;
 	private ArrayList<Team> teamsList;
 	private ArrayList<String> statusList;
+	private ArrayList<Demand> demandsList;
 	
 	
 	
@@ -51,6 +54,7 @@ public class ManageDemandServlet extends HttpServlet {
 		req.setAttribute("employesList", this.employesList);
 		req.setAttribute("teamsList", this.teamsList);
 		req.setAttribute("statusList", this.statusList);
+		req.setAttribute("demandsList", this.demandsList);
 		req.setAttribute("currentPage", "manageDemand");
 		req.setAttribute("currentMode", "RH");
 		
@@ -69,9 +73,11 @@ public class ManageDemandServlet extends HttpServlet {
 		if(isRespoRH) {
 			this.employesList = (ArrayList<Employe>) this.employeService.getAllEmployes();
 			this.teamsList = (ArrayList<Team>) this.teamService.getAllTeams();
+			this.demandsList = (ArrayList<Demand>) this.demandService.getAllDemands();
 		}else {
 			this.employesList = (ArrayList<Employe>) this.employeService.getAllEmployesButRH();	
 			this.teamsList = (ArrayList<Team>) this.teamService.getAllTeamsButRH();
+			this.demandsList = (ArrayList<Demand>) this.demandService.getAllDemandsButRH();
 		}
 		
 		this.employesList = (ArrayList<Employe>) this.employeService.getAllEmployes();

@@ -57,7 +57,7 @@ public class TeamDAOImpl {
 	public List<Team> findAllTeamsButRH() {
 		// avoid select * queries because of performance issues,
 		// only query the columns you need
-		return findBy("select * from team where leader NOT IN (select * from employe where fonction = 'RespoRH');");
+		return findBy("select * from team where leader NOT IN (select mail from employe where fonction = 'RespoRH');");
 	}
 	
 	public Team findEmployeTeam(String mail) {

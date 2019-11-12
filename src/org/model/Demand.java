@@ -1,24 +1,50 @@
 package org.model;
 
 public class Demand {
+	private int id;
+	private Employe employe;
 	private String status;
 	private String startDate;
 	private String endDate;
 	private String requestDate;
 	private String motif;
 	private int nbDays;
-	
-	
-	
-	public Demand(String status, String startDate,String endDate,String requestDate, String motif, int nbDays) {
+
+	public Demand(int id,String status, String startDate,String endDate,String requestDate, String motif, int nbDays) {
 		this.setStatus(status);
 		this.setStartDate(startDate);
 		this.setEndDate(endDate);
 		this.setRequestDate(requestDate);
 		this.setMotif(motif);
 		this.setNbDays(nbDays);
+		this.setEmploye(employe);
+	}
+	
+	
+	public Demand(int id, Employe employe,String status, String startDate,String endDate,String requestDate, String motif, int nbDays) {
+		this.setStatus(status);
+		this.setStartDate(startDate);
+		this.setEndDate(endDate);
+		this.setRequestDate(requestDate);
+		this.setMotif(motif);
+		this.setNbDays(nbDays);
+		this.setEmploye(employe);
+		this.setId(id);
 	}
 
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	public Employe getEmploye() {
+		return employe;
+	}
+	
+	public void setEmploye(Employe employe) {
+		this.employe = employe;
+	}
 
 
 	public String getStatus() {

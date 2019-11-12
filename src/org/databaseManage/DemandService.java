@@ -14,6 +14,11 @@ public class DemandService {
 		List<Demand> listDemands = demandDao.findAll();
 		return listDemands;
 	}
+	
+	public List<Demand> getAllDemandsButRH() {
+		List<Demand> listDemands = demandDao.findAllButRH();
+		return listDemands;
+	}
 
 	public List<Demand> getTeamDemands(String email) {
 		return demandDao.findAllDemandeFromTeam(email);
