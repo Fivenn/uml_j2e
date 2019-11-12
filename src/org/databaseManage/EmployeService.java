@@ -31,4 +31,9 @@ public class EmployeService {
 		return employeDao.findMyTeam(mail);
 	}
 	
+	//ajout employe
+	public void ajoutEmploye(Employe emp) {
+		employeDao.addEmploye(emp);
+	}
+	
 }

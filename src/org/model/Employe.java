@@ -19,7 +19,7 @@ public class Employe {
 	}
 	
 	public String getTitle() {
-		return "Employé";
+		return "Employe";
 	}
 	
 	public String getFullName(){
