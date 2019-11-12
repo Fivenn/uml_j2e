@@ -38,14 +38,15 @@ public class ManageDemandServlet extends HttpServlet {
 	}
 	
 	protected void doProcess(HttpServletRequest req, HttpServletResponse resp) {
-		
-		try {
-			this.initLists((req.getSession().getAttribute("currentUser")).getClass() == Class.forName("TeamLeader.java").getClass());
+		this.initLists(true);
+		/*try {
+			//this.initLists((req.getSession().getAttribute("currentUser")).getClass() == Class.forName("TeamLeader.java").getClass());
+			
 		} catch (ClassNotFoundException e1) {
 			// TODO Auto-generated catch block
 			System.out.print("coucou les potes");
 			e1.printStackTrace();
-		}
+		}*/
 		
 		req.setAttribute("employesList", this.employesList);
 		req.setAttribute("teamsList", this.teamsList);

@@ -13,7 +13,7 @@
 
 <form class="form-co" action="ManageDemand" method="post">
 	<div class="form-row">
-		<%-- <div class="form-group col-md-6">
+		<div class="form-group col-md-6">
 		    <select class="" name="employe">
 		      <%
 		    	for (Employe e: employesList) {
@@ -40,12 +40,12 @@
 	        <%
 	        for (String s: statusList) {
 	        %>
-	          <option value="<%=s%>">s%></option>
+	          <option value="<%=s%>"><%=s%></option>
 	        <%
 	        }
 	        %>
 	      </select>
-	    </div> --%>
+	    </div>
 	    <div>
 	  		<button class="btn btn-primary my-2 my-sm-0" type="submit">Rechercher</button>
 	  	</div>
