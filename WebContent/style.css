@@ -9,6 +9,7 @@ form{
 main{
 	max-width: 90%;
 	margin: auto;
+	margin-top: 2em;
 }
 
 .btn-outline-primary{
@@ -18,17 +19,6 @@ main{
 
 .btn-primary{
 	background-color: #110133;
-}
-
-.td-status{
-	background-color: red !important;
-	display: flex !important;
-	justify-content: space-around !important;
-}
-
-.button-square{
-	width: 1em;
-	height: 1em;
 }
 
 

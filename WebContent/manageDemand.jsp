@@ -79,13 +79,13 @@
 	        <td><%=d.getEndDate()%></td>
 	        <td><%=d.getNbDays()%></td>
 	        <td><%=d.getMotif()%></td>
-	        <td class="td-status">
+	        <td style="display: flex !important;justify-content: space-around !important;">
 	          <% if(d.getStatus().equals("pending")){ %>
-	            <form class="form form-inline button-square approved" action="ManageDemand" method="post">
-	              <button class="btn btn-primary" type="submit" name="approved" value="<%=d.getId()%>"><i class="fas fa-check" aria-hidden="true"></i></button>
+	            <form class="form form-inline" action="ManageDemand" method="post">
+	              <button class="btn btn-success" type="submit" name="approved" value="<%=d.getId()%>"><i class="fas fa-check" aria-hidden="true"></i></button>
 	            </form>
-	            <form class="form form-inline button-square refused" action="ManageDemand" method="post">
-	              <button class="btn btn-primary" type="submit" name="refused" value="<%=d.getId()%>"><i class="fas fa-times" aria-hidden="true"></i></button>
+	            <form class="form form-inline" action="ManageDemand" method="post">
+	              <button class="btn btn-danger" type="submit" name="refused" value="<%=d.getId()%>"><i class="fas fa-times" aria-hidden="true"></i></button>
 	            </form>
 	          <%}else{%>
 	            <%=d.getStatus()%>
