@@ -21,13 +21,13 @@
 		</div>
 		<div>
 			<% if(currentUser.isRH() && currentUser.isLeader()){ %>
-				<label>Leader Responsable RH</label>
+				<label>Leader Responsable RH de l'équipe <%=currentUser.getNbTeam() %></label>
 			<% } else if (currentUser.isRH()) { %>
-				<label>Responsable RH</label>
+				<label>Responsable RH de l'équipe <%=currentUser.getNbTeam() %></label>
 			<% } else if (currentUser.isLeader()) { %>
-				<label>Leader</label>
+				<label>Leader de l'équipe <%=currentUser.getNbTeam() %></label>
 			<% } else { %>
-				<label>Employé</label>
+				<label>Employé dans l'équipe <%=currentUser.getNbTeam() %></label>
 			<% } %>
 		</div>
 		

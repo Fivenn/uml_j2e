@@ -9,10 +9,10 @@ public class Employe {
 	private boolean RH;
 	private boolean leader;
 	private int nbDays;
+	private int nbTeam;
 	
 	
-	
-	public Employe(String mail, String firstName,String surname,String birthDate, String address, int nbDays, boolean RH, boolean leader) {
+	public Employe(String mail, String firstName,String surname,String birthDate, String address, int nbDays, boolean RH, boolean leader,int nbTeam) {
 		this.setMail(mail);
 		this.setFirstName(firstName);
 		this.setSurname(surname);
@@ -21,9 +21,20 @@ public class Employe {
 		this.setNbDays(nbDays);
 		this.setRH(RH);
 		this.setLeader(leader);
+		this.setNbTeam(nbTeam);
 	}
 	
 	
+	public int getNbTeam() {
+		return nbTeam;
+	}
+
+
+	public void setNbTeam(int nbTeam) {
+		this.nbTeam = nbTeam;
+	}
+
+
 	public String getBirthDate() {
 		return birthDate;
 	}
