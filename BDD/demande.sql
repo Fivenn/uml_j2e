@@ -32,5 +32,8 @@ CREATE OR REPLACE TABLE demand (
 
 INSERT INTO demand (employe,status,beginDate,endDate,demandDate, reason, duration) VALUES ('mheyrend@enssat.fr','pending','29-12-1998','30-12-1998','25-12-1998','RTT',1);
 INSERT INTO demand (employe,status,beginDate,endDate,demandDate, reason, duration) VALUES ('mheyrend@enssat.fr','canceled','29-12-1999','30-12-1999','25-12-1999','RTT',2);
-INSERT INTO demand (employe,status,beginDate,endDate,demandDate, reason, duration) VALUES ('a@a.a','pending','29-12-1998','30-12-1998','25-12-1998','RTT',1);
-INSERT INTO demand (employe,status,beginDate,endDate,demandDate, reason, duration) VALUES ('e@e.e','refused','29-12-1998','30-12-1998','25-12-1998','RTT',1);
+INSERT INTO demand (employe,status,beginDate,endDate,demandDate, reason, duration) VALUES ('a@a.a','pending','29-12-1998','30-12-1998','25-12-2019','RTT',1);
+INSERT INTO demand (employe,status,beginDate,endDate,demandDate, reason, duration) VALUES ('e@e.e','refused','1-12-1998','14-12-1998','25-12-2012','RTT',1);
+INSERT INTO demand (employe,status,beginDate,endDate,demandDate, reason, duration) VALUES ('e@e.e','pending','10-12-1998','15-12-1998','25-12-2012','RTT',1);
+INSERT INTO demand (employe,status,beginDate,endDate,demandDate, reason, duration) VALUES ('e@e.e','pending','21-12-2018','31-12-1998','25-12-1998','RTT',1);
+INSERT INTO demand (employe,status,beginDate,endDate,demandDate, reason, duration) VALUES ('e@e.e','pending','29-12-1998','30-12-1998','24-12-1998','RTT',1);

@@ -53,12 +53,23 @@ public class ManageDemandServlet extends HttpServlet {
 	}
 	
 	protected void doProcess(HttpServletRequest req, HttpServletResponse resp) {
-		this.initLists(((Employe) req.getSession().getAttribute("currentUser")).isLeader());
+		if(req.getParameter("search")!= null) {
+			this.reloadDemands(((Employe) req.getSession().getAttribute("currentUser")).isLeader(), req.getParameter("status"), req.getParameter("employe"), req.getParameter("team"));
+			req.setAttribute("mail", req.getParameter("employe"));
+			req.setAttribute("status", req.getParameter("status"));
+			req.setAttribute("team", req.getParameter("team"));
+		}else {
+			this.initLists(((Employe) req.getSession().getAttribute("currentUser")).isLeader());
+			req.setAttribute("mail", "all");
+			req.setAttribute("status", "all");
+			req.setAttribute("team", "all");
+		}
 		
 		req.setAttribute("employesList", this.employesList);
 		req.setAttribute("teamsList", this.teamsList);
 		req.setAttribute("statusList", this.statusList);
 		req.setAttribute("demandsList", this.demandsList);
+		
 		req.setAttribute("currentPage", "manageDemand");
 		req.setAttribute("currentMode", "RH");
 		
@@ -73,7 +84,7 @@ public class ManageDemandServlet extends HttpServlet {
 
 	
 	private void initLists(boolean isRespoRH) {
-		// TODO Auto-generated method stub
+
 		if(isRespoRH) {
 			this.employesList = (ArrayList<Employe>) this.employeService.getAllEmployes();
 			this.teamsList = (ArrayList<Team>) this.teamService.getAllTeams();
@@ -87,5 +98,10 @@ public class ManageDemandServlet extends HttpServlet {
 		this.employesList = (ArrayList<Employe>) this.employeService.getAllEmployes();
 		
 		this.statusList = this.demandService.getStatus();
+	}
+	
+	private void reloadDemands(boolean isRespoRH, String status, String mail, String team) {
+		System.out.println(status + mail + team);
+		this.demandsList = (ArrayList<Demand>) this.demandService.getFilteredDemand(status, mail, team, isRespoRH);
 	}
 }

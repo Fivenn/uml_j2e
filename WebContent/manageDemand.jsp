@@ -5,8 +5,12 @@
 <%
 	ArrayList<Team> teamsList = (ArrayList<Team>)request.getAttribute("teamsList");
 	ArrayList<Employe> employesList  = (ArrayList<Employe>)request.getAttribute("employesList");
- 	 ArrayList<String> statusList  = (ArrayList<String>)request.getAttribute("statusList");
- 	 ArrayList<Demand> demandsList  = (ArrayList<Demand>)request.getAttribute("demandsList");
+ 	ArrayList<String> statusList  = (ArrayList<String>)request.getAttribute("statusList");
+ 	ArrayList<Demand> demandsList  = (ArrayList<Demand>)request.getAttribute("demandsList");
+ 	 
+ 	String mail = request.getAttribute("mail")!= null ? (String)request.getAttribute("mail") : "all";
+ 	int team = request.getAttribute("team")!=null &&  !request.getAttribute("team").equals("all")?Integer.parseInt(((String) request.getAttribute("team"))):-1;
+ 	String status = request.getAttribute("status")!=null?(String)request.getAttribute("status"):"all";
 %>
 <%
 	if(teamsList != null){
@@ -15,43 +19,48 @@
 		Gestion des demandes
 	</h3>
 	
+	
 	<form class="form-co" action="ManageDemand" method="post">
-		<div class="form-row">
-			<div class="form-group col-md-3">
+		<div class="form-row form-group">
+			<i style="align-self: center; font-size: 2em; display: inline-block; color: primary;" class="far fa-question-circle" data-toggle="tooltip" data-placement="top" title="Il n'est possible de choisir qu'un employé ou une team. Si les deux sont sélectionnés, l'employé est choisi."></i>
+			<div class="col-md-3">
 			    <select class="form-control" name="employe">
+			    	<option value="all">Tous les employés</option>
 			      <%
 			    	for (Employe e: employesList) {
 			    	%>
-			    		<option value="<%=e.getSurname()%>"><%=e.getSurname()%> <%=e.getFirstName()%></option>
+			    		<option value="<%=e.getMail()%>" <%if(e.getMail().equals(mail)){%>selected<%}%>><%=e.getSurname()%> <%=e.getFirstName()%></option>
 			    	<%
 			    	}
 			    	%>
 			    </select>
 	  		</div>
-		  	<div class="form-group col-md-3">
+		  	<div class="col-md-3">
 		      <select class="form-control" name="team">
+		      	<option value="all">Toutes les équipes</option>
 		        <%
 		        for (Team t: teamsList) {
 		        %>
-		          <option value="<%=t.getNoTeam()%>"><%=t.getName()%></option>
+		          <option value="<%=t.getNoTeam()%>" <%if(t.getNoTeam() == team){%>selected<%}%>><%=t.getName()%></option>
 		        <%
 		        }
 		        %>
 		      </select>
 		  	</div>
-		    <div class="form-group col-md-3">
-		      <select class="form-control" name="statut">
+		    <div class="col-md-3">
+		      <select class="form-control" name="status">
+		      	<option value="all">Tous les statuts</option>
 		        <%
 		        for (String s: statusList) {
 		        %>
-		          <option value="<%=s%>"><%=s%></option>
+		          <option value="<%=s%>" <%if(s.equals(status)){%>selected<%}%> ><%=s%></option>
 		        <%
 		        }
 		        %>
 		      </select>
 		    </div>
 		    <div>
-		  		<button class="btn btn-primary my-2 my-sm-0" type="submit">Rechercher</button>
+		  		<button class="btn btn-primary my-2 my-sm-0" type="submit" name="search">Rechercher</button>
 		  	</div>
 		</div>
 	</form>

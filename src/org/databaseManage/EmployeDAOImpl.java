@@ -84,9 +84,9 @@ public class EmployeDAOImpl {
 	
 	//Ajout d'un employe
 	public void addEmploye(Employe emp) {
-		//Ajout du password par d�faut
+		//Ajout du password par défaut
 		String pwd = emp.getFirstName().toLowerCase().charAt(0) +""+ emp.getSurname().toLowerCase().charAt(0) ;
-		System.out.println("Le password par d�faut est:"+pwd);
+		System.out.println("Le password par défaut est:"+pwd);
 		
 		String query = "INSERT INTO employe (mail, firstName, surname, address, nbDays, fonction, pwd) VALUES ("+"'"+emp.getMail()+"'"+","+"'"+ emp.getFirstName()+"'"+","+"'"+emp.getSurname()+"'"+","+"'"+emp.getAddress()+"'"+","+"'"+emp.getNbDays()+"'"+","+"'"+emp.getTitle()+"'"+","+"'"+pwd+"'"+");";
 		Connection conn = null;

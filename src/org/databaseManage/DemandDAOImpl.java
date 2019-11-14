@@ -117,4 +117,20 @@ public class DemandDAOImpl {
 		// only query the columns you need
 		return findBy("select * from demand where status ='"+status+"'  and employe in(select mail from employe where team=(select noTeam from team where leader='"+ mail +"'));" );
 	}
+	
+	public List<Demand> findFilteredDemand(String status,String mail, String team, Boolean RH) {
+		String requete = "select * from demand where ";
+		if(!status.equals("all")) {
+			requete += "status ='"+status+"'";
+			if(!mail.equals("all")||!team.equals("all"))requete += " and ";
+		}
+		if(!mail.equals("all"))requete += "employe ='"+mail+"'";
+		if(!team.equals("all") && mail.equals("all"))requete += "employe in(select mail from employe where team='"+ team +"')";
+		
+		if(requete.equals("select * from demand where ")){
+			return RH?findAll():findAllButRH();
+		}
+		System.out.println(requete);
+		return this.findBy(requete + "order by status;");
+	}
 }

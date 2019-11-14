@@ -28,6 +28,10 @@ public class DemandService {
 		return demandDao.findAllDemandeFromEmploye(mail);
 	}
 	
+	public List<Demand> getFilteredDemand(String status,String mail, String team, Boolean RH) {
+		return demandDao.findFilteredDemand(status,mail, team, RH);
+	}
+	
 	public ArrayList<String> getStatus(){
 		return (ArrayList<String>) demandDao.findAllStatus();
 	}
