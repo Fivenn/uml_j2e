@@ -43,15 +43,14 @@ public class CalendarServlet extends HttpServlet{
 	protected void doProcess(HttpServletRequest req, HttpServletResponse resp) {
 		this.demandsList = (ArrayList<Demand>) this.demandService.getEmployeDemand(((Employe)req.getSession().getAttribute("currentUser")).getMail());
 		
+		// Build JSON
 		for(Demand d: demandsList) {
-			employeDemand.put("end", d.getEndDate());
-			employeDemand.put("start", d.getStartDate());
 			employeDemand.put("title", ((Employe)req.getSession().getAttribute("currentUser")).getMail() + " - " + d.getMotif());
+			employeDemand.put("start", d.getStartDate());
+			employeDemand.put("end", d.getEndDate());
 			employeDemandsList.add(employeDemand);
 		}
-		
-		System.out.println(employeDemandsList.toString());
-						
+							
 		req.setAttribute("currentPage", "calendar");
 		
 		try {
