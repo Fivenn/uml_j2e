@@ -17,10 +17,21 @@
 			<label><%=currentUser.getFirstName() + " " + currentUser.getSurname()%></label>
 		</div>
 		<div>
-			<label>Date de naissance</label>
+			<label><%=currentUser.getBirthDate()%></label>
 		</div>
 		<div>
-			<label>Poste</label>
+			<% if(currentUser.isRH() && currentUser.isLeader()){ %>
+				<label>Leader Responsable RH</label>
+			<% } else if (currentUser.isRH()) { %>
+				<label>Responsable RH</label>
+			<% } else if (currentUser.isLeader()) { %>
+				<label>Leader</label>
+			<% } else { %>
+				<label>Employé</label>
+			<% } %>
+		</div>
+		
+		<div>
 			<label>Equipe</label>
 		</div>
 		
@@ -35,20 +46,12 @@
 		</div>
 		
 		<div>
-			<label for="addr">Adresse</label>
-			<input type="text" id="addr" name="addr" required size="30">
-			<label for="addr2">Complément d'adresse</label>
-			<input type="text" id="addr2" name="addr2" required size="30">
+			<label><%=currentUser.getMail()%></label>
 		</div>
+		
 		<div>
-			<label for="cp">Code Postal</label>
-			<input type="text" id="cp" name="cp" required size="10">
-			<label for="city">Ville</label>
-			<input type="text" id="city" name="city" required size="20">
-		</div>
-		<div>
-			<label for="tel">Téléphone portable</label>
-			<input type="text" id="tel" name="tel" required size="30">
+			<label for="addr">Adresse postale</label>
+			<input type="text" id="addr" name="addr" required size="30" value="<%=currentUser.getAddress()%>">
 		</div>
 	</body>
 </html>
