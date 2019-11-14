@@ -8,7 +8,9 @@ page import="java.util.List,org.model.Employe, org.model.Demand,java.util.ArrayL
 <%
 	//Employe currentUser = (Employe)request.getSession().getAttribute("currentUser");
 ArrayList<Demand> demandsList = (ArrayList<Demand>) request.getAttribute("demandsList");
-System.out.println(request.getAttribute("demandsList"));
+for(Demand d: demandsList) {
+	System.out.println(d.getEmploye().getMail() + "-" + d.getMotif());
+}
 %>
 <div id='calendar'></div>
 
