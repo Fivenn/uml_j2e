@@ -28,19 +28,25 @@ private EmployeService employeService = new EmployeService();
 		//R�cup�ration des donn�es du formulaire de la page createUser.jsp
 		String prenom = req.getParameter("prenom");
 		String nom = req.getParameter("nom");
+		String naissance = req.getParameter("naissance");
 		String poste = req.getParameter("poste");
 		String equipe = req.getParameter("equipe");
 		String mail = req.getParameter("mail");
+		String chef = req.getParameter("chef");
 		String adresse = req.getParameter("adresse");
 		String tel = req.getParameter("tel");
 		boolean RH = false;
+		boolean TL = false;
 		
 		if(poste.contains("RH")||poste.contains("rh")||poste.contains("Rh")||poste.contains("rH")) {
 			RH = true;
-		}		
-		Employe emp = new Employe(mail, prenom,nom,adresse, 25, RH);
+		}
+		if(chef=="oui") {
+			TL = true;
+		}
+		Employe emp = new Employe(mail, prenom,nom,naissance,adresse, 25, RH,TL);
 		employeService.ajoutEmploye(emp);
-		System.out.println(RH);
+		System.out.println(RH+" "+TL);
 		
 		String pageName="/createUser.jsp";
 

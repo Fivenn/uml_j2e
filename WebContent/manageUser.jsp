@@ -30,8 +30,5 @@
         <%if(e.isRH()){ %>
         	<td>RH</td>
         <%} %>	
-        <%else if(!e.isRH) %>
-        	<td><%e.getTitle()%></td>
-        <%} %>
       </tr>
     <%}%>
