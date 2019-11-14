@@ -15,7 +15,6 @@ import org.databaseManage.TeamService;
 import org.model.Demand;
 import org.model.Employe;
 import org.model.Team;
-import org.model.TeamLeader;
 
 public class ManageDemandServlet extends HttpServlet {
 	private EmployeService employeService = new EmployeService();

@@ -1,7 +1,6 @@
 package org.databaseManage;
 import org.model.Employe;
 import org.model.Team;
-import org.model.TeamLeader;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
