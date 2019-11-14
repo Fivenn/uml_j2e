@@ -2,7 +2,7 @@
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd" id="WebApp_ID" version="4.0">
   <display-name>DaysOffManager</display-name>
   	<session-config> 
-		<session-timeout>30</session-timeout>
+		<session-timeout>300</session-timeout>
 	</session-config>
   	<servlet>
 		<display-name>HomeServlet</display-name>

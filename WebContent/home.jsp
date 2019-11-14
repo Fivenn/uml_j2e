@@ -33,7 +33,7 @@
             </a>
             <% if(currentMode != "RH"){ %>
             <a class="nav-item nav-link active" href="/DaysOffManager/Calendar">Mon calendrier</a>
-            <% if(currentUser.getTitle() == "Leader"){ %>
+            <% if(currentUser.isLeader()){ %>
             <a class="nav-item nav-link active" href="/DaysOffManager/Team">Mon équipe</a>
             <% } %>
             <a class="nav-item nav-link active" href="/DaysOffManager/MyProfil">Profil</a>

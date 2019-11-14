@@ -14,7 +14,7 @@
 
 <form class="form-co" action="ManageDemand" method="post">
 	<div class="form-row">
-		<div class="form-group col-md-6">
+		<div class="form-group col-md-3">
 		    <select class="" name="employe">
 		      <%
 		    	for (Employe e: employesList) {
@@ -25,7 +25,7 @@
 		    	%>
 		    </select>
   		</div>
-	  	<div class="form-group col-md-6">
+	  	<div class="form-group col-md-3">
 	      <select class="" name="team">
 	        <%
 	        for (Team t: teamsList) {
@@ -36,7 +36,7 @@
 	        %>
 	      </select>
 	  	</div>
-	    <div class="form-group col-md-6">
+	    <div class="form-group col-md-3">
 	      <select class="" name="statut">
 	        <%
 	        for (String s: statusList) {

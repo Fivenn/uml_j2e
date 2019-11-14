@@ -25,7 +25,7 @@ private EmployeService employeService = new EmployeService();
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		//Récupération des données du formulaire de la page createUser.jsp
+		//Rï¿½cupï¿½ration des donnï¿½es du formulaire de la page createUser.jsp
 		String prenom = req.getParameter("prenom");
 		String nom = req.getParameter("nom");
 		String poste = req.getParameter("poste");
