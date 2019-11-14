@@ -20,6 +20,16 @@ main{
 	background-color: #110133;
 }
 
+.td-status{
+	display: inline-block;
+}
+
+.button-square{
+	width: 1em;
+	height: 1em;
+}
+
+
 .btn-outline-success{
 	color: #5dd599 !important;
 	border-color: #5dd599;
@@ -62,11 +72,3 @@ main{
     }
 }
 
-.td-status{
-	
-}
-
-.button-square{
-	width: 1em;
-	height: 1em;
-}

@@ -1,12 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@page import="java.util.List,org.model.Employe"%>
-<%@page import="java.util.List,org.model.TeamLeader"%>
+<%@page import="java.util.ArrayList,org.model.Employe"%>
 
 <%
-	TeamLeader currentUser = (TeamLeader)request.getSession().getAttribute("currentUser");
+	//il faut faire une requete bdd
+	ArrayList<Employe> team = (ArrayList<Employe>)request.getAttribute("currentTeam");
 %>
-<% if(currentUser!=null){%>
+<% if(team!=null){%>
 
 <h1>
 	C'est la teaaam
@@ -18,7 +18,7 @@
 		<th>Prénom</th>
 	</tr>
 	<%
-	for (Employe e: currentUser.getTeam()) {
+	for (Employe e: team) {
 	%>
 		<tr>
 			<td><%=e.getSurname()%></td>
