@@ -84,11 +84,26 @@ public class EmployeDAOImpl {
 	
 	//Ajout d'un employe
 	public void addEmploye(Employe emp) {
-		//Ajout du password par défaut
+		//Ajout du password par d�faut
+		String query = "";
+		String fonction = emp.getTitle();
+		if(emp.isLeader() && !emp.isRH()) {
+			fonction = "TeamLeader";
+		}
+		else if(emp.isLeader() && emp.isRH()) {
+			fonction = "RespoRH";
+		}
+		else if(!emp.isLeader() && emp.isRH()) {
+			fonction = "EmployeRH";
+		}
 		String pwd = emp.getFirstName().toLowerCase().charAt(0) +""+ emp.getSurname().toLowerCase().charAt(0) ;
-		System.out.println("Le password par défaut est:"+pwd);
-		
-		String query = "INSERT INTO employe (mail, firstName, surname, address, nbDays, fonction, pwd) VALUES ("+"'"+emp.getMail()+"'"+","+"'"+ emp.getFirstName()+"'"+","+"'"+emp.getSurname()+"'"+","+"'"+emp.getAddress()+"'"+","+"'"+emp.getNbDays()+"'"+","+"'"+emp.getTitle()+"'"+","+"'"+pwd+"'"+");";
+		System.out.println("Le password par d�faut est:"+pwd);
+		if(emp.getNbTeam()== 0) {
+			query = "INSERT INTO employe (mail, firstName, surname, birthDate, address, nbDays, fonction, pwd) VALUES ("+"'"+emp.getMail()+"'"+","+"'"+ emp.getFirstName()+"'"+","+"'"+emp.getSurname()+"'"+","+"'"+emp.getBirthDate()+"'"+","+"'"+emp.getAddress()+"'"+","+"'"+emp.getNbDays()+"'"+","+"'"+fonction+"'"+","+"'"+pwd+"'"+");";
+		}
+		else {
+			query = "INSERT INTO employe (mail, firstName, surname, birthDate, address, nbDays, fonction, pwd,team) VALUES ("+"'"+emp.getMail()+"'"+","+"'"+ emp.getFirstName()+"'"+","+"'"+emp.getSurname()+"'"+","+"'"+emp.getBirthDate()+"'"+","+"'"+emp.getAddress()+"'"+","+"'"+emp.getNbDays()+"'"+","+"'"+fonction+"'"+","+"'"+pwd+"'"+","+"'"+emp.getNbTeam()+"'"+");";
+		}
 		Connection conn = null;
 		Statement stat = null;
 		ResultSet rs = null;
