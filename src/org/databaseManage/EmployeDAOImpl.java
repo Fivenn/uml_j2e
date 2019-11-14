@@ -28,16 +28,16 @@ public class EmployeDAOImpl {
 				while (rs.next()) {
 					switch (rs.getString("fonction")) {
 						case "EmployeRH":
-							listEmployes.add(new Employe(rs.getString("mail"),rs.getString("firstName"),rs.getString("surname"),rs.getString("birthDate"),rs.getString("address"),rs.getInt("nbDays"),true,false,rs.getInt("nbTeam")));												
+							listEmployes.add(new Employe(rs.getString("mail"),rs.getString("firstName"),rs.getString("surname"),rs.getString("birthDate"),rs.getString("address"),rs.getInt("nbDays"),true,false,rs.getInt("team")));												
 							break;
 						case "RespoRH":
-							listEmployes.add(new Employe(rs.getString("mail"),rs.getString("firstName"),rs.getString("surname"),rs.getString("birthDate"),rs.getString("address"),rs.getInt("nbDays"),true,true,rs.getInt("nbTeam")));																			
+							listEmployes.add(new Employe(rs.getString("mail"),rs.getString("firstName"),rs.getString("surname"),rs.getString("birthDate"),rs.getString("address"),rs.getInt("nbDays"),true,true,rs.getInt("team")));																			
 							break;
 						case "TeamLeader":
-							listEmployes.add(new Employe(rs.getString("mail"),rs.getString("firstName"),rs.getString("surname"),rs.getString("birthDate"),rs.getString("address"),rs.getInt("nbDays"),false,true,rs.getInt("nbTeam")));						
+							listEmployes.add(new Employe(rs.getString("mail"),rs.getString("firstName"),rs.getString("surname"),rs.getString("birthDate"),rs.getString("address"),rs.getInt("nbDays"),false,true,rs.getInt("team")));						
 							break;
 						default:
-							listEmployes.add(new Employe(rs.getString("mail"),rs.getString("firstName"),rs.getString("surname"),rs.getString("birthDate"),rs.getString("address"),rs.getInt("nbDays"),false,false,rs.getInt("nbTeam")));
+							listEmployes.add(new Employe(rs.getString("mail"),rs.getString("firstName"),rs.getString("surname"),rs.getString("birthDate"),rs.getString("address"),rs.getInt("nbDays"),false,false,rs.getInt("team")));
 							break;
 					}
 				}
