@@ -31,4 +31,8 @@ public class DemandService {
 	public ArrayList<String> getStatus(){
 		return (ArrayList<String>) demandDao.findAllStatus();
 	}
+	
+	public boolean changeDemandStatus(String string,String status) {
+		return this.demandDao.setDemandStatus(string,status);
+	}
 }

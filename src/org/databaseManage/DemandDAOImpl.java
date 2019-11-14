@@ -55,6 +55,33 @@ public class DemandDAOImpl {
 		return listDemandes;
 	}
 
+	public boolean setDemandStatus(String string, String status) {
+		return updateDemand("update demand set status='"+status+"' where id='"+string+"';");
+	}
+	
+	private boolean updateDemand(String query) {
+		Connection conn = null;
+		ResultSet rs = null;
+		Statement stat = null;
+		int a = 0;
+		
+		try {
+			conn = DBManager.getInstance().getConnection();
+			if (conn != null) {
+				stat = conn.createStatement();
+				a = stat.executeUpdate(query);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			if (conn != null) {
+				DBManager.getInstance().cleanup(conn, stat,rs);
+			}
+		}
+		return a != 0;
+	}
+	
 	public List<Demand> findAll() {
 		// avoid select * queries because of performance issues,
 		// only query the columns you need
