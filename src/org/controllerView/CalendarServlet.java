@@ -11,11 +11,13 @@ import javax.servlet.http.HttpServletResponse;
 import org.databaseManage.DemandService;
 import org.databaseManage.EmployeService;
 import org.model.Demand;
+import org.model.Employe;
 
 
 public class CalendarServlet extends HttpServlet{
 	
 	private DemandService demandService = new DemandService();
+	private EmployeService employeService = new EmployeService();
 	
 	private ArrayList<Demand> demandsList;
 	
@@ -35,8 +37,7 @@ public class CalendarServlet extends HttpServlet{
 	}
 	
 	protected void doProcess(HttpServletRequest req, HttpServletResponse resp) {
-		this.initDemand();
-		
+		this.demandsList = (ArrayList<Demand>) this.demandService.getEmployeDemand(((Employe)req.getSession().getAttribute("currentUser")).getMail());
 		req.setAttribute("demandsList", this.demandsList);
 		req.setAttribute("currentPage", "calendar");
 		
@@ -47,9 +48,5 @@ public class CalendarServlet extends HttpServlet{
 		} catch (ServletException e) {
 			e.printStackTrace();
 		}
-	}
-	
-	private void initDemand() {
-		this.demandsList = (ArrayList<Demand>) this.demandService.getAllDemands();
 	}
 }
