@@ -5,7 +5,7 @@
 	Création d'un employé
 </h1>
 
-<form class="form-co"  method="post">
+<form class="form-co" method="post">
 	 <form>
         <fieldset>
             <legend>Identité</legend>            
@@ -25,3 +25,5 @@
         </fieldset>
          <button type="submit" class="btn btn-primary text-center">Envoyer</button>
 </form>
+<a href="ManageUser">Retour</a>
+

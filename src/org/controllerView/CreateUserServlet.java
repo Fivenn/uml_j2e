@@ -28,7 +28,6 @@ private EmployeService employeService = new EmployeService();
 		//Récupération des données du formulaire de la page createUser.jsp
 		String prenom = req.getParameter("prenom");
 		String nom = req.getParameter("nom");
-		String dateNaissance = req.getParameter("dateDeNaissance");
 		String poste = req.getParameter("poste");
 		String equipe = req.getParameter("equipe");
 		String mail = req.getParameter("mail");
@@ -41,9 +40,9 @@ private EmployeService employeService = new EmployeService();
 		}		
 		Employe emp = new Employe(mail, prenom,nom,adresse, 25, RH);
 		employeService.ajoutEmploye(emp);
+		System.out.println(RH);
 		
-		
-		String pageName="/ManageUser.jsp";
+		String pageName="/createUser.jsp";
 
 		RequestDispatcher rd = getServletContext().getRequestDispatcher(pageName);
 
