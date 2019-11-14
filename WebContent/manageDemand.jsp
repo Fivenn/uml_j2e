@@ -11,9 +11,9 @@
 <%
 	if(teamsList != null){
 %>
-	<h1>
-		C'est la gestion des demandes
-	</h1>
+	<h3>
+		Gestion des demandes
+	</h3>
 	
 	<form class="form-co" action="ManageDemand" method="post">
 		<div class="form-row">

@@ -21,7 +21,9 @@ main{
 }
 
 .td-status{
-	display: inline-block;
+	background-color: red !important;
+	display: flex !important;
+	justify-content: space-around !important;
 }
 
 .button-square{
