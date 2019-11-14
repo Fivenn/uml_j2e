@@ -16,7 +16,7 @@
         <fieldset>
             <legend>Métier</legend>            
             <label>Poste: <input type="text" name="poste"></label>            
-            <label>Equipe: <input type="text" name="equipe"></label>
+            <label>Equipe: <input type="number" name="equipe"></label>
             <label>Chef d'equipe</label>
             <select name="chef">
             	<option value="oui">oui</option>

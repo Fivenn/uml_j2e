@@ -3,6 +3,7 @@ package org.controllerView;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
+import java.util.function.ToIntFunction;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -26,6 +27,7 @@ private EmployeService employeService = new EmployeService();
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		//R�cup�ration des donn�es du formulaire de la page createUser.jsp
+		int numeroEquipe;
 		String prenom = req.getParameter("prenom");
 		String nom = req.getParameter("nom");
 		String naissance = req.getParameter("naissance");
@@ -41,10 +43,17 @@ private EmployeService employeService = new EmployeService();
 		if(poste.contains("RH")||poste.contains("rh")||poste.contains("Rh")||poste.contains("rH")) {
 			RH = true;
 		}
-		if(chef=="oui") {
+		if(chef.contains("oui")) {
 			TL = true;
 		}
-		Employe emp = new Employe(mail, prenom,nom,naissance,adresse, 25, RH,TL);
+		if(equipe == "") {
+			numeroEquipe = 0;
+			
+		}
+		else {
+			numeroEquipe = Integer.parseInt(equipe);
+		}
+		Employe emp = new Employe(mail, prenom,nom,naissance,adresse, 25, RH,TL,numeroEquipe);
 		employeService.ajoutEmploye(emp);
 		System.out.println(RH+" "+TL);
 		

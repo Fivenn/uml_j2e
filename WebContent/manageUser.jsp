@@ -10,25 +10,3 @@
 </h1>
 
 <a href="CreateUser">Créer un nouvel employé</a>
-
-
-
-<table class="table table-bordered table-striped">
-  <thead>
-    <tr>
-      <th scope="col">Nom</th>
-      <th scope="col">Prenom</th>
-      <th scope="col">Mail</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% for(Employe e : employesList){ %>
-      <tr>
-        <td><%=e.getSurname()%></td>
-        <td><%=e.getFirstName()%></td>
-        <td><%=e.getMail()%></td>
-        <%if(e.isRH()){ %>
-        	<td>RH</td>
-        <%} %>	
-      </tr>
-    <%}%>
