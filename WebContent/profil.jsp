@@ -1,5 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+ <%@page import="java.util.ArrayList,org.model.Employe,org.model.Team,org.model.Demand"%>
+
+<%
+	Employe currentUser = (Employe)request.getSession().getAttribute("currentUser");
+%>
 
 <html>
 	<head>
@@ -9,8 +14,7 @@
 	<body>
 		<h1>Mon Profil</h1>
 		<div>
-			<label>Nom</label>
-			<label>Prénom</label>
+			<label><%=currentUser.getFirstName() + " " + currentUser.getSurname()%></label>
 		</div>
 		<div>
 			<label>Date de naissance</label>

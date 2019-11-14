@@ -4,20 +4,48 @@ public class Employe {
 	private String mail;
 	private String firstName;
 	private String surname;
+	private String birthDate;
 	private String address;
 	private boolean RH;
+	private boolean leader;
 	private int nbDays;
 	
 	
-	public Employe(String mail, String firstName,String surname,String address, int nbDays, boolean RH) {
+	
+	public Employe(String mail, String firstName,String surname,String birthDate, String address, int nbDays, boolean RH, boolean leader) {
 		this.setMail(mail);
 		this.setFirstName(firstName);
 		this.setSurname(surname);
+		this.setBirthDate(birthDate);
 		this.setAddress(address);
 		this.setNbDays(nbDays);
 		this.setRH(RH);
+		this.setLeader(leader);
 	}
 	
+	
+	public String getBirthDate() {
+		return birthDate;
+	}
+
+
+
+	public void setBirthDate(String birthDate) {
+		this.birthDate = birthDate;
+	}
+
+
+
+	public boolean isLeader() {
+		return leader;
+	}
+
+
+	public void setLeader(boolean leader) {
+		this.leader = leader;
+	}
+
+
 	public String getTitle() {
 		return "Employe";
 	}

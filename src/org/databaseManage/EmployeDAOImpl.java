@@ -1,6 +1,5 @@
 package org.databaseManage;
 import org.model.Employe;
-import org.model.TeamLeader;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -29,16 +28,16 @@ public class EmployeDAOImpl {
 				while (rs.next()) {
 					switch (rs.getString("fonction")) {
 						case "EmployeRH":
-							listEmployes.add(new Employe(rs.getString("mail"),rs.getString("firstName"),rs.getString("surname"),rs.getString("address"),rs.getInt("nbDays"),true));												
+							listEmployes.add(new Employe(rs.getString("mail"),rs.getString("firstName"),rs.getString("surname"),rs.getString("birthDate"),rs.getString("address"),rs.getInt("nbDays"),true,false));												
 							break;
 						case "RespoRH":
-							listEmployes.add(new TeamLeader(rs.getString("mail"),rs.getString("firstName"),rs.getString("surname"),rs.getString("address"),rs.getInt("nbDays"),true));																			
+							listEmployes.add(new Employe(rs.getString("mail"),rs.getString("firstName"),rs.getString("surname"),rs.getString("birthDate"),rs.getString("address"),rs.getInt("nbDays"),true,true));																			
 							break;
 						case "TeamLeader":
-							listEmployes.add(new TeamLeader(rs.getString("mail"),rs.getString("firstName"),rs.getString("surname"),rs.getString("address"),rs.getInt("nbDays"),false));						
+							listEmployes.add(new Employe(rs.getString("mail"),rs.getString("firstName"),rs.getString("surname"),rs.getString("birthDate"),rs.getString("address"),rs.getInt("nbDays"),false,true));						
 							break;
 						default:
-							listEmployes.add(new Employe(rs.getString("mail"),rs.getString("firstName"),rs.getString("surname"),rs.getString("address"),rs.getInt("nbDays"),false));
+							listEmployes.add(new Employe(rs.getString("mail"),rs.getString("firstName"),rs.getString("surname"),rs.getString("birthDate"),rs.getString("address"),rs.getInt("nbDays"),false,false));
 							break;
 					}
 				}
@@ -85,9 +84,9 @@ public class EmployeDAOImpl {
 	
 	//Ajout d'un employe
 	public void addEmploye(Employe emp) {
-		//Ajout du password par défaut
+		//Ajout du password par dï¿½faut
 		String pwd = emp.getFirstName().toLowerCase().charAt(0) +""+ emp.getSurname().toLowerCase().charAt(0) ;
-		System.out.println("Le password par défaut est:"+pwd);
+		System.out.println("Le password par dï¿½faut est:"+pwd);
 		
 		String query = "INSERT INTO employe (mail, firstName, surname, address, nbDays, fonction, pwd) VALUES ("+"'"+emp.getMail()+"'"+","+"'"+ emp.getFirstName()+"'"+","+"'"+emp.getSurname()+"'"+","+"'"+emp.getAddress()+"'"+","+"'"+emp.getNbDays()+"'"+","+"'"+emp.getTitle()+"'"+","+"'"+pwd+"'"+");";
 		Connection conn = null;
