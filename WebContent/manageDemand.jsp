@@ -79,10 +79,10 @@
         <td>
           <% if(d.getStatus().equals("pending")){ %>
             <form class="button-square approved" action="ManageDemand" method="post">
-              <button type="submit" name="approved" value="<%=d.getId()%>"><i class="fa fa-check" aria-hidden="true"></i></button>
+              <button type="submit" name="approved" value="<%=d.getId()%>"><i class="fas fa-check" aria-hidden="true"></i></button>
             </form>
             <form class="button-square refused" action="ManageDemand" method="post">
-              <button type="submit" name="refused" value="<%=d.getId()%>"><i class="fa fa-times" aria-hidden="true"></i></button>
+              <button type="submit" name="refused" value="<%=d.getId()%>"><i class="fas fa-times" aria-hidden="true"></i></button>
             </form>
           <%}else{%>
             <%=d.getStatus()%>
