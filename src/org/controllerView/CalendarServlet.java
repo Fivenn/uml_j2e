@@ -1,14 +1,23 @@
 package org.controllerView;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.databaseManage.DemandService;
+import org.databaseManage.EmployeService;
+import org.model.Demand;
+
 
 public class CalendarServlet extends HttpServlet{
+	
+	private DemandService demandService = new DemandService();
+	
+	private ArrayList<Demand> demandsList;
 	
 	
 	@Override
@@ -26,7 +35,11 @@ public class CalendarServlet extends HttpServlet{
 	}
 	
 	protected void doProcess(HttpServletRequest req, HttpServletResponse resp) {
+		this.initDemand();
+		
+		req.setAttribute("demandsList", this.demandsList);
 		req.setAttribute("currentPage", "calendar");
+		
 		try {
             this.getServletContext().getRequestDispatcher("/Home").forward(req, resp);
 		} catch (IOException e) {
@@ -36,5 +49,7 @@ public class CalendarServlet extends HttpServlet{
 		}
 	}
 	
-	
+	private void initDemand() {
+		this.demandsList = (ArrayList<Demand>) this.demandService.getAllDemands();
+	}
 }
