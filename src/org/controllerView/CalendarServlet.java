@@ -12,6 +12,8 @@ import org.databaseManage.DemandService;
 import org.databaseManage.EmployeService;
 import org.model.Demand;
 import org.model.Employe;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 
 public class CalendarServlet extends HttpServlet{
@@ -21,7 +23,9 @@ public class CalendarServlet extends HttpServlet{
 	
 	private ArrayList<Demand> demandsList;
 	
-	
+	private JSONObject employeDemand = new JSONObject();
+	private JSONArray employeDemandsList = new JSONArray();
+		
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		this.doProcess(req, resp);
@@ -38,7 +42,16 @@ public class CalendarServlet extends HttpServlet{
 	
 	protected void doProcess(HttpServletRequest req, HttpServletResponse resp) {
 		this.demandsList = (ArrayList<Demand>) this.demandService.getEmployeDemand(((Employe)req.getSession().getAttribute("currentUser")).getMail());
-		req.setAttribute("demandsList", this.demandsList);
+		
+		for(Demand d: demandsList) {
+			employeDemand.put("end", d.getEndDate());
+			employeDemand.put("start", d.getStartDate());
+			employeDemand.put("title", ((Employe)req.getSession().getAttribute("currentUser")).getMail() + " - " + d.getMotif());
+			employeDemandsList.add(employeDemand);
+		}
+		
+		System.out.println(employeDemandsList.toString());
+						
 		req.setAttribute("currentPage", "calendar");
 		
 		try {
