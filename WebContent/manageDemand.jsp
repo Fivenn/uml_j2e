@@ -15,10 +15,19 @@
 <%
 	if(teamsList != null){
 %>
-	<h3>
-		Gestion des demandes
-	</h3>
-	
+	<div style="display: flex;border-bottom: 1px solid #110133;margin-bottom: 2em;justify-content: space-between;">
+		<h3>
+			Gestion des demandes
+		</h3>	
+		<nav>
+			<form class="form-inline" action="ManageDemand" method="post">
+               <button class="nav-button" type="submit">Liste des demandes</button>
+               <button class="nav-button" name="statsDemand" type="submit">Statistiques</button>            
+            </form>	
+		</nav>
+	</div>
+
+
 	
 	<form class="form-co" action="ManageDemand" method="post">
 		<div class="form-row form-group">

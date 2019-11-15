@@ -39,13 +39,14 @@ public class ManageDemandServlet extends HttpServlet {
 	}
 	
 	protected void doGetOrPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		System.out.println(req.getSession().getAttribute("currentUser"));
+
 		if(req.getSession().getAttribute("currentUser")!=null && ((Employe)req.getSession().getAttribute("currentUser")).isRH()) {
 			if(req.getParameter("approved")!= null) {
 				this.demandService.changeDemandStatus(req.getParameter("approved"), "approved");
 			}else if(req.getParameter("refused")!= null) {
 				this.demandService.changeDemandStatus(req.getParameter("refused"), "refused");
 			}
+			
 			this.doProcess(req, resp);
 		}else {
 			this.getServletContext().getRequestDispatcher("/Home").forward(req, resp);
