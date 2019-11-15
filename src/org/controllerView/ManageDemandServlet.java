@@ -46,7 +46,9 @@ public class ManageDemandServlet extends HttpServlet {
 			}else if(req.getParameter("refused")!= null) {
 				this.demandService.changeDemandStatus(req.getParameter("refused"), "refused");
 			}
-			
+			if(req.getParameter("statsDemand")!= null) {
+				req.setAttribute("stats", true);
+			}
 			this.doProcess(req, resp);
 		}else {
 			this.getServletContext().getRequestDispatcher("/Home").forward(req, resp);
