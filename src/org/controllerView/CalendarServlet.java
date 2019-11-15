@@ -50,6 +50,8 @@ public class CalendarServlet extends HttpServlet{
 			employeDemand.put("end", d.getEndDate());
 			employeDemandsList.add(employeDemand);
 		}
+		
+		System.out.println(employeDemandsList);
 							
 		req.setAttribute("currentPage", "calendar");
 		
