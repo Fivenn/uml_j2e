@@ -22,6 +22,7 @@ public class CalendarServlet extends HttpServlet{
 	private EmployeService employeService = new EmployeService();
 	
 	private ArrayList<Demand> demandsList;
+	private ArrayList<String> reasonsList = (ArrayList<String>) demandService.getAllReasons();
 	
 	private JSONObject employeDemand = new JSONObject();
 	private JSONArray employeDemandsList = new JSONArray();
@@ -36,6 +37,8 @@ public class CalendarServlet extends HttpServlet{
 		System.out.println("Mode : "  + req.getParameter("goToRHMode"));
 		if(req.getParameter("goToRHMode")!= null) {
 			req.setAttribute("currentMode", "employe");
+		}else if(req.getParameter("askDaysOff")!= null) {
+			this.demandService.insertIntoDemand(((Employe)req.getSession().getAttribute("currentUser")).getMail(), req.getParameter("fromDate"), req.getParameter("toDate"), req.getParameter("reason"), req.getParameter("nbDays"));
 		}
 		this.doProcess(req, resp);
 	}
@@ -52,7 +55,9 @@ public class CalendarServlet extends HttpServlet{
 		}
 		
 		System.out.println(employeDemandsList);
-							
+		
+		req.setAttribute("reasonsList", this.reasonsList);
+		
 		req.setAttribute("currentPage", "calendar");
 		
 		try {

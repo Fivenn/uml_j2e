@@ -82,6 +82,10 @@ public class DemandDAOImpl {
 		return a != 0;
 	}
 	
+	public boolean insertIntoDemand(String mail, String fromDate, String toDate, String reason, String string) {
+		return updateDemand("Insert into demand(employe, beginDate, endDate, reason, duration) values ('"+mail+"',"+fromDate+"',"+toDate+"',"+reason+"',"+String.valueOf(string)+");");
+	}
+	
 	public List<Demand> findAll() {
 		// avoid select * queries because of performance issues,
 		// only query the columns you need

@@ -17,7 +17,19 @@ CREATE TRIGGER decrementeNbDays BEFORE UPDATE ON demand
        END$$
 
        
+DROP TRIGGER insertDemand;
+
+
+DELIMITER $$
+CREATE TRIGGER insertDemand BEFORE INSERT ON demand
+       FOR EACH ROW 
+       	SET NEW.demandDate = SELECT convert(varchar(25), now(), 120) ;
+
+       END$$
+DELIMITER ;       
        
+SET
+       	NEW.status = 'pending' AND
        
 
 
