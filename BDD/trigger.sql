@@ -24,7 +24,6 @@ DELIMITER $$
 CREATE TRIGGER insertDemand BEFORE INSERT ON demand
        FOR EACH ROW 
        	SET NEW.status = 'pending';
-       END$$
 DELIMITER ;       
        	
        
