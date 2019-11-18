@@ -3,6 +3,7 @@ package org.controllerView;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -27,6 +28,17 @@ public class ManageDemandServlet extends HttpServlet {
 	private ArrayList<Demand> demandsList;
 	
 	
+	//ArrayList des stats :
+	//1 : liste de nb de congés par équipe Tab([String, int])
+	private ArrayList<List<String>> daysOffPerTeam = new ArrayList<List<String>>();
+	//2 : liste de nb congés par motif Tab([String, int])
+	private ArrayList<List<String>> daysOffPerReason = new ArrayList<List<String>>();
+	//3 : liste de nb congés par mois Tab([String, int])
+	private ArrayList<List<String>> daysOffPerMonth = new ArrayList<List<String>>();
+	//4 : list nb congés par poste Tab([String, int])
+	private ArrayList<List<String>> daysOffPerJob = new ArrayList<List<String>>();
+	
+	
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -48,6 +60,12 @@ public class ManageDemandServlet extends HttpServlet {
 			}
 			if(req.getParameter("statsDemand")!= null) {
 				req.setAttribute("stats", true);
+				this.initStats();
+				req.setAttribute("daysOffPerTeam", this.daysOffPerTeam);
+				req.setAttribute("daysOffPerJob", this.daysOffPerJob);
+				req.setAttribute("daysOffPerMonth", this.daysOffPerMonth);
+				req.setAttribute("daysOffPerReason", this.daysOffPerReason);
+				
 			}
 			this.doProcess(req, resp);
 		}else {
@@ -101,6 +119,14 @@ public class ManageDemandServlet extends HttpServlet {
 		this.employesList = (ArrayList<Employe>) this.employeService.getAllEmployes();
 		
 		this.statusList = this.demandService.getStatus();
+	}
+	
+	private void initStats() {
+		
+//		this.daysOffPerJob = ;
+//		this.daysOffPerMonth = ;
+//		this.daysOffPerReason = ;
+//		this.daysOffPerTeam = ;
 	}
 	
 	private void reloadDemands(boolean isRespoRH, String status, String mail, String team) {
