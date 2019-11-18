@@ -3,10 +3,10 @@
  <%@page import="java.util.ArrayList,org.model.Employe,org.model.Team,org.model.Demand"%>
 
 <%
-	ArrayList<String> daysOffPerTeam = (ArrayList<String>)request.getSession().getAttribute("daysOffPerTeam");
-	ArrayList<String> daysOffPerReason = (ArrayList<String>)request.getSession().getAttribute("daysOffPerReason");
-	ArrayList<String> daysOffPerMonth = (ArrayList<String>)request.getSession().getAttribute("daysOffPerMonth");
-	ArrayList<String> daysOffPerJob = (ArrayList<String>)request.getSession().getAttribute("daysOffPerJob");
+	ArrayList<String> daysOffPerTeam = (ArrayList<String>)request.getAttribute("daysOffPerTeam");
+	ArrayList<String> daysOffPerReason = (ArrayList<String>)request.getAttribute("daysOffPerReason");
+	ArrayList<String> daysOffPerMonth = (ArrayList<String>)request.getAttribute("daysOffPerMonth");
+	ArrayList<String> daysOffPerJob = (ArrayList<String>)request.getAttribute("daysOffPerJob");
 	Employe currentUser = (Employe)request.getSession().getAttribute("currentUser");
 %>
 
@@ -22,16 +22,10 @@
 	    <script type="text/javascript">
 	      google.charts.load("current", {packages:["corechart"]});
 	      google.charts.setOnLoadCallback(drawChart);
+	      var dataDaysOffPerMonth = [['Month','NbDays']];
+	      
 	      function drawChart() {
-	        var data = google.visualization.arrayToDataTable([
-	          ['Task', 'Hours per Day'],
-	          ['Work',     11],
-	          ['Eat',      2],
-	          ['Commute',  2],
-	          ['Watch TV', 2],
-	          ['Sleep',    7]
-	        ]);
-	
+	        var data = google.visualization.arrayToDataTable(getDataPerMonth(dataDaysOffPerMonth));
 	        var options = {
 	          title: 'Nombre de congés par mois ()',
 	          is3D: true,
@@ -39,6 +33,53 @@
 	
 	        var chart = new google.visualization.PieChart(document.getElementById('piechart_3d'));
 	        chart.draw(data, options);
+	      }
+	      
+	      function getDataPerMonth(dataPerMonth){
+		      for(let i of <%=daysOffPerMonth%>){
+		    	 dataDaysOffPerMonth.push([getMonth(i[0]), i[1]]);
+		      }
+		      return dataPerMonth;
+	      }
+	      
+	      function getDataPerJob(dataPerJob){
+		      for(let i of <%=daysOffPerJob%>){
+		    	 dataDaysOffPerJob.push([i[0].toString(), i[1]]);
+		      }
+		      return dataPerJob;
+	      }
+	      
+	      function getDataPerReason(dataPerReason){
+		      for(let i of <%=daysOffPerReason%>){
+		    	 dataDaysOffPerReason.push([i[0].toString(), i[1]]);
+		      }
+		      return dataPerReason;
+	      }
+	      
+	      function getDataPerTeam(dataPerTeam){
+		      for(let i of <%=daysOffPerTeam%>){
+		    	 dataDaysOffPerTeam.push([i[0].toString(), i[1]]);
+		      }
+		      return dataPerTeam;
+	      }
+	      
+	      function getMonth(numMois){
+	    	  let b = "";
+	    	  switch(numMois){
+	            case 1: b = "Janvier";break;
+	            case 2: b = "Fevrier";break;
+	            case 3: b = "Mars";break;
+	            case 4: b = "Avril";break;
+	            case 5: b = "Mai";break;
+	            case 6: b = "Juin"; break;
+	            case 7: b = "Juillet";break;
+	            case 8: b = "Aout";break;
+	            case 9: b = "Septembre";break;
+	            case 10: b = "Octobre";break;
+	            case 11: b = "Novembre";break;
+	            case 12: b = "Decembre";break;
+	          }
+	    	  return b;
 	      }
 	    </script>
 	</head>
