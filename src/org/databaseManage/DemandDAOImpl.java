@@ -80,6 +80,35 @@ public class DemandDAOImpl {
 		return a != 0;
 	}
 	
+	public ArrayList<List<String>> findNbDemandPerX(String query,String what,String perWhat){
+		Connection conn = null;
+		Statement stat = null;
+		ResultSet rs = null;
+		ArrayList<List<String>> daysOffPerMonth = new ArrayList<List<String>>();
+		
+		try {
+			conn = DBManager.getInstance().getConnection();
+			if (conn != null) {
+				stat = conn.createStatement();
+				rs = stat.executeQuery(query);
+				while (rs.next()) {
+					List<String> list = new ArrayList<String>();
+					list.add(rs.getString(perWhat));
+					list.add(rs.getString(what));
+					daysOffPerMonth.add(list);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (conn != null) {
+				DBManager.getInstance().cleanup(conn, stat, rs);
+			}
+		}
+
+		return daysOffPerMonth;
+	}
+	
 	public boolean insertIntoDemand(String mail, String fromDate, String toDate, String reason, String duration) {
 		return updateDemand("Insert into demand(employe, beginDate, endDate, reason, duration) values ('"+mail+"','"+fromDate+"','"+toDate+"','"+reason+"','"+duration+"');");
 	}
@@ -124,5 +153,22 @@ public class DemandDAOImpl {
 		}
 		System.out.println(requete);
 		return this.findBy(requete + "order by status;");
+	}
+	
+	
+	public ArrayList<List<String>> getDaysOffPerTeam(){
+		return this.findNbDemandPerX("SELECT team, SUM('duration') AS nbDays FROM demand NATURAL JOIN employe GROUP BY team;","nbDays","team");
+	}
+	//to do
+	public ArrayList<List<String>> getDaysOffPerMonth(){
+		return this.findNbDemandPerX("SELECT MONTH(beginDate) AS month, SUM('duration') AS nbDays  FROM demand GROUP BY MONTH(beginDate);","nbDays","month");
+	}
+	
+	public ArrayList<List<String>> getDaysOffPerReason(){
+		return this.findNbDemandPerX("SELECT reason, SUM('duration') AS nbDays  FROM demand GROUP BY reason;","nbDays","reason");
+	}
+	
+	public ArrayList<List<String>> getDaysOffPerJob(){
+		return this.findNbDemandPerX("SELECT fonction, SUM('duration') AS nbDays FROM demand NATURAL JOIN employe GROUP BY fonction;","nbDays","fonction");
 	}
 }

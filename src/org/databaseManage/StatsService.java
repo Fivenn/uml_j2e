@@ -10,17 +10,21 @@ public class StatsService {
 	// choose the DAO data source : DB or Mock
 	private DemandDAOImpl demandDao = new DemandDAOImpl();
 	private ReasonDAOImpl reasonDao = new ReasonDAOImpl();
+	private TeamDAOImpl teamDao = new TeamDAOImpl();
+	private EmployeDAOImpl employeDao = new EmployeDAOImpl();
 	
-	public List<Demand> getAllDemands() {
-		List<Demand> listDemands = demandDao.findAll();
-		return listDemands;
+	public ArrayList<List<String>> getDaysOffPerMonth() {
+		return this.demandDao.getDaysOffPerMonth();
 	}
 	
-//	public List<String> getAllReasons(){
-//		return this.reasonDao.findAllReasons();
-//	}
-//	
-//	public List<String> getAllReasons(){
-//		return this.reasonDao.findAllReasons();
-//	}
+	public ArrayList<List<String>>  getDaysOffPerTeam(){
+		return this.demandDao.getDaysOffPerTeam();
+	}
+	
+	public ArrayList<List<String>>  getDaysOffPerReasons(){
+		return this.demandDao.getDaysOffPerReason();	}
+	
+	public ArrayList<List<String>> getDaysOffPerJob(){
+		return this.demandDao.getDaysOffPerJob();	
+	}
 }

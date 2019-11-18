@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.databaseManage.DemandService;
 import org.databaseManage.EmployeService;
+import org.databaseManage.StatsService;
 import org.databaseManage.TeamService;
 import org.model.Demand;
 import org.model.Employe;
@@ -21,6 +22,7 @@ public class ManageDemandServlet extends HttpServlet {
 	private EmployeService employeService = new EmployeService();
 	private TeamService teamService = new TeamService();
 	private DemandService demandService = new DemandService();
+	private StatsService statService = new StatsService();
 	
 	private ArrayList<Employe> employesList;
 	private ArrayList<Team> teamsList;
@@ -60,7 +62,9 @@ public class ManageDemandServlet extends HttpServlet {
 			}
 			if(req.getParameter("statsDemand")!= null) {
 				req.setAttribute("stats", true);
+				
 				this.initStats();
+				
 				req.setAttribute("daysOffPerTeam", this.daysOffPerTeam);
 				req.setAttribute("daysOffPerJob", this.daysOffPerJob);
 				req.setAttribute("daysOffPerMonth", this.daysOffPerMonth);
@@ -122,11 +126,10 @@ public class ManageDemandServlet extends HttpServlet {
 	}
 	
 	private void initStats() {
-		
-//		this.daysOffPerJob = ;
-//		this.daysOffPerMonth = ;
-//		this.daysOffPerReason = ;
-//		this.daysOffPerTeam = ;
+		this.daysOffPerJob = this.statService.getDaysOffPerJob();
+		this.daysOffPerMonth = this.statService.getDaysOffPerMonth();
+		this.daysOffPerReason = this.statService.getDaysOffPerReasons();
+		this.daysOffPerTeam = this.statService.getDaysOffPerTeam();
 	}
 	
 	private void reloadDemands(boolean isRespoRH, String status, String mail, String team) {

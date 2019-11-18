@@ -28,7 +28,8 @@ page import="java.util.List,org.model.Employe, org.model.Demand,java.util.ArrayL
 				<input class="form-control" id="toDate" name="toDate" type="date"></input>
 	  		</div>
 	  		<div class="col-md-2">
-		      <select class="form-control" name="reason">
+	  			<label for="reason"> Motif : </label>
+		      <select class="form-control" name="reason" id="reason">
 		        <% for (String s: reasonsList) { %>
 		          <option value="<%=s%>"><%=s%></option>
 		        <%}%>
