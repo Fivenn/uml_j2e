@@ -49,28 +49,16 @@ public class ConnectionServlet extends HttpServlet{
 	
 	//TO GO HOME
 	private void goHome(HttpServletRequest request, HttpServletResponse response, Employe user) {
-		String pageName="/Home";
+		String pageName="/DaysOffManager/Calendar";
 		
         HttpSession session = request.getSession();
 
 		session.setAttribute("currentUser", user);
 
-		
-		
-		RequestDispatcher rd = getServletContext().getRequestDispatcher(pageName);
-
 		try {
-
-			rd.forward(request, response);
-
-		} catch (ServletException e) {
-
-			e.printStackTrace();
-
+			response.sendRedirect(pageName);
 		} catch (IOException e) {
-
 			e.printStackTrace();
-
 		}
 	}
 	

@@ -65,15 +65,11 @@ public class HomeServlet extends HttpServlet {
 
 	}
 	private void redirectConnection(HttpServletRequest request, HttpServletResponse response) {
-		String pageName="/Connection";
-
-		RequestDispatcher rd = getServletContext().getRequestDispatcher(pageName);
+		String pageName="/DaysOffManager/Connection";
 
 		try {
-			rd.forward(request, response);
-		} catch (ServletException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
+			response.sendRedirect(pageName);
+		}catch (IOException e) {
 			e.printStackTrace();
 		}	
 	}

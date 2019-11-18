@@ -9,10 +9,15 @@ public class DemandService {
 
 	// choose the DAO data source : DB or Mock
 	private DemandDAOImpl demandDao = new DemandDAOImpl();
-
+	private ReasonDAOImpl reasonDao = new ReasonDAOImpl();
+	
 	public List<Demand> getAllDemands() {
 		List<Demand> listDemands = demandDao.findAll();
 		return listDemands;
+	}
+	
+	public boolean insertIntoDemand(String mail, String fromDate, String toDate, String reason, String duration) {
+		return demandDao.insertIntoDemand(mail, fromDate, toDate, reason, duration);
 	}
 	
 	public List<Demand> getAllDemandsButRH() {
@@ -38,5 +43,9 @@ public class DemandService {
 	
 	public boolean changeDemandStatus(String string,String status) {
 		return this.demandDao.setDemandStatus(string,status);
+	}
+
+	public List<String> getAllReasons(){
+		return this.reasonDao.findAllReasons();
 	}
 }

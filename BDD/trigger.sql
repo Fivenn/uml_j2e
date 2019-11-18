@@ -17,7 +17,15 @@ CREATE TRIGGER decrementeNbDays BEFORE UPDATE ON demand
        END$$
 
        
-       
+DROP TRIGGER insertDemand;
+
+
+DELIMITER $$
+CREATE TRIGGER insertDemand BEFORE INSERT ON demand
+       FOR EACH ROW 
+       	SET NEW.status = 'pending';
+DELIMITER ;       
+       	
        
 
 

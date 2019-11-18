@@ -40,8 +40,7 @@ private ArrayList<Team> teamsList;
 		this.initLists(true);
 		req.setAttribute("currentMode", "RH");
 		req.setAttribute("currentPage", "manageUser");		
-		req.setAttribute("employeList", this.employesList);
-		req.setAttribute("teamsList", this.teamsList);
+		req.setAttribute("employesList", this.employesList);
 		
 		try {
             this.getServletContext().getRequestDispatcher("/Home").forward(req, resp);
