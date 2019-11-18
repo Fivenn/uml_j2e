@@ -20,7 +20,6 @@
       <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
       <script src='ressources/fullcalendar/core/main.js'></script>
       <script src='ressources/fullcalendar/daygrid/main.js'></script>
-      <script src='fullcalendar.js'></script>
       <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
       <title>Days Off Manager</title>
    </head>
