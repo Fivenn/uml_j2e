@@ -21,6 +21,18 @@ main{
 	background-color: #110133;
 }
 
+/*Into manage demand */
+button.nav-button {
+    padding: 0.5em;
+    background-color: #FFF;
+    border: 0px;
+    color: #110133;
+}
+
+button.nav-button:hover {
+	color: #00918E;
+}
+/* end */
 
 .btn-outline-success{
 	color: #5dd599 !important;
