@@ -51,7 +51,7 @@ public class CalendarServlet extends HttpServlet{
 			employeDemand.put("title", ((Employe)req.getSession().getAttribute("currentUser")).getMail() + " - " + d.getMotif());
 			employeDemand.put("start", d.getStartDate());
 			employeDemand.put("end", d.getEndDate());
-			employeDemandsList.add(employeDemand);
+			employeDemandsList.add(employeDemand.toString());
 		}
 		
 		System.out.println(employeDemandsList);
@@ -59,6 +59,7 @@ public class CalendarServlet extends HttpServlet{
 		req.setAttribute("reasonsList", this.reasonsList);
 		
 		req.setAttribute("currentPage", "calendar");
+		req.setAttribute("employeDemandsList", this.employeDemandsList);
 		
 		try {
             this.getServletContext().getRequestDispatcher("/Home").forward(req, resp);

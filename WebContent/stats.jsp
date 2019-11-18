@@ -3,6 +3,10 @@
  <%@page import="java.util.ArrayList,org.model.Employe,org.model.Team,org.model.Demand"%>
 
 <%
+	ArrayList<String> daysOffPerTeam = (ArrayList<String>)request.getSession().getAttribute("daysOffPerTeam");
+	ArrayList<String> daysOffPerReason = (ArrayList<String>)request.getSession().getAttribute("daysOffPerReason");
+	ArrayList<String> daysOffPerMonth = (ArrayList<String>)request.getSession().getAttribute("daysOffPerMonth");
+	ArrayList<String> daysOffPerJob = (ArrayList<String>)request.getSession().getAttribute("daysOffPerJob");
 	Employe currentUser = (Employe)request.getSession().getAttribute("currentUser");
 %>
 

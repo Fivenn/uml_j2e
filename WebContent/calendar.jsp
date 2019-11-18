@@ -5,6 +5,9 @@
 <%@ 
 page import="java.util.List,org.model.Employe, org.model.Demand,java.util.ArrayList"
  %>
+ <%
+ //String employeDemandsList = (String) request.getAttribute("employeDemandsList");
+ %>
 
 <%
  	ArrayList<String> reasonsList  = (ArrayList<String>)request.getAttribute("reasonsList");
