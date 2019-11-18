@@ -1,6 +1,9 @@
 package org.controllerView;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 import javax.servlet.ServletException;
@@ -24,7 +27,6 @@ public class CalendarServlet extends HttpServlet{
 	private ArrayList<Demand> demandsList;
 	private ArrayList<String> reasonsList = (ArrayList<String>) demandService.getAllReasons();
 	
-	private JSONObject employeDemand = new JSONObject();
 	private JSONArray employeDemandsList = new JSONArray();
 		
 	@Override
@@ -48,17 +50,20 @@ public class CalendarServlet extends HttpServlet{
 		
 		// Build JSON
 		for(Demand d: demandsList) {
+			JSONObject employeDemand = new JSONObject();
+
 			employeDemand.put("title", ((Employe)req.getSession().getAttribute("currentUser")).getMail() + " - " + d.getMotif());
 			employeDemand.put("start", d.getStartDate());
 			employeDemand.put("end", d.getEndDate());
-			employeDemandsList.add(employeDemand.toString());
+			
+			employeDemandsList.add(employeDemand);
 		}
 		
+		System.out.println("CalendarServlet.java");
 		System.out.println(employeDemandsList);
 		
-		req.setAttribute("reasonsList", this.reasonsList);
-		
 		req.setAttribute("currentPage", "calendar");
+		req.setAttribute("reasonsList", this.reasonsList);
 		req.setAttribute("employeDemandsList", this.employeDemandsList);
 		
 		try {
@@ -68,5 +73,7 @@ public class CalendarServlet extends HttpServlet{
 		} catch (ServletException e) {
 			e.printStackTrace();
 		}
+		
+		employeDemandsList.clear();
 	}
 }

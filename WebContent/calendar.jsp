@@ -3,15 +3,40 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
    pageEncoding="UTF-8"%>
 <%@ 
-page import="java.util.List,org.model.Employe, org.model.Demand,java.util.ArrayList"
+page import="java.util.List, org.model.Employe, org.model.Demand, java.util.ArrayList, org.json.simple.JSONArray"
  %>
  <%
- //String employeDemandsList = (String) request.getAttribute("employeDemandsList");
+ JSONArray employeDemandsList = (JSONArray) request.getAttribute("employeDemandsList");
+ System.out.println("calendar.jsp");
+ System.out.println(employeDemandsList);
  %>
 
 <%
  	ArrayList<String> reasonsList  = (ArrayList<String>)request.getAttribute("reasonsList");
 %>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var calendarEl = document.getElementById('calendar');
+
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+        plugins: ['dayGrid'],
+        header: {
+            left: 'prevYear,prev,next,nextYear today',
+            center: 'title',
+            right: 'dayGridMonth,dayGridWeek'
+        },
+        defaultDate: '2019-11-13',
+        navLinks: false, // can click day/week names to navigate views
+        editable: false,
+        eventLimit: true, // allow "more" link when too many events
+        events: <%=employeDemandsList%>
+    });
+    console.log(<%=employeDemandsList%>);
+    
+    calendar.render();
+});
+</script>
 
 
 <p>
