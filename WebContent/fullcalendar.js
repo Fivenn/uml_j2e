@@ -12,9 +12,8 @@ document.addEventListener('DOMContentLoaded', function() {
         navLinks: false, // can click day/week names to navigate views
         editable: false,
         eventLimit: true, // allow "more" link when too many events
-        events: "<%=employeDemandsList%>"
+        events: []
     });
     
-    console.log("<%=employeDemandsList%>");
     calendar.render();
 });

@@ -6,8 +6,7 @@
 page import="java.util.List,org.model.Employe, org.model.Demand,java.util.ArrayList"
  %>
  <%
- String employeDemandsList = (String) request.getAttribute("employeDemandsList");
- System.out.println(employeDemandsList);
+ //String employeDemandsList = (String) request.getAttribute("employeDemandsList");
  %>
 
 <%
