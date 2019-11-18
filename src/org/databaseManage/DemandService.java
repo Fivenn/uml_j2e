@@ -16,8 +16,8 @@ public class DemandService {
 		return listDemands;
 	}
 	
-	public boolean insertIntoDemand(String mail, String fromDate, String toDate, String reason, String string) {
-		return demandDao.insertIntoDemand(mail, fromDate, toDate, reason, string);
+	public boolean insertIntoDemand(String mail, String fromDate, String toDate, String reason, String duration) {
+		return demandDao.insertIntoDemand(mail, fromDate, toDate, reason, duration);
 	}
 	
 	public List<Demand> getAllDemandsButRH() {

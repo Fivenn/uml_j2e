@@ -23,13 +23,10 @@ DROP TRIGGER insertDemand;
 DELIMITER $$
 CREATE TRIGGER insertDemand BEFORE INSERT ON demand
        FOR EACH ROW 
-       	SET NEW.demandDate = SELECT convert(varchar(25), now(), 120) ;
-
+       	SET NEW.status = 'pending';
        END$$
 DELIMITER ;       
-       
-SET
-       	NEW.status = 'pending' AND
+       	
        
 
 
