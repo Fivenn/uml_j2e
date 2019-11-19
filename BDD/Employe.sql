@@ -19,7 +19,7 @@ CREATE OR REPLACE TABLE employe (
   nbDays int(11) NOT NULL,
   fonction enum('Employe', 'EmployeRH', 'TeamLeader', 'RespoRH') NOT NULL,
   pwd varchar(255) NOT NULL,
-  team int,
+  team int NOT NULL DEFAULT 0,
   PRIMARY KEY (mail),
   FOREIGN KEY (team)
         REFERENCES team(noTeam)

@@ -2,7 +2,7 @@
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
    pageEncoding="ISO-8859-1"%>
-<%@page import="java.util.List,org.model.Employe"%>
+<%@page import="org.model.Employe"%>
 <%
    Employe currentUser = (Employe)request.getSession().getAttribute("currentUser");
    String currentPage = request.getAttribute("currentPage") == null?"calendar":(String)request.getAttribute("currentPage");
