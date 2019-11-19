@@ -57,8 +57,10 @@ public class ManageDemandServlet extends HttpServlet {
 		if(req.getSession().getAttribute("currentUser")!=null && ((Employe)req.getSession().getAttribute("currentUser")).isRH()) {
 			if(req.getParameter("approved")!= null) {
 				this.demandService.changeDemandStatus(req.getParameter("approved"), "approved");
+			}else if(req.getParameter("approvedCom")!= null) {
+				this.demandService.changeDemandStatus(req.getParameter("approvedCom"), "approved",req.getParameter("comment"));
 			}else if(req.getParameter("refused")!= null) {
-				this.demandService.changeDemandStatus(req.getParameter("refused"), "refused");
+				this.demandService.changeDemandStatus(req.getParameter("refused"), "refused",req.getParameter("comment"));
 			}
 			if(req.getParameter("statsDemand")!= null) {
 				req.setAttribute("stats", true);

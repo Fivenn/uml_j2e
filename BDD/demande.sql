@@ -20,6 +20,7 @@ CREATE OR REPLACE TABLE demand (
   demandDate dateTime NOT NULL DEFAULT NOW(),
   reason varchar(255) NOT NULL,
   duration int(11) NOT NULL,
+  comment varchar(255),
   PRIMARY KEY (id),
     FOREIGN KEY (employe)
         REFERENCES employe(mail),
