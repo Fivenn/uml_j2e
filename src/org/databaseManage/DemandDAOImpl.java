@@ -157,18 +157,18 @@ public class DemandDAOImpl {
 	
 	
 	public ArrayList<List<String>> getDaysOffPerTeam(){
-		return this.findNbDemandPerX("SELECT team, SUM('duration') AS nbDays FROM demand NATURAL JOIN employe GROUP BY team;","nbDays","team");
+		return this.findNbDemandPerX("SELECT team, SUM(duration) AS nbDays FROM demand NATURAL JOIN employe GROUP BY team;","nbDays","team");
 	}
 	//to do
 	public ArrayList<List<String>> getDaysOffPerMonth(){
-		return this.findNbDemandPerX("SELECT MONTH(beginDate) AS month, SUM('duration') AS nbDays  FROM demand GROUP BY MONTH(beginDate);","nbDays","month");
+		return this.findNbDemandPerX("SELECT MONTH(beginDate) AS month, SUM(duration) AS nbDays  FROM demand GROUP BY MONTH(beginDate);","nbDays","month");
 	}
 	
 	public ArrayList<List<String>> getDaysOffPerReason(){
-		return this.findNbDemandPerX("SELECT reason, SUM('duration') AS nbDays  FROM demand GROUP BY reason;","nbDays","reason");
+		return this.findNbDemandPerX("SELECT reason, SUM(duration) AS nbDays  FROM demand GROUP BY reason;","nbDays","reason");
 	}
 	
 	public ArrayList<List<String>> getDaysOffPerJob(){
-		return this.findNbDemandPerX("SELECT fonction, SUM('duration') AS nbDays FROM demand NATURAL JOIN employe GROUP BY fonction;","nbDays","fonction");
+		return this.findNbDemandPerX("SELECT fonction, SUM(duration) AS nbDays FROM demand NATURAL JOIN employe GROUP BY fonction;","nbDays","fonction");
 	}
 }
