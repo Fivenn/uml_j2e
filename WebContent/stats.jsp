@@ -24,9 +24,11 @@
 	      google.charts.setOnLoadCallback(drawChartPerMonth);
 	      google.charts.setOnLoadCallback(drawChartPerTeam);
 	      google.charts.setOnLoadCallback(drawChartPerReason);
+	      google.charts.setOnLoadCallback(drawChartPerJob);
 	      var dataDaysOffPerMonth = [['Month','NbDays']];
 	      var dataDaysOffPerTeam = [['Team','NbDays']];
 	      var dataDaysOffPerReason = [['Reason','NbDays']];
+	      var dataDaysOffPerJob = [['Fonction','NbDays']];
 	      
 	      function drawChartPerMonth() {
 	        var data = google.visualization.arrayToDataTable(getDataPerMonth(dataDaysOffPerMonth));
@@ -46,11 +48,22 @@
 		      return dataPerMonth;
 	      }
 	      
+	      function drawChartPerJob() {
+		        var data = google.visualization.arrayToDataTable(getDataPerJob(dataDaysOffPerJob));
+		        var options = {
+		          title: 'job',
+		          is3D: true,
+		        };
+		
+		        var chart = new google.visualization.PieChart(document.getElementById('piechart_3d_4'));
+		        chart.draw(data, options);
+		      }
+	      
 	      function getDataPerJob(dataPerJob){
 		      <% for(int i=0;i<daysOffPerJob.size();i++){%>
 		    	 dataPerJob.push([getFonction("<%=daysOffPerJob.get(i).get(0).toString()%>"),<%=daysOffPerJob.get(i).get(1)%>]);
 		      <%}%>
-		    	 dataPerJob.push([getFonction(i[0]), i[1]]);
+		    	 //dataPerJob.push([getFonction(i[0]), i[1]]);
 		    return dataPerJob;
 	      }
 	      
@@ -133,5 +146,6 @@
 		<div id="piechart_3d" style="width: 700px; height: 500px;"></div>
 		<div id="piechart_3d_2" style="width: 700px; height: 500px;"></div>
 		<div id="piechart_3d_3" style="width: 700px; height: 500px;"></div>
+		<div id="piechart_3d_4" style="width: 700px; height: 500px;"></div>
 	</body>
 </html>
