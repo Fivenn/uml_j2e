@@ -67,7 +67,7 @@ public class CalendarServlet extends HttpServlet {
                 c.add(Calendar.DATE, 1);
                 endDate = sdf.format(c.getTime());
 
-                employeDemand.put("title", ((Employe) req.getSession().getAttribute("currentUser")).getMail() + " - " + d.getMotif());
+                employeDemand.put("title", ((Employe) req.getSession().getAttribute("currentUser")).getMail() + " - " + d.getMotif() + " - " + d.getStatus());
                 employeDemand.put("start", d.getStartDate());
                 employeDemand.put("end", endDate.toString());
                 employeDemand.put("color", "#aab7b8");
@@ -84,7 +84,24 @@ public class CalendarServlet extends HttpServlet {
                 c.add(Calendar.DATE, 1);
                 endDate = sdf.format(c.getTime());
 
-                employeDemand.put("title", ((Employe) req.getSession().getAttribute("currentUser")).getMail() + " - " + d.getMotif());
+                employeDemand.put("title", ((Employe) req.getSession().getAttribute("currentUser")).getMail() + " - " + d.getMotif() + " - " + d.getStatus());
+                employeDemand.put("start", d.getStartDate());
+                employeDemand.put("end", endDate.toString());
+                employeDemand.put("color", "#3498db");
+
+                employeDemandsList.add(employeDemand);
+            	break;
+            case "refused":
+                // add one day to the end date
+                try {
+                    c.setTime(sdf.parse(endDate));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                c.add(Calendar.DATE, 1);
+                endDate = sdf.format(c.getTime());
+
+                employeDemand.put("title", ((Employe) req.getSession().getAttribute("currentUser")).getMail() + " - " + d.getMotif() + " - " + d.getStatus());
                 employeDemand.put("start", d.getStartDate());
                 employeDemand.put("end", endDate.toString());
                 employeDemand.put("color", "#3498db");
