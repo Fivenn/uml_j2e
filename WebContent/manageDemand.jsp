@@ -92,21 +92,40 @@
 		  <tbody>
 		    <% for(Demand d : demandsList){ %>
 		      <tr>
-		      	<td><%=d.getRequestDate()%></td>
+		      	<td><%=d.getRequestDate().substring(0,10)%></td>
 		        <td><%=d.getEmploye().getSurname()%></td>
 		        <td><%=d.getEmploye().getFirstName()%></td>
 		        <td><%=d.getStartDate()%></td>
 		        <td><%=d.getEndDate()%></td>
 		        <td><%=d.getNbDays()%></td>
 		        <td><%=d.getMotif()%></td>
-		        <td style="display: flex !important;justify-content: space-around !important;">
+		        <td>
 		          <% if(d.getStatus().equals("pending")){ %>
-		            <form class="form form-inline" action="ManageDemand" method="post">
-		              <button class="btn btn-success" type="submit" name="approved" value="<%=d.getId()%>"><i class="fas fa-check" aria-hidden="true"></i></button>
-		            </form>
-		            <form class="form form-inline" action="ManageDemand" method="post">
-		              <button class="btn btn-danger" type="submit" name="refused" value="<%=d.getId()%>"><i class="fas fa-times" aria-hidden="true"></i></button>
-		            </form>
+		              <div style="display: flex !important;justify-content: space-around !important;">
+		              	<form class="form form-inline" action="ManageDemand" method="post">
+		              		<button class="btn btn-success" type="submit" name="approved" value="<%=d.getId()%>"><i class="fas fa-check" aria-hidden="true"></i></button>
+						</form>
+						<a class="btn btn-primary" data-toggle="collapse" href="#collapseComment<%=d.getId()%>" role="button" aria-expanded="false" aria-controls="collapseForm">
+						   <i class="fas fa-comment" aria-hidden="true"></i>
+						</a>
+						<a class="btn btn-danger" data-toggle="collapse" href="#collapseRefused<%=d.getId()%>" role="button" aria-expanded="false" aria-controls="collapseForm">
+						   <i class="fas fa-times" aria-hidden="true"></i>
+						</a>
+		              </div>
+		              
+					  <div class="collapse" id="collapseComment<%=d.getId()%>">
+					  	<form class="form form-inline" action="ManageDemand" method="post" style="display: flex !important;justify-content: space-around !important;">  
+							<input class="form-control" name="comment" type="text" placeholder="Laisser un commentaire" required></input>
+		              		<button class="btn btn-primary" style="color:#fff;" type="submit" name="approvedCom" value="<%=d.getId()%>"><i class="fas fa-comment" aria-hidden="true"></i></button>
+					  	</form>
+					  </div>
+					  <div class="collapse" id="collapseRefused<%=d.getId()%>">
+					  	<form class="form form-inline" action="ManageDemand" method="post" style="display: flex !important;justify-content: space-around !important;">  
+					  		<input class="form-control" id="nbDays" name="comment" type="text" placeholder="Laisser un commentaire" required></input>  
+		              		<button class="btn btn-danger" type="submit" name="refused" value="<%=d.getId()%>"><i class="fas fa-times" aria-hidden="true"></i></button>
+					  	</form>
+					  </div>
+		            
 		          <%}else{%>
 		            <%=d.getStatus()%>
 		          <%}%>

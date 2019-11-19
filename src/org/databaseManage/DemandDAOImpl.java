@@ -57,6 +57,10 @@ public class DemandDAOImpl {
 		return updateDemand("update demand set status='"+status+"' where id='"+string+"';");
 	}
 	
+	public boolean setDemandStatus(String string, String status,String comment) {
+		return updateDemand("update demand set status='"+status+"', comment='"+comment+"' where id='"+string+"';");
+	}
+	
 	private boolean updateDemand(String query) {
 		Connection conn = null;
 		ResultSet rs = null;
