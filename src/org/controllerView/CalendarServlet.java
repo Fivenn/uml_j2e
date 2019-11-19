@@ -58,7 +58,6 @@ public class CalendarServlet extends HttpServlet {
             
             switch(status) {
             case "pending":
-            	System.out.println("case pending");
                 // add one day to the end date
                 try {
                     c.setTime(sdf.parse(endDate));
@@ -76,7 +75,6 @@ public class CalendarServlet extends HttpServlet {
                 employeDemandsList.add(employeDemand);
             	break;
             case "approved":
-            	System.out.println("case accepted");
                 // add one day to the end date
                 try {
                     c.setTime(sdf.parse(endDate));
@@ -95,9 +93,6 @@ public class CalendarServlet extends HttpServlet {
             	break;
             }
         }
-
-        System.out.println("CalendarServlet.java");
-        System.out.println(employeDemandsList);
 
         req.setAttribute("currentPage", "calendar");
         req.setAttribute("reasonsList", this.reasonsList);

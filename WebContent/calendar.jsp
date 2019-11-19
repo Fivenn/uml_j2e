@@ -7,12 +7,7 @@ page import="java.util.List, org.model.Employe, org.model.Demand, java.util.Arra
  %>
  <%
  JSONArray employeDemandsList = (JSONArray) request.getAttribute("employeDemandsList");
- System.out.println("calendar.jsp");
- System.out.println(employeDemandsList);
- %>
-
-<%
- 	ArrayList<String> reasonsList  = (ArrayList<String>)request.getAttribute("reasonsList");
+ ArrayList<String> reasonsList  = (ArrayList<String>)request.getAttribute("reasonsList");
 %>
 
 <script>
@@ -31,9 +26,7 @@ document.addEventListener('DOMContentLoaded', function() {
         editable: false,
         eventLimit: true, // allow "more" link when too many events
         events: <%=employeDemandsList%>
-    });
-    console.log(<%=employeDemandsList%>);
-    
+    });    
     calendar.render();
 });
 </script>

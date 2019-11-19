@@ -1,33 +1,28 @@
+
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@page import="java.util.ArrayList,org.model.Employe"%>
+   pageEncoding="UTF-8"%>
 
-<%
-	//il faut faire une requete bdd
-	ArrayList<Employe> team = (ArrayList<Employe>)request.getAttribute("currentTeam");
-%>
-<% if(team!=null){%>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var calendarEl = document.getElementById('calendar');
 
-<h1>
-	C'est la teaaam
-</h1>
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+        plugins: ['dayGrid'],
+        header: {
+            left: 'prevYear,prev,next,nextYear today',
+            center: 'title',
+            right: 'dayGridMonth,dayGridWeek'
+        },
+        defaultDate: '2019-11-13',
+        navLinks: false, // can click day/week names to navigate views
+        editable: false,
+        eventLimit: true, // allow "more" link when too many events
+        events: []
+    });    
+    calendar.render();
+});
+</script>
 
-<table border="1" cellpadding="5" cellspacing="0">
-	<tr>
-		<th>Nom</th>
-		<th>Prénom</th>
-	</tr>
-	<%
-	for (Employe e: team) {
-	%>
-		<tr>
-			<td><%=e.getSurname()%></td>
-			<td><%=e.getFirstName() %></td>
-		</tr>
-	<%
-	}
-	%>
-</table>
-	<%
-	}
-	%>
+<div id='calendar'></div>
+
