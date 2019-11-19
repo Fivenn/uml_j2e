@@ -23,8 +23,10 @@
 	      google.charts.load("current", {packages:["corechart"]});
 	      google.charts.setOnLoadCallback(drawChartPerMonth);
 	      google.charts.setOnLoadCallback(drawChartPerTeam);
+	      google.charts.setOnLoadCallback(drawChartPerReason);
 	      var dataDaysOffPerMonth = [['Month','NbDays']];
 	      var dataDaysOffPerTeam = [['Team','NbDays']];
+	      var dataDaysOffPerReason = [['Reason','NbDays']];
 	      
 	      function drawChartPerMonth() {
 	        var data = google.visualization.arrayToDataTable(getDataPerMonth(dataDaysOffPerMonth));
@@ -39,21 +41,32 @@
 	      
 	      function getDataPerMonth(dataPerMonth){
 		      for(let i of <%=daysOffPerMonth%>){
-		    	 dataDaysOffPerMonth.push([getMonth(i[0]), i[1]]);
+		    	 dataPerMonth.push([getMonth(i[0]), i[1]]);
 		      }
 		      return dataPerMonth;
 	      }
 	      
 	      function getDataPerJob(dataPerJob){
 		      for(let i of <%=daysOffPerJob%>){
-		    	 dataDaysOffPerJob.push([i[0].toString(), i[1]]);
+		    	 dataPerJob.push([i[0].toString(), i[1]]);
 		      }
 		      return dataPerJob;
 	      }
 	      
+	      function drawChartPerReason() {
+		        var data = google.visualization.arrayToDataTable(getDataPerReason(dataDaysOffPerReason));
+		        var options = {
+		          title: 'reason',
+		          is3D: true,
+		        };
+		
+		        var chart = new google.visualization.PieChart(document.getElementById('piechart_3d_3'));
+		        chart.draw(data, options);
+		      }
+	      
 	      function getDataPerReason(dataPerReason){
 		      for(let i of <%=daysOffPerReason%>){
-		    	 dataDaysOffPerReason.push([i[0].toString(), i[1]]);
+		    	 dataPerReason.push([i[0].toString(), i[1]]);
 		      }
 		      return dataPerReason;
 	      }
@@ -71,7 +84,7 @@
 	      
 	      function getDataPerTeam(dataPerTeam){
 		      for(let i of <%=daysOffPerTeam%>){
-		    	 dataDaysOffPerTeam.push([i[0].toString(), i[1]]);
+		    	 dataPerTeam.push([i[0].toString(), i[1]]);
 		      }
 		      return dataPerTeam;
 	      }
@@ -106,5 +119,6 @@
 		</div>
 		<div id="piechart_3d" style="width: 700px; height: 500px;"></div>
 		<div id="piechart_3d_2" style="width: 700px; height: 500px;"></div>
+		<div id="piechart_3d_3" style="width: 700px; height: 500px;"></div>
 	</body>
 </html>
