@@ -44,6 +44,12 @@ public class DemandService {
 	public boolean changeDemandStatus(String string,String status) {
 		return this.demandDao.setDemandStatus(string,status);
 	}
+	
+	public boolean changeDemandStatus(String string,String status,String comment) {
+		return this.demandDao.setDemandStatus(string,status,comment);
+	}
+	
+	
 
 	public List<String> getAllReasons(){
 		return this.reasonDao.findAllReasons();

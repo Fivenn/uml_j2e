@@ -3,7 +3,7 @@
 
 DROP TRIGGER decrementeNbDays;
 
-DELIMITER ;
+
 DELIMITER $$
 CREATE TRIGGER decrementeNbDays BEFORE UPDATE ON demand
        FOR EACH ROW
@@ -15,7 +15,7 @@ CREATE TRIGGER decrementeNbDays BEFORE UPDATE ON demand
             END IF;
             END IF;
        END$$
-
+DELIMITER ;
        
 DROP TRIGGER insertDemand;
 
