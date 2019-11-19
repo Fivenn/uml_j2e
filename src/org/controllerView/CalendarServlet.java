@@ -1,10 +1,10 @@
 package org.controllerView;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -28,6 +28,8 @@ public class CalendarServlet extends HttpServlet{
 	private ArrayList<String> reasonsList = (ArrayList<String>) demandService.getAllReasons();
 	
 	private JSONArray employeDemandsList = new JSONArray();
+	
+	SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -47,14 +49,26 @@ public class CalendarServlet extends HttpServlet{
 	
 	protected void doProcess(HttpServletRequest req, HttpServletResponse resp) {
 		this.demandsList = (ArrayList<Demand>) this.demandService.getEmployeDemand(((Employe)req.getSession().getAttribute("currentUser")).getMail());
-		
+	
 		// Build JSON
 		for(Demand d: demandsList) {
 			JSONObject employeDemand = new JSONObject();
-
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			Calendar c = Calendar.getInstance();
+			String endDate = d.getEndDate();
+			
+			// add one day to the end date
+			try {
+				c.setTime(sdf.parse(endDate));
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+			c.add(Calendar.DATE, 1);
+			endDate = sdf.format(c.getTime());
+			
 			employeDemand.put("title", ((Employe)req.getSession().getAttribute("currentUser")).getMail() + " - " + d.getMotif());
 			employeDemand.put("start", d.getStartDate());
-			employeDemand.put("end", d.getEndDate());
+			employeDemand.put("end", endDate.toString());
 			
 			employeDemandsList.add(employeDemand);
 		}
