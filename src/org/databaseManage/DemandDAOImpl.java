@@ -35,7 +35,7 @@ public class DemandDAOImpl {
 				while (rs.next()) {
 					Employe emp = employeService.getEmploye(rs.getString("employe"));
 					
-					listDemandes.add(new Demand(rs.getInt("id"),emp,rs.getString("status"),rs.getString("beginDate"),rs.getString("endDate"),rs.getString("demandDate"),rs.getString("reason"),rs.getInt("duration")));
+					listDemandes.add(new Demand(rs.getInt("id"),emp,rs.getString("status"),rs.getString("beginDate"),rs.getString("endDate"),rs.getString("demandDate"),rs.getString("reason"),rs.getInt("duration"),rs.getString("comment")));
 				}
 			}
 		} catch (Exception e) {

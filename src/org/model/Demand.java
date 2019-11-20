@@ -9,8 +9,9 @@ public class Demand {
 	private String requestDate;
 	private String motif;
 	private int nbDays;
+	private String commentary;
 
-	public Demand(int id,String status, String startDate,String endDate,String requestDate, String motif, int nbDays) {
+	public Demand(int id,String status, String startDate,String endDate,String requestDate, String motif, int nbDays, String commentary) {
 		this.setStatus(status);
 		this.setStartDate(startDate);
 		this.setEndDate(endDate);
@@ -18,10 +19,11 @@ public class Demand {
 		this.setMotif(motif);
 		this.setNbDays(nbDays);
 		this.setEmploye(employe);
+		this.setCommentary(commentary);
 	}
 	
 	
-	public Demand(int id, Employe employe,String status, String startDate,String endDate,String requestDate, String motif, int nbDays) {
+	public Demand(int id, Employe employe,String status, String startDate,String endDate,String requestDate, String motif, int nbDays, String commentary) {
 		this.setStatus(status);
 		this.setStartDate(startDate);
 		this.setEndDate(endDate);
@@ -30,6 +32,7 @@ public class Demand {
 		this.setNbDays(nbDays);
 		this.setEmploye(employe);
 		this.setId(id);
+		this.setCommentary(commentary);
 	}
 
 	public int getId() {
@@ -95,5 +98,12 @@ public class Demand {
 		this.nbDays = nbDays;
 	}
 	
+	public String getCommentary() {
+		return commentary;
+	}
+	
+	public void setCommentary(String commentary) {
+		this.commentary = commentary;
+	}
 	
 }

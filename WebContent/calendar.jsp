@@ -11,9 +11,15 @@ page import="java.util.List, org.model.Employe, org.model.Demand, java.util.Arra
 %>
 
 <script>
+var today = new Date();
+var dd = String(today.getDate()).padStart(2, '0');
+var mm = String(today.getMonth() + 1).padStart(2, '0');
+var yyyy = today.getFullYear();
+
+today = yyyy + '-' + mm + '-' + dd;
+
 document.addEventListener('DOMContentLoaded', function() {
     var calendarEl = document.getElementById('calendar');
-
     var calendar = new FullCalendar.Calendar(calendarEl, {
         plugins: ['dayGrid'],
         header: {
@@ -21,13 +27,22 @@ document.addEventListener('DOMContentLoaded', function() {
             center: 'title',
             right: 'dayGridMonth,dayGridWeek'
         },
-        defaultDate: '2019-11-13',
+        defaultDate: today,
         navLinks: false, // can click day/week names to navigate views
         editable: false,
         eventLimit: true, // allow "more" link when too many events
+        eventRender: function(info) {
+        	var tooltip = new Tooltip(info.el, {
+        		title: info.event.extendedProps.description,
+              	placement: 'top',
+              	trigger: 'hover',
+              	container: 'body'
+            });
+         },
         events: <%=employeDemandsList%>
-    });    
+    });
     calendar.render();
+    console.log(<%=employeDemandsList%>);
 });
 </script>
 
