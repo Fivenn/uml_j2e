@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', function() {
         eventLimit: true,
         eventRender: function(info) {
             $(info.el).tooltip({
-                title: info.event.extendedProps.description,
+                title: info.event.extendedProps.description || '',
                 placement: 'top',
                 trigger: 'hover',
                 container: 'body'
