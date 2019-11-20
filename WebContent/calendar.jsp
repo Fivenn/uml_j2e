@@ -8,6 +8,7 @@ page import="java.util.List, org.model.Employe, org.model.Demand, java.util.Arra
  <%
  JSONArray employeDemandsList = (JSONArray) request.getAttribute("employeDemandsList");
  ArrayList<String> reasonsList  = (ArrayList<String>)request.getAttribute("reasonsList");
+ String errorAskingForDays = request.getAttribute("errorAskingForDays")!= null ? (String)request.getAttribute("errorAskingForDays") : "";
 %>
 
 <script>
@@ -51,21 +52,22 @@ document.addEventListener('DOMContentLoaded', function() {
   <a class="btn btn-primary" data-toggle="collapse" href="#collapseForm" role="button" aria-expanded="false" aria-controls="collapseForm">
     <i class="fas fa-plus"></i>
   </a>
+  <p style="color: DC3545;"><%=errorAskingForDays %></p>
 </p>
 <div class="collapse" id="collapseForm">
   	<form class="form-co" action="Calendar" method="post">
 		<div class="form-row form-group">
 			<div class="col-md-2">
 				<label for="fromDate">Du : </label>
-				<input class="form-control" id="fromDate" name="fromDate" type="date"></input>
+				<input class="form-control" id="fromDate" name="fromDate" type="date" required></input>
 			</div>
 			<div class="col-md-2">
 				<label for="toDate"> au : </label>
-				<input class="form-control" id="toDate" name="toDate" type="date"></input>
+				<input class="form-control" id="toDate" name="toDate" type="date" required></input>
 	  		</div>
 	  		<div class="col-md-2">
 	  			<label for="reason"> Motif : </label>
-		      <select class="form-control" name="reason" id="reason">
+		      <select class="form-control" name="reason" id="reason" required>
 		        <% for (String s: reasonsList) { %>
 		          <option value="<%=s%>"><%=s%></option>
 		        <%}%>
@@ -73,7 +75,7 @@ document.addEventListener('DOMContentLoaded', function() {
 		    </div>
 		    <div class="col-md-2">
 		      	<label for="nbDays"> Durée : </label>
-				<input class="form-control" id="nbDays" name="nbDays" type="text" placeholder="Durée en jours"></input>
+				<input class="form-control" id="nbDays" name="nbDays" type="text" placeholder="Durée en jours" required></input>
 		    </div>
 	    	<div>
 		  		<button class="btn btn-primary my-2 my-sm-0" type="submit" name="askDaysOff">Faire la demande</button>

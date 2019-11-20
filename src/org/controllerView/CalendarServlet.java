@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.databaseManage.DemandService;
+import org.databaseManage.EmployeService;
 import org.model.Demand;
 import org.model.Employe;
 import org.json.simple.JSONArray;
@@ -21,7 +22,8 @@ import org.json.simple.JSONObject;
 public class CalendarServlet extends HttpServlet {
 
     private DemandService demandService = new DemandService();
-
+    private EmployeService employeService = new EmployeService();
+    
     private ArrayList < Demand > demandsList;
     private ArrayList < String > reasonsList = (ArrayList < String > ) demandService.getAllReasons();
 
@@ -40,7 +42,15 @@ public class CalendarServlet extends HttpServlet {
         if (req.getParameter("goToRHMode") != null) {
             req.setAttribute("currentMode", "employe");
         } else if (req.getParameter("askDaysOff") != null) {
-            this.demandService.insertIntoDemand(((Employe) req.getSession().getAttribute("currentUser")).getMail(), req.getParameter("fromDate"), req.getParameter("toDate"), req.getParameter("reason"), req.getParameter("nbDays"));
+        	try {
+	        	if(((Employe) req.getSession().getAttribute("currentUser")).getNbDays()>=Integer.parseInt(req.getParameter("nbDays"))){
+	        		this.demandService.insertIntoDemand(((Employe) req.getSession().getAttribute("currentUser")).getMail(), req.getParameter("fromDate"), req.getParameter("toDate"), req.getParameter("reason"), req.getParameter("nbDays"));   
+	        	}else {
+	        		req.setAttribute("errorAskingForDays", "Le nombre de jours est insuffisant, il n'en reste que "+ ((Employe) req.getSession().getAttribute("currentUser")).getNbDays() +".");
+	        	}
+        	}catch(Exception e){
+        		req.setAttribute("errorAskingForDays", "Demande non valide.");
+	        }
         }
         this.doProcess(req, resp);
     }
