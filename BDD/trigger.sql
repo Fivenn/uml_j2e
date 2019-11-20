@@ -1,3 +1,4 @@
+SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
 --Trigger pour decrementer et reincrementer les jours des demandes quand approuvé ou annulée
 

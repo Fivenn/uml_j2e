@@ -1,12 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
- <%@page import="java.util.ArrayList,org.model.Employe,org.model.Team,org.model.Demand"%>
+ <%@page import="java.util.ArrayList,java.util.List,org.model.Employe,org.model.Team,org.model.Demand"%>
 
 <%
-	ArrayList<String> daysOffPerTeam = (ArrayList<String>)request.getAttribute("daysOffPerTeam");
-	ArrayList<String> daysOffPerReason = (ArrayList<String>)request.getAttribute("daysOffPerReason");
-	ArrayList<String> daysOffPerMonth = (ArrayList<String>)request.getAttribute("daysOffPerMonth");
-	ArrayList<String> daysOffPerJob = (ArrayList<String>)request.getAttribute("daysOffPerJob");
+	ArrayList<List<String>>daysOffPerTeam = (ArrayList<List<String>>)request.getAttribute("daysOffPerTeam");
+	ArrayList<List<String>> daysOffPerReason = (ArrayList<List<String>>)request.getAttribute("daysOffPerReason");
+	ArrayList<List<String>> daysOffPerMonth = (ArrayList<List<String>>)request.getAttribute("daysOffPerMonth");
+	ArrayList<List<String>> daysOffPerJob = (ArrayList<List<String>>)request.getAttribute("daysOffPerJob");
 	Employe currentUser = (Employe)request.getSession().getAttribute("currentUser");
 %>
 
@@ -24,9 +24,11 @@
 	      google.charts.setOnLoadCallback(drawChartPerMonth);
 	      google.charts.setOnLoadCallback(drawChartPerTeam);
 	      google.charts.setOnLoadCallback(drawChartPerReason);
+	      google.charts.setOnLoadCallback(drawChartPerJob);
 	      var dataDaysOffPerMonth = [['Month','NbDays']];
 	      var dataDaysOffPerTeam = [['Team','NbDays']];
 	      var dataDaysOffPerReason = [['Reason','NbDays']];
+	      var dataDaysOffPerJob = [['Fonction','NbDays']];
 	      
 	      function drawChartPerMonth() {
 	        var data = google.visualization.arrayToDataTable(getDataPerMonth(dataDaysOffPerMonth));
@@ -46,11 +48,23 @@
 		      return dataPerMonth;
 	      }
 	      
-	      function getDataPerJob(dataPerJob){
-		      for(let i of <%=daysOffPerJob%>){
-		    	 dataPerJob.push([i[0].toString(), i[1]]);
+	      function drawChartPerJob() {
+		        var data = google.visualization.arrayToDataTable(getDataPerJob(dataDaysOffPerJob));
+		        var options = {
+		          title: 'job',
+		          is3D: true,
+		        };
+		
+		        var chart = new google.visualization.PieChart(document.getElementById('piechart_3d_4'));
+		        chart.draw(data, options);
 		      }
-		      return dataPerJob;
+	      
+	      function getDataPerJob(dataPerJob){
+		      <% for(int i=0;i<daysOffPerJob.size();i++){%>
+		    	 dataPerJob.push([getFonction("<%=daysOffPerJob.get(i).get(0).toString()%>"),<%=daysOffPerJob.get(i).get(1)%>]);
+		      <%}%>
+		    	 //dataPerJob.push([getFonction(i[0]), i[1]]);
+		    return dataPerJob;
 	      }
 	      
 	      function drawChartPerReason() {
@@ -65,9 +79,9 @@
 		      }
 	      
 	      function getDataPerReason(dataPerReason){
-		      for(let i of <%=daysOffPerReason%>){
-		    	 dataPerReason.push([i[0].toString(), i[1]]);
-		      }
+		      <% for(int i=0;i<daysOffPerReason.size();i++){%>
+		    	 dataPerReason.push(["<%=daysOffPerReason.get(i).get(0).toString()%>",<%=daysOffPerReason.get(i).get(1)%>]);
+		      <%}%>
 		      return dataPerReason;
 	      }
 	      
@@ -107,6 +121,18 @@
 	          }
 	    	  return b;
 	      }
+	      
+	      function getFonction(fonction){
+	    	  let b = "";
+	    	  switch(fonction){
+	            case "TeamLeader": b = "Chef d'équipe";break;
+	            case "RespoRH": b = "Responsable RH";break;
+	            case "EmployeRH": b = "Employé RH";break;
+	            case "Employe": b = "Employe";break;
+	          }
+	    	  return b;
+	      }
+	      
 	    </script>
 	</head>
 	<body>
@@ -120,5 +146,6 @@
 		<div id="piechart_3d" style="width: 700px; height: 500px;"></div>
 		<div id="piechart_3d_2" style="width: 700px; height: 500px;"></div>
 		<div id="piechart_3d_3" style="width: 700px; height: 500px;"></div>
+		<div id="piechart_3d_4" style="width: 700px; height: 500px;"></div>
 	</body>
 </html>
