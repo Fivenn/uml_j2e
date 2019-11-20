@@ -27,59 +27,25 @@ private EmployeService employeService = new EmployeService();
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		//R�cup�ration des donn�es du formulaire de la page createUser.jsp
-		int numeroEquipe;
-		String prenom = req.getParameter("prenom");
-		String nom = req.getParameter("nom");
-		String naissance = req.getParameter("naissance");
-		String poste = req.getParameter("poste");
-		String equipe = req.getParameter("equipe");
-		String mail = req.getParameter("mail");
-		String chef = req.getParameter("chef");
-		String adresse = req.getParameter("adresse");
-		String tel = req.getParameter("tel");
-		boolean RH = false;
-		boolean TL = false;
-		
-		if(poste.contains("RH")||poste.contains("rh")||poste.contains("Rh")||poste.contains("rH")) {
-			RH = true;
-		}
-		if(chef.contains("oui")) {
-			TL = true;
-		}
-		if(equipe == "") {
-			numeroEquipe = 0;
+		if(req.getParameter("modifier")!=null) {
+			req.setAttribute("employe", this.employeService.getEmploye((String)req.getParameter("modifier")));
 			
-		}
-		else {
-			numeroEquipe = Integer.parseInt(equipe);
-		}
-		Employe emp = new Employe(mail, prenom,nom,naissance,adresse, 25, RH,TL,numeroEquipe);
-		employeService.ajoutEmploye(emp);
-		System.out.println(RH+" "+TL);
+		}else if(req.getParameter("create")!=null) {
+			this.createUser(req.getParameter("prenom"),req.getParameter("nom"),req.getParameter("naissance"),req.getParameter("poste"),req.getParameter("equipe"),req.getParameter("mail"),req.getParameter("chef"),req.getParameter("adresse"));
 		
-		String pageName="/createUser.jsp";
-
-		RequestDispatcher rd = getServletContext().getRequestDispatcher(pageName);
-
-		try {
-
-			rd.forward(req, resp);
-
-		} catch (ServletException e) {
-
-			e.printStackTrace();
-
-		} catch (IOException e) {
-
-			e.printStackTrace();
-
+		}else if(req.getParameter("update")!=null) {
+			this.modifyEmploye(req.getParameter("prenom"),req.getParameter("nom"),req.getParameter("naissance"),req.getParameter("poste"),req.getParameter("equipe"),req.getParameter("mail"),req.getParameter("chef"),req.getParameter("adresse"));
 		}
+		
+		this.doProcess(req, resp);
+		
 	}
 	
 	protected void doProcess(HttpServletRequest req, HttpServletResponse resp) {
+		
 		req.setAttribute("currentMode", "RH");
 		req.setAttribute("currentPage", "createUser");
-	
+
 		try {
             this.getServletContext().getRequestDispatcher("/Home").forward(req, resp);
 		} catch (IOException e) {
@@ -88,5 +54,48 @@ private EmployeService employeService = new EmployeService();
 			e.printStackTrace();
 		}
 	}
+	
+	protected void createUser(String firstName,String Surname, String BirthDate,String poste, String team, String mail, String teamleader, String address) {
+			int nbteam;
+			boolean RH = false;
+			boolean TL = false;			
+			if(poste.contains("RH")||poste.contains("rh")||poste.contains("Rh")||poste.contains("rH")) {
+				RH = true;
+			}
+			if(teamleader.equals("oui")) {
+				TL = true;
+			}
+			if(team.equals("")) {
+				nbteam = 0;
+				
+			}
+			else {
+				nbteam = Integer.parseInt(team);
+			}
+			Employe emp = new Employe(mail, firstName,Surname,BirthDate,address, 25, RH,TL,nbteam);
+			employeService.ajoutEmploye(emp);
+	
+		}
+		protected void modifyEmploye(String firstName,String surName,String birthDate,String function,String team, String mail,String teamleader,String address) {
+			int nbteam;
+			boolean RH = false;
+			boolean TL = false;			
+			if(function.contains("RH")||function.contains("rh")||function.contains("Rh")||function.contains("rH")) {
+				RH = true;
+			}
+			if(teamleader.equals("oui")) {
+				TL = true;
+			}
+			if(team.equals("")) {
+				nbteam = 0;
+				
+			}
+			else {
+				nbteam = Integer.parseInt(team);
+			}
+			Employe emp = new Employe(mail, firstName,surName,birthDate,address, 25, RH,TL,nbteam);
+			employeService.updateEmploye(emp);
+			
+		}
 }
 

@@ -7,8 +7,12 @@
 <h1>
 	C'est la table des employés
 </h1>
+<p>
+	<form action="CreateUser" method="post">
+		<button class="btn btn-primary" type="submit" href="CreateUser">Créer un nouvel employé</button>
+	</form>
+</p>
 
-<a href="CreateUser">Créer un nouvel employé</a>
 <%if(employesList != null){ %>
 <table class="table table-bordered table-striped">
 	  <thead>
@@ -18,6 +22,8 @@
 	      <th scope="col">Mail</th>
 	      <th scope="col">Equipe</th>
 	      <th scope="col">Poste</th>
+	      <th scope="col">Modifier</th>
+	      <th scope="col">Supprimer</th>
 	    </tr>
 	  </thead>
 	  <tbody>
@@ -43,7 +49,20 @@
 	         <%if(!e.isRH() && !e.isLeader()){ %>
 	        <td>Employe</td>
 	        <%} %>
-	        <td style="display: flex !important;justify-content: space-around !important;"></td>
+	        <td>
+	        <div style="display: flex !important;justify-content: space-around !important;">
+	        <form action="CreateUser" method="post">
+		        <button class="btn btn-success" type="submit" name="modifier" style="font-size:12px;" value="<%=e.getMail()%>"><i class="fa fa-edit" aria-hidden="true"></i></button>
+		    </form>
+		    </div>
+		    </td>
+		    <td>
+		    <div style="display: flex !important;justify-content: space-around !important;">
+		    <form class="form-row align-items-center" action="ManageUser" method="post" onsubmit="return confirm('Are you sure you want to delete <%=e.getFullName()%>?');">
+		        <button class="btn btn-danger" type="submit" name="delete" value="<%=e.getMail()%>"><i class="fa fa-window-close" style="font-size:12px;" aria-hidden="true"></i></button>
+		    </form>
+		    </div>
+		    </td>
 	      </tr>
 	    <%}%>	
 	  </tbody>

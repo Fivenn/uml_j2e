@@ -27,12 +27,15 @@ private ArrayList<Team> teamsList;
 
 	
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {		
 		this.doProcess(req, resp);		
 	}
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		if(req.getParameter("delete")!=null){
+			this.employeService.deleteEmploye((String)req.getParameter("delete"));			
+		}
 		this.doProcess(req, resp);
 	}
 	
@@ -58,5 +61,6 @@ private ArrayList<Team> teamsList;
 			this.teamsList = (ArrayList<Team>) this.teamService.getAllTeams();		
 		}
 	}
+	
 }
 
