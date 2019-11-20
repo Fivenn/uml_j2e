@@ -55,7 +55,7 @@ public class CalendarServlet extends HttpServlet {
             Calendar c = Calendar.getInstance();
             String endDate = d.getEndDate();
             String status = d.getStatus();
-            
+                        
             switch(status) {
             case "pending":
                 // add one day to the end date
@@ -86,6 +86,7 @@ public class CalendarServlet extends HttpServlet {
                 endDate = sdf.format(c.getTime());
 
                 employeDemand.put("title", ((Employe) req.getSession().getAttribute("currentUser")).getMail() + " - " + d.getMotif() + " - " + d.getStatus());
+                employeDemand.put("description", d.getCommentary());
                 employeDemand.put("start", d.getStartDate());
                 employeDemand.put("end", endDate.toString());
                 employeDemand.put("color", "#28a745");
@@ -110,7 +111,6 @@ public class CalendarServlet extends HttpServlet {
                 employeDemand.put("color", "#dc3545");
                 employeDemand.put("textColor", "#FFFFFF");
 
-                System.out.println(d.getCommentary());
                 employeDemandsList.add(employeDemand);
             	break;
             case "canceled":
