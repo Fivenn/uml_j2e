@@ -28,21 +28,21 @@ document.addEventListener('DOMContentLoaded', function() {
             right: 'dayGridMonth,dayGridWeek'
         },
         defaultDate: today,
-        navLinks: false, // can click day/week names to navigate views
+        navLinks: false,
         editable: false,
-        eventLimit: true, // allow "more" link when too many events
+        eventLimit: true,
         eventRender: function(info) {
-        	var tooltip = new Tooltip(info.el, {
-        		title: info.event.extendedProps.description,
-              	placement: 'top',
-              	trigger: 'hover',
-              	container: 'body'
+            $(info.el).tooltip({
+                title: info.event.extendedProps.description,
+                placement: 'top',
+                trigger: 'hover',
+                container: 'body'
             });
-         },
-        events: <%=employeDemandsList%>
+        },
+        events: <%= employeDemandsList %>
     });
+    console.log(<%= employeDemandsList %>);
     calendar.render();
-    console.log(<%=employeDemandsList%>);
 });
 </script>
 
