@@ -30,6 +30,14 @@ document.addEventListener('DOMContentLoaded', function() {
         navLinks: false, // can click day/week names to navigate views
         editable: false,
         eventLimit: true, // allow "more" link when too many events
+        eventRender: function(info) {
+            $(info.el).tooltip({
+                title: info.event.extendedProps.description || '',
+                placement: 'top',
+                trigger: 'hover',
+                container: 'body'
+            });
+        },
         events: <%= teamDemandsList %>
     });    
     calendar.render();

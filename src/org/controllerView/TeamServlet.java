@@ -90,6 +90,7 @@ public class TeamServlet extends HttpServlet{
 	            endDate = sdf.format(c.getTime());
 	            
                 teamDemand.put("title", d.getEmploye().getMail() + " - " + d.getMotif() + " - " + d.getStatus());
+                teamDemand.put("description", d.getCommentary());
                 teamDemand.put("start", d.getStartDate());
                 teamDemand.put("end", endDate.toString());
                 teamDemand.put("color", "#28a745");
@@ -108,6 +109,7 @@ public class TeamServlet extends HttpServlet{
 	            endDate = sdf.format(c.getTime());
 	            
                 teamDemand.put("title", d.getEmploye().getMail() + " - " + d.getMotif() + " - " + d.getStatus());
+                teamDemand.put("description", d.getCommentary());
                 teamDemand.put("start", d.getStartDate());
                 teamDemand.put("end", endDate.toString());
                 teamDemand.put("color", "#dc3545");
