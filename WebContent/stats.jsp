@@ -37,7 +37,7 @@
 	          is3D: true,
 	        };
 	
-	        var chart = new google.visualization.PieChart(document.getElementById('piechart_3d'));
+	        var chart = new google.visualization.ColumnChart(document.getElementById('piechart_3d'));
 	        chart.draw(data, options);
 	      }
 	      
@@ -52,7 +52,7 @@
 		        var data = google.visualization.arrayToDataTable(getDataPerJob(dataDaysOffPerJob));
 		        var options = {
 		          title: 'job',
-		          is3D: true,
+		          pieHole: 0.4,
 		        };
 		
 		        var chart = new google.visualization.PieChart(document.getElementById('piechart_3d_4'));
@@ -71,7 +71,7 @@
 		        var data = google.visualization.arrayToDataTable(getDataPerReason(dataDaysOffPerReason));
 		        var options = {
 		          title: 'reason',
-		          is3D: true,
+		          pieHole: 0.4,
 		        };
 		
 		        var chart = new google.visualization.PieChart(document.getElementById('piechart_3d_3'));
