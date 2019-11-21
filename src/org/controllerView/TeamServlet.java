@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.databaseManage.DemandService;
+import org.databaseManage.TeamService;
 
 
 public class TeamServlet extends HttpServlet{
