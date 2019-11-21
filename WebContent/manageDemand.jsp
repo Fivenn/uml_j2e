@@ -6,6 +6,7 @@
 	ArrayList<Team> teamsList = (ArrayList<Team>)request.getAttribute("teamsList");
 	ArrayList<Employe> employesList  = (ArrayList<Employe>)request.getAttribute("employesList");
  	ArrayList<String> statusList  = (ArrayList<String>)request.getAttribute("statusList");
+ 	ArrayList<String> reasonsList  = (ArrayList<String>)request.getAttribute("reasonsList");
  	ArrayList<Demand> demandsList  = (ArrayList<Demand>)request.getAttribute("demandsList");
  	 
  	String mail = request.getAttribute("mail")!= null ? (String)request.getAttribute("mail") : "all";
@@ -98,7 +99,15 @@
 		        <td><%=d.getStartDate()%></td>
 		        <td><%=d.getEndDate()%></td>
 		        <td><%=d.getNbDays()%></td>
-		        <td><%=d.getMotif()%></td>
+		        <td> 
+		        	<form>
+		        		<select class="form-control" name="<%="status" + d.getId()%>">
+				       	 <% for (String s: statusList) { %>
+				        	  <option value="<%=s%>" <%if(s.equals(d.getMotif())){%>selected<%}%>><%=s%></option>
+				       	 <%}%>
+			    		</select> 
+		        	</form>   
+		        </td>
 		        <td>
 		          <% if(d.getStatus().equals("pending")){ %>
 		              <div style="display: flex !important;justify-content: space-around !important;">

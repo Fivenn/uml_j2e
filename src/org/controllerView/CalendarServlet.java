@@ -51,7 +51,7 @@ public class CalendarServlet extends HttpServlet {
 
     
 	protected void doGetOrPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		if(req.getSession().getAttribute("currentUser")!=null && ((Employe)req.getSession().getAttribute("currentUser")).isRH()) {
+		if(req.getSession().getAttribute("currentUser")!=null) {
 			this.doProcess(req, resp);
 		}else {
 			this.getServletContext().getRequestDispatcher("/Home").forward(req, resp);
@@ -60,6 +60,7 @@ public class CalendarServlet extends HttpServlet {
 	
 
 	protected void doProcess(HttpServletRequest req, HttpServletResponse resp) {
+		System.out.println("blblbl");
         this.demandsList = (ArrayList < Demand > ) this.demandService.getEmployeDemand(((Employe) req.getSession().getAttribute("currentUser")).getMail());
 
         // Build JSON
@@ -69,6 +70,9 @@ public class CalendarServlet extends HttpServlet {
             Calendar c = Calendar.getInstance();
             String endDate = d.getEndDate();
             String status = d.getStatus();
+            
+            System.out.println(d.getMotif());
+
                         
             switch(status) {
             case "pending":
@@ -86,7 +90,7 @@ public class CalendarServlet extends HttpServlet {
                 employeDemand.put("end", endDate.toString());
                 employeDemand.put("color", "#007bff");
                 employeDemand.put("textColor", "#FFFFFF");
-
+                
                 employeDemandsList.add(employeDemand);
             	break;
             case "approved":
@@ -123,24 +127,6 @@ public class CalendarServlet extends HttpServlet {
                 employeDemand.put("start", d.getStartDate());
                 employeDemand.put("end", endDate.toString());
                 employeDemand.put("color", "#dc3545");
-                employeDemand.put("textColor", "#FFFFFF");
-
-                employeDemandsList.add(employeDemand);
-            	break;
-            case "canceled":
-                // add one day to the end date
-                try {
-                    c.setTime(sdf.parse(endDate));
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-                c.add(Calendar.DATE, 1);
-                endDate = sdf.format(c.getTime());
-
-                employeDemand.put("title", ((Employe) req.getSession().getAttribute("currentUser")).getMail() + " - " + d.getMotif() + " - " + d.getStatus());
-                employeDemand.put("start", d.getStartDate());
-                employeDemand.put("end", endDate.toString());
-                employeDemand.put("color", "#6c757d");
                 employeDemand.put("textColor", "#FFFFFF");
 
                 employeDemandsList.add(employeDemand);

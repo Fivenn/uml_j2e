@@ -28,7 +28,7 @@ private ArrayList<Team> teamsList;
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {		
-		this.doProcess(req, resp);		
+		this.doGetOrPost(req, resp);		
 	}
 	
 	@Override
@@ -36,7 +36,16 @@ private ArrayList<Team> teamsList;
 		if(req.getParameter("delete")!=null){
 			this.employeService.deleteEmploye((String)req.getParameter("delete"));			
 		}
-		this.doProcess(req, resp);
+		this.doGetOrPost(req, resp);
+	}
+	
+	
+	protected void doGetOrPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		if(req.getSession().getAttribute("currentUser")!=null && ((Employe)req.getSession().getAttribute("currentUser")).isRH()) {
+			this.doProcess(req, resp);
+		}else {
+			this.getServletContext().getRequestDispatcher("/Home").forward(req, resp);
+		}
 	}
 	
 	protected void doProcess(HttpServletRequest req, HttpServletResponse resp) {

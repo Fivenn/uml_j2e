@@ -21,7 +21,7 @@ private EmployeService employeService = new EmployeService();
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		this.doProcess(req, resp);
+		this.doGetOrPost(req, resp);
 	}
 	
 	@Override
@@ -37,7 +37,7 @@ private EmployeService employeService = new EmployeService();
 			this.modifyEmploye(req.getParameter("prenom"),req.getParameter("nom"),req.getParameter("naissance"),req.getParameter("poste"),req.getParameter("equipe"),req.getParameter("mail"),req.getParameter("chef"),req.getParameter("adresse"));
 		}
 		
-		this.doProcess(req, resp);
+		this.doGetOrPost(req, resp);
 		
 	}
 	
@@ -52,6 +52,14 @@ private EmployeService employeService = new EmployeService();
 			e.printStackTrace();
 		} catch (ServletException e) {
 			e.printStackTrace();
+		}
+	}
+	
+	protected void doGetOrPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		if(req.getSession().getAttribute("currentUser")!=null && ((Employe)req.getSession().getAttribute("currentUser")).isRH()) {
+			this.doProcess(req, resp);
+		}else {
+			this.getServletContext().getRequestDispatcher("/Home").forward(req, resp);
 		}
 	}
 	
