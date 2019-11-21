@@ -34,7 +34,7 @@
 	<% if(!stats){ %>
 		<form class="form-co" action="ManageDemand" method="post">
 			<div class="form-row form-group">
-				<i style="align-self: center; font-size: 2em; display: inline-block; color: primary;" class="far fa-question-circle" data-toggle="tooltip" data-placement="top" title="Il est possible de ne choisir qu'un employé ou une team. Si les deux sont sélectionnés, l'employé est choisi."></i>
+				<i style="align-self: center; font-size: 2em; display: inline-block; color: primary;" class="far fa-question-circle" data-toggle="tooltip" data-placement="top" title="Il est possible de ne choisir qu'un employé ou une team. Si les deux sont sélectionnés, l'employé est choisi. Pour modifier le motif d'une demande, choisir le motif et cliquer sur modifier."></i>
 				<div class="col-md-3">
 				    <select class="form-control" name="employe">
 				    	<option value="all">Tous les employés</option>
