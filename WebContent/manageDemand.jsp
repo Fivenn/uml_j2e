@@ -34,7 +34,7 @@
 	<% if(!stats){ %>
 		<form class="form-co" action="ManageDemand" method="post">
 			<div class="form-row form-group">
-				<i style="align-self: center; font-size: 2em; display: inline-block; color: primary;" class="far fa-question-circle" data-toggle="tooltip" data-placement="top" title="Il est possible de ne choisir qu'un employé ou une team. Si les deux sont sélectionnés, l'employé est choisi."></i>
+				<i style="align-self: center; font-size: 2em; display: inline-block; color: primary;" class="far fa-question-circle" data-toggle="tooltip" data-placement="top" title="Il est possible de ne choisir qu'un employé ou une team. Si les deux sont sélectionnés, l'employé est choisi. Pour modifier le motif d'une demande, choisir le motif et cliquer sur modifier."></i>
 				<div class="col-md-3">
 				    <select class="form-control" name="employe">
 				    	<option value="all">Tous les employés</option>
@@ -99,13 +99,16 @@
 		        <td><%=d.getStartDate()%></td>
 		        <td><%=d.getEndDate()%></td>
 		        <td><%=d.getNbDays()%></td>
-		        <td> 
-		        	<form>
-		        		<select class="form-control" name="<%="status" + d.getId()%>">
-				       	 <% for (String s: statusList) { %>
+		        <td> 	        	
+		        	<form class="form form-inline" action="ManageDemand" method="post">
+		        		<select class="form-control" name="reasonsList">
+				       	 <% for (String s: reasonsList) { %>
 				        	  <option value="<%=s%>" <%if(s.equals(d.getMotif())){%>selected<%}%>><%=s%></option>
 				       	 <%}%>
 			    		</select> 
+			    		<button class="btn btn-danger" type="submit" name="changeReason" value="<%=d.getId()%>">
+			    			<i class="fa fa-edit" aria-hidden="true"></i>
+			    		</button>
 		        	</form>   
 		        </td>
 		        <td>

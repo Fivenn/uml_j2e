@@ -4,6 +4,13 @@
    pageEncoding="UTF-8"%>
 
 <script>
+var today = new Date();
+var dd = String(today.getDate()).padStart(2, '0');
+var mm = String(today.getMonth() + 1).padStart(2, '0');
+var yyyy = today.getFullYear();
+
+today = yyyy + '-' + mm + '-' + dd;
+
 document.addEventListener('DOMContentLoaded', function() {
     var calendarEl = document.getElementById('calendar');
 
@@ -14,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function() {
             center: 'title',
             right: 'dayGridMonth,dayGridWeek'
         },
-        defaultDate: '2019-11-13',
+        defaultDate: today,
         navLinks: false, // can click day/week names to navigate views
         editable: false,
         eventLimit: true, // allow "more" link when too many events
@@ -23,6 +30,5 @@ document.addEventListener('DOMContentLoaded', function() {
     calendar.render();
 });
 </script>
-
 <div id='calendar'></div>
 
