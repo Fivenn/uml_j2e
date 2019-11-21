@@ -37,7 +37,7 @@
 	          is3D: true,
 	        };
 	
-	        var chart = new google.visualization.ColumnChart(document.getElementById('piechart_3d'));
+	        var chart = new google.visualization.ColumnChart(document.getElementById('chartPerMonth'));
 	        chart.draw(data, options);
 	      }
 	      
@@ -55,7 +55,7 @@
 		          pieHole: 0.4,
 		        };
 		
-		        var chart = new google.visualization.PieChart(document.getElementById('piechart_3d_4'));
+		        var chart = new google.visualization.PieChart(document.getElementById('chartPerJob'));
 		        chart.draw(data, options);
 		      }
 	      
@@ -74,7 +74,7 @@
 		          pieHole: 0.4,
 		        };
 		
-		        var chart = new google.visualization.PieChart(document.getElementById('piechart_3d_3'));
+		        var chart = new google.visualization.PieChart(document.getElementById('chartPerReason'));
 		        chart.draw(data, options);
 		      }
 	      
@@ -92,7 +92,7 @@
 	          is3D: true,
 	        };
 	
-	        var chart = new google.visualization.PieChart(document.getElementById('piechart_3d_2'));
+	        var chart = new google.visualization.PieChart(document.getElementById('chartPerTeam'));
 	        chart.draw(data, options);
 	      }
 	      
@@ -143,9 +143,25 @@
 			la moyenne de congés par équipe.
 			</p>
 		</div>
-		<div id="piechart_3d" style="width: 700px; height: 500px;"></div>
-		<div id="piechart_3d_2" style="width: 700px; height: 500px;"></div>
-		<div id="piechart_3d_3" style="width: 700px; height: 500px;"></div>
-		<div id="piechart_3d_4" style="width: 700px; height: 500px;"></div>
+		<div class="card">
+            <div class="card-body">
+				<div id="chartPerMonth" style="width: 600px; height: 400px;"></div>
+			</div>
+		</div>
+		<div class="card">
+            <div class="card-body">
+				<div id="chartPerJob" style="width: 600px; height: 400px;"></div>
+			</div>
+		</div>
+		<div class="card">
+            <div class="card-body">
+				<div id="chartPerTeam" style="width: 600px; height: 400px;"></div>
+			</div>
+		</div>
+		<div class="card">
+            <div class="card-body">
+				<div id="chartPerReason" style="width: 600px; height: 400px;"></div>
+			</div>
+		</div>
 	</body>
 </html>
