@@ -26,11 +26,13 @@ CREATE TRIGGER insertDemand BEFORE INSERT ON demand
        FOR EACH ROW 
        	SET NEW.status = 'pending';    
 
+       	
+       	
 DROP EVENT autoAccept;
 
 DELIMITER $$$
 CREATE EVENT autoAccept ON SCHEDULE EVERY 1 DAY DO BEGIN
-	UPDATE demand SET status = 'aproved', comment='acceptation auto' WHERE ADDDATE(demandDate, INTERVAL 1 MINUTE) < now() and status='pending';
+	UPDATE demand SET status = 'approved', comment='acceptation auto' WHERE ADDDATE(demandDate, INTERVAL 2 DAY) < now() and status='pending';
 END $$$
 DELIMITER ;
    

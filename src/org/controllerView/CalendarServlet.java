@@ -3,8 +3,10 @@ package org.controllerView;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -33,7 +35,7 @@ public class CalendarServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        this.doProcess(req, resp);
+        this.doGetOrPost(req, resp);
     }
 
     @Override
@@ -42,20 +44,22 @@ public class CalendarServlet extends HttpServlet {
         if (req.getParameter("goToRHMode") != null) {
             req.setAttribute("currentMode", "employe");
         } else if (req.getParameter("askDaysOff") != null) {
-        	try {
-	        	if(((Employe) req.getSession().getAttribute("currentUser")).getNbDays()>=Integer.parseInt(req.getParameter("nbDays"))){
-	        		this.demandService.insertIntoDemand(((Employe) req.getSession().getAttribute("currentUser")).getMail(), req.getParameter("fromDate"), req.getParameter("toDate"), req.getParameter("reason"), req.getParameter("nbDays"));   
-	        	}else {
-	        		req.setAttribute("errorAskingForDays", "Le nombre de jours est insuffisant, il n'en reste que "+ ((Employe) req.getSession().getAttribute("currentUser")).getNbDays() +".");
-	        	}
-        	}catch(Exception e){
-        		req.setAttribute("errorAskingForDays", "Demande non valide.");
-	        }
+    		req.setAttribute("errorAskingForDays", this.isDateValid(req));
         }
-        this.doProcess(req, resp);
+        this.doGetOrPost(req, resp);
     }
 
-    protected void doProcess(HttpServletRequest req, HttpServletResponse resp) {
+    
+	protected void doGetOrPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		if(req.getSession().getAttribute("currentUser")!=null && ((Employe)req.getSession().getAttribute("currentUser")).isRH()) {
+			this.doProcess(req, resp);
+		}else {
+			this.getServletContext().getRequestDispatcher("/Home").forward(req, resp);
+		}
+	}
+	
+
+	protected void doProcess(HttpServletRequest req, HttpServletResponse resp) {
         this.demandsList = (ArrayList < Demand > ) this.demandService.getEmployeDemand(((Employe) req.getSession().getAttribute("currentUser")).getMail());
 
         // Build JSON
@@ -158,4 +162,31 @@ public class CalendarServlet extends HttpServlet {
 
         employeDemandsList.clear();
     }
+	
+	private String isDateValid(HttpServletRequest req) {
+		// TODO Auto-generated method stub
+    	String message = "";
+    	try {
+        	if(((Employe) req.getSession().getAttribute("currentUser")).getNbDays()<Integer.parseInt(req.getParameter("nbDays"))){
+        		message = "Le nombre de jours est insuffisant, il n'en reste que "+ ((Employe) req.getSession().getAttribute("currentUser")).getNbDays() +".";
+        	
+        	}else if(new SimpleDateFormat("yyyy-MM-dd").parse(req.getParameter("fromDate")).after(new SimpleDateFormat("yyyy-MM-dd").parse(req.getParameter("toDate")))) {
+        		message = "La première date doit être inférieure à la deuxième.";
+        	
+        	}else if(LocalDate.parse(req.getParameter("fromDate")).isBefore(LocalDate.now().plusDays(2)) && !req.getParameter("reason").equals("Enfants malades") && !req.getParameter("reason").equals("Raisons familiales")) {
+        		message = "Il faut au minimum 48h pour poser des congés.";
+        	}
+        	
+        	if(message.contentEquals("")) {
+        		if(this.demandService.insertIntoDemand(((Employe) req.getSession().getAttribute("currentUser")).getMail(), req.getParameter("fromDate"), req.getParameter("toDate"), req.getParameter("reason"), req.getParameter("nbDays"))) {
+            		message = "Demande envoyée au service RH. Elle sera traitée dans les meilleurs délais.";
+        		}
+        	}
+    	}catch(Exception e){
+    		message = "Demande non valide.";
+        }
+    	return message;
+		
+	}
+    
 }
