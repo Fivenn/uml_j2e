@@ -7,8 +7,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.databaseManage.DemandService;
+
 
 public class TeamServlet extends HttpServlet{
+	
+	private DemandService demandService = new DemandService();
+	private TeamService teamService = new TeamService();
 	
 	HttpServlet httpServlet;
 	

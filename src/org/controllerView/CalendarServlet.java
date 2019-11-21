@@ -6,7 +6,6 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -60,7 +59,6 @@ public class CalendarServlet extends HttpServlet {
 	
 
 	protected void doProcess(HttpServletRequest req, HttpServletResponse resp) {
-		System.out.println("blblbl");
         this.demandsList = (ArrayList < Demand > ) this.demandService.getEmployeDemand(((Employe) req.getSession().getAttribute("currentUser")).getMail());
 
         // Build JSON
@@ -70,9 +68,6 @@ public class CalendarServlet extends HttpServlet {
             Calendar c = Calendar.getInstance();
             String endDate = d.getEndDate();
             String status = d.getStatus();
-            
-            System.out.println(d.getMotif());
-
                         
             switch(status) {
             case "pending":
@@ -150,7 +145,6 @@ public class CalendarServlet extends HttpServlet {
     }
 	
 	private String isDateValid(HttpServletRequest req) {
-		// TODO Auto-generated method stub
     	String message = "";
     	try {
         	if(((Employe) req.getSession().getAttribute("currentUser")).getNbDays()<Integer.parseInt(req.getParameter("nbDays"))){
