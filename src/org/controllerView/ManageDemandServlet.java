@@ -28,7 +28,7 @@ public class ManageDemandServlet extends HttpServlet {
 	private ArrayList<Team> teamsList;
 	private ArrayList<String> statusList;
 	private ArrayList<Demand> demandsList;
-	
+	private ArrayList<String> reasonsList;
 	
 	//ArrayList des stats :
 	//1 : liste de nb de congés par équipe Tab([String, int])
@@ -96,6 +96,7 @@ public class ManageDemandServlet extends HttpServlet {
 		req.setAttribute("teamsList", this.teamsList);
 		req.setAttribute("statusList", this.statusList);
 		req.setAttribute("demandsList", this.demandsList);
+		req.setAttribute("reasonsList", this.reasonsList);
 		
 		req.setAttribute("currentPage", "manageDemand");
 		req.setAttribute("currentMode", "RH");
