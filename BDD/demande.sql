@@ -1,5 +1,5 @@
 
-
+DROP TABLE demand;
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
@@ -11,7 +11,7 @@ use DaysOffManager;
 -- Structure de la table 'demand'
 --
 
-CREATE OR REPLACE TABLE demand (
+CREATE TABLE demand (
   id serial NOT NULL,
   employe varchar(255) NOT NULL,
   status enum('pending', 'canceled', 'approved', 'refused') NOT NULL,
