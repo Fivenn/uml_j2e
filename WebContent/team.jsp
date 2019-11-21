@@ -1,7 +1,12 @@
 
 
+<%@page import="org.json.simple.JSONArray"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
    pageEncoding="UTF-8"%>
+   
+<%
+JSONArray teamDemandsList = (JSONArray) request.getAttribute("teamDemandsList");
+%>
 
 <script>
 var today = new Date();
@@ -25,9 +30,10 @@ document.addEventListener('DOMContentLoaded', function() {
         navLinks: false, // can click day/week names to navigate views
         editable: false,
         eventLimit: true, // allow "more" link when too many events
-        events: []
+        events: <%= teamDemandsList %>
     });    
     calendar.render();
+    console.log(<%= teamDemandsList %>);
 });
 </script>
 <div id='calendar'></div>

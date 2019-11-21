@@ -1,6 +1,10 @@
 package org.controllerView;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -8,12 +12,21 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.databaseManage.DemandService;
+import org.databaseManage.TeamService;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.model.Demand;
+import org.model.Employe;
 
 
 public class TeamServlet extends HttpServlet{
 	
 	private DemandService demandService = new DemandService();
 	private TeamService teamService = new TeamService();
+	
+	private ArrayList < Demand > demandsList;
+	
+	private JSONArray teamDemandsList = new JSONArray();
 	
 	HttpServlet httpServlet;
 	
@@ -37,7 +50,77 @@ public class TeamServlet extends HttpServlet{
 	}
 	
 	protected void doProcess(HttpServletRequest req, HttpServletResponse resp) {
+		this.demandsList = (ArrayList < Demand > ) this.demandService.getTeamDemands(((Employe) req.getSession().getAttribute("currentUser")).getMail());
+		
+		// Build JSON
+		for (Demand d: demandsList) {
+			JSONObject teamDemand = new JSONObject();
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			Calendar c = Calendar.getInstance();
+			String endDate = d.getEndDate();
+			String status = d.getStatus();
+			
+			switch(status) {
+			case "pending":
+	            // add one day to the end date
+	            try {
+	                c.setTime(sdf.parse(endDate));
+	            } catch (ParseException e) {
+	                e.printStackTrace();
+	            }
+	            c.add(Calendar.DATE, 1);
+	            endDate = sdf.format(c.getTime());
+	            
+                teamDemand.put("title", d.getEmploye().getMail() + " - " + d.getMotif() + " - " + d.getStatus());
+                teamDemand.put("start", d.getStartDate());
+                teamDemand.put("end", endDate.toString());
+                teamDemand.put("color", "#007bff");
+                teamDemand.put("textColor", "#FFFFFF");
+                
+                teamDemandsList.add(teamDemand);
+				break;
+			case "approved":
+	            // add one day to the end date
+	            try {
+	                c.setTime(sdf.parse(endDate));
+	            } catch (ParseException e) {
+	                e.printStackTrace();
+	            }
+	            c.add(Calendar.DATE, 1);
+	            endDate = sdf.format(c.getTime());
+	            
+                teamDemand.put("title", d.getEmploye().getMail() + " - " + d.getMotif() + " - " + d.getStatus());
+                teamDemand.put("start", d.getStartDate());
+                teamDemand.put("end", endDate.toString());
+                teamDemand.put("color", "#28a745");
+                teamDemand.put("textColor", "#FFFFFF");
+                
+                teamDemandsList.add(teamDemand);
+				break;
+			case "refused":
+	            // add one day to the end date
+	            try {
+	                c.setTime(sdf.parse(endDate));
+	            } catch (ParseException e) {
+	                e.printStackTrace();
+	            }
+	            c.add(Calendar.DATE, 1);
+	            endDate = sdf.format(c.getTime());
+	            
+                teamDemand.put("title", d.getEmploye().getMail() + " - " + d.getMotif() + " - " + d.getStatus());
+                teamDemand.put("start", d.getStartDate());
+                teamDemand.put("end", endDate.toString());
+                teamDemand.put("color", "#dc3545");
+                teamDemand.put("textColor", "#FFFFFF");
+                
+                teamDemandsList.add(teamDemand);
+				break;
+			}
+		}
+		
 		req.setAttribute("currentPage", "team");
+		req.setAttribute("teamDemandsList", this.teamDemandsList);
+		
 		try {
             this.getServletContext().getRequestDispatcher("/Home").forward(req, resp);
 		} catch (IOException e) {
@@ -45,6 +128,8 @@ public class TeamServlet extends HttpServlet{
 		} catch (ServletException e) {
 			e.printStackTrace();
 		}
+		
+		teamDemandsList.clear();
 	}
 	
 }
