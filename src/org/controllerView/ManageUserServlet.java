@@ -14,7 +14,6 @@ import javax.servlet.http.HttpSession;
 
 import org.databaseManage.EmployeService;
 import org.databaseManage.TeamService;
-import org.model.Demand;
 import org.model.Employe;
 import org.model.Team;
 
@@ -22,8 +21,10 @@ public class ManageUserServlet extends HttpServlet {
 HttpServlet httpServlet;
 private EmployeService employeService = new EmployeService();
 private TeamService teamService = new TeamService();
+
 private ArrayList<Employe> employesList;
 private ArrayList<Team> teamsList;
+private ArrayList<String> posteList;
 
 	
 	@Override
@@ -50,10 +51,19 @@ private ArrayList<Team> teamsList;
 	
 	protected void doProcess(HttpServletRequest req, HttpServletResponse resp) {
 		this.initLists(true);
+		
+		if(req.getParameter("search")!= null) {
+			this.reloadEmployes( req.getParameter("poste"), req.getParameter("team"), req.getParameter("employe"));
+			req.setAttribute("mail", req.getParameter("employe"));
+			req.setAttribute("poste", req.getParameter("poste"));
+			req.setAttribute("team", req.getParameter("team"));
+		}
+		
 		req.setAttribute("currentMode", "RH");
 		req.setAttribute("currentPage", "manageUser");		
 		req.setAttribute("employesList", this.employesList);
-		
+		req.setAttribute("teamsList", this.teamsList);
+		req.setAttribute("posteList", this.posteList);
 		try {
             this.getServletContext().getRequestDispatcher("/Home").forward(req, resp);
 		} catch (IOException e) {
@@ -67,8 +77,18 @@ private ArrayList<Team> teamsList;
 		// TODO Auto-generated method stub
 		if(isRespoRH) {
 			this.employesList = (ArrayList<Employe>) this.employeService.getAllEmployes();
-			this.teamsList = (ArrayList<Team>) this.teamService.getAllTeams();		
+			this.teamsList = (ArrayList<Team>) this.teamService.getAllTeams();
+			this.posteList = new ArrayList<String>();
+			this.posteList.add("Employe");
+			this.posteList.add("EmployeRH");
+			this.posteList.add("TeamLeader");
+			this.posteList.add("RespoRH");
 		}
+	}
+	
+	private void reloadEmployes(String poste, String team, String mail) {
+		System.out.println(poste + mail + team);
+		this.employesList = (ArrayList<Employe>) this.employeService.getFilteredEmploye(poste,team,mail);
 	}
 	
 }
