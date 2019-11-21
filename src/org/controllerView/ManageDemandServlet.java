@@ -61,7 +61,10 @@ public class ManageDemandServlet extends HttpServlet {
 				this.demandService.changeDemandStatus(req.getParameter("approvedCom"), "approved",req.getParameter("comment"));
 			}else if(req.getParameter("refused")!= null) {
 				this.demandService.changeDemandStatus(req.getParameter("refused"), "refused",req.getParameter("comment"));
+			}else if(req.getParameter("changeReason") != null) {
+				this.demandService.changeDemandReason(req.getParameter("changeReason"),req.getParameter("reasonsList"));
 			}
+			
 			if(req.getParameter("statsDemand")!= null) {
 				req.setAttribute("stats", true);
 				
@@ -126,6 +129,7 @@ public class ManageDemandServlet extends HttpServlet {
 		this.employesList = (ArrayList<Employe>) this.employeService.getAllEmployes();
 		
 		this.statusList = this.demandService.getStatus();
+		this.reasonsList = (ArrayList<String>) this.demandService.getAllReasons();
 	}
 	
 	private void initStats() {

@@ -60,6 +60,10 @@ public class DemandDAOImpl {
 	public boolean setDemandStatus(String string, String status,String comment) {
 		return updateDemand("update demand set status='"+status+"', comment='"+comment+"' where id='"+string+"';");
 	}
+
+	public boolean setDemandReason(String id, String reason) {
+		return updateDemand("update demand set reason='"+reason+"' where id='"+id+"';");
+	}
 	
 	private boolean updateDemand(String query) {
 		Connection conn = null;

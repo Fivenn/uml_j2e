@@ -99,13 +99,16 @@
 		        <td><%=d.getStartDate()%></td>
 		        <td><%=d.getEndDate()%></td>
 		        <td><%=d.getNbDays()%></td>
-		        <td> 
-		        	<form>
-		        		<select class="form-control" name="<%="status" + d.getId()%>">
-				       	 <% for (String s: statusList) { %>
+		        <td> 	        	
+		        	<form class="form form-inline" action="ManageDemand" method="post">
+		        		<select class="form-control" name="reasonsList">
+				       	 <% for (String s: reasonsList) { %>
 				        	  <option value="<%=s%>" <%if(s.equals(d.getMotif())){%>selected<%}%>><%=s%></option>
 				       	 <%}%>
 			    		</select> 
+			    		<button class="btn btn-danger" type="submit" name="changeReason" value="<%=d.getId()%>">
+			    			<i class="fa fa-edit" aria-hidden="true"></i>
+			    		</button>
 		        	</form>   
 		        </td>
 		        <td>
