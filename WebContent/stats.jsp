@@ -143,11 +143,25 @@
 			la moyenne de congés par équipe.
 			</p>
 		</div>
-		<div>
-			<div id="chartPerMonth" style="width: 700px; height: 500px;"></div>
-			<div id="chartPerJob" style="width: 700px; height: 500px;"></div>
-			<div id="chartPerReason" style="width: 700px; height: 500px;"></div>
-			<div id="chartPerTeam" style="width: 700px; height: 500px;"></div>
+		<div class="card">
+            <div class="card-body">
+				<div id="chartPerMonth" style="width: 600px; height: 400px;"></div>
+			</div>
+		</div>
+		<div class="card">
+            <div class="card-body">
+				<div id="chartPerJob" style="width: 600px; height: 400px;"></div>
+			</div>
+		</div>
+		<div class="card">
+            <div class="card-body">
+				<div id="chartPerTeam" style="width: 600px; height: 400px;"></div>
+			</div>
+		</div>
+		<div class="card">
+            <div class="card-body">
+				<div id="chartPerReason" style="width: 600px; height: 400px;"></div>
+			</div>
 		</div>
 	</body>
 </html>
