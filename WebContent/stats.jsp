@@ -97,9 +97,9 @@
 	      }
 	      
 	      function getDataPerTeam(dataPerTeam){
-		      for(let i of <%=daysOffPerTeam%>){
-		    	 dataPerTeam.push([i[0].toString(), i[1]]);
-		      }
+		      <% for(int i=0;i<daysOffPerTeam.size();i++){%>
+		      	dataPerTeam.push(["<%=daysOffPerTeam.get(i).get(0)!= null ? daysOffPerTeam.get(i).get(0).toString() : "Sans team"%>",<%=daysOffPerTeam.get(i).get(1)%>]);
+		      <%}%>
 		      return dataPerTeam;
 	      }
 	      
