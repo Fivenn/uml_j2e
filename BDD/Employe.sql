@@ -1,4 +1,4 @@
- 
+DROP TABLE employe; 
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
@@ -10,7 +10,7 @@ use DaysOffManager;
 -- Structure de la table 'employe'
 --
 
-CREATE OR REPLACE TABLE employe (
+CREATE TABLE employe (
   mail varchar(255) NOT NULL,
   firstName varchar(255) NOT NULL,
   surname varchar(255) NOT NULL,
