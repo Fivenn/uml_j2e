@@ -20,12 +20,20 @@ HttpServlet httpServlet;
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		this.doProcess(req, resp);
+		this.doGetOrPost(req, resp);
 	}
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		this.doProcess(req, resp);
+		this.doGetOrPost(req, resp);
+	}
+	
+	protected void doGetOrPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		if(req.getSession().getAttribute("currentUser")!=null) {
+			this.doProcess(req, resp);
+		}else {
+			this.getServletContext().getRequestDispatcher("/Home").forward(req, resp);
+		}
 	}
 	
 	protected void doProcess(HttpServletRequest req, HttpServletResponse resp) {
