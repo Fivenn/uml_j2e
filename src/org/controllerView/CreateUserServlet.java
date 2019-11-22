@@ -62,6 +62,7 @@ private boolean pageVerif;
 					req.setAttribute("employe", this.employe);
 				}
 			}
+	
 		
 		this.doGetOrPost(req, resp);
 		
@@ -77,6 +78,11 @@ private boolean pageVerif;
 			req.setAttribute("currentPage","manageUser");
 			pageVerif = false;		
 		}
+		if(req.getParameter("createTeam")!=null) {
+			req.setAttribute("teamToCreate", "yes");
+			req.setAttribute("currentPage","createUser");	
+		}
+		
 		else {
 			req.setAttribute("currentPage","createUser");	
 		}			

@@ -234,7 +234,7 @@ public class EmployeDAOImpl {
 			if(!poste.equals("all")||!team.equals("all"))requete += " and ";
 		}
 		if(!poste.equals("all"))requete += "fonction ='"+poste+"'";
-		if(!team.equals("all") && mail.equals("all"))requete += "mail in(select mail from employe where team='"+ team +"')";
+		if(!team.equals("all") && mail.equals("all"))requete += " and mail in(select mail from employe where team='"+ team +"')";
 		
 		if(requete.equals("select * from employe where ")){
 			return (ArrayList<Employe>) findByAll();

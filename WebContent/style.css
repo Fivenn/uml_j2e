@@ -10,7 +10,7 @@ main{
 	margin: auto;
 	margin-top: 2em;
 	padding-bottom: 2vh;
-	min-height: 100%;
+	min-height: 83%;
 }
 
 footer {
@@ -21,6 +21,11 @@ footer {
 	background-color: #110133;
 	color: #FFFFFF;
 	z-index: 24;
+	height: 3em;
+	font-size: 0.55em; 
+	justify-content: space-between;
+    display: flex !important;
+    align-items: center;
 }
 
 .profil-image{

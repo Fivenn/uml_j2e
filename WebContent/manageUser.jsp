@@ -20,6 +20,9 @@
 			<form action="CreateUser" method="post">
 				<button class="nav-button" type="submit">Créer un nouvel employé</button>
 			</form>
+			<form action="CreateUser" method="post">
+				<button class="nav-button" type="submit" name="createTeam" >Créer une nouvelle team</button>
+			</form>
 			</nav>
 		</div>
 
@@ -31,18 +34,7 @@
 <form class="form-co" action="ManageUser" method="post">
 			<div class="form-row form-group">
 				<i style="align-self: center; font-size: 2em; display: inline-block; color: primary;" class="far fa-question-circle" data-toggle="tooltip" data-placement="top" title="Il est possible de ne choisir qu'un employé ou une team. Si les deux sont sélectionnés, l'employé est choisi. Pour modifier le motif d'une demande, choisir le motif et cliquer sur modifier."></i>
-				<div class="col-md-3">
-				    <select class="form-control" name="employe">
-				    	<option value="all">Tous les employés</option>
-				      <%
-				    	for (Employe e: employesList) {
-				    	%>
-				    		<option value="<%=e.getMail()%>" <%if(e.getMail().equals(mail)){%>selected<%}%>><%=e.getSurname()%> <%=e.getFirstName()%></option>
-				    	<%
-				    	}
-				    	%>
-				    </select>
-		  		</div>
+				
 			  	<div class="col-md-3">
 			      <select class="form-control" name="team">
 			      	<option value="all">Toutes les équipes</option>
@@ -54,7 +46,7 @@
 			        }
 			        %>
 			      </select>
-			  	</div>
+			  	</div>			  	
 			    <div class="col-md-3">
 			      <select class="form-control" name="poste">
 			      	<option value="all">Tous les postes</option>
@@ -67,6 +59,18 @@
 			        %>
 			      </select>
 			    </div>
+			    <div class="col-md-3">
+				    <select class="form-control" name="employe">
+				    	<option value="all">Tous les employés</option>
+				      <%
+				    	for (Employe e: employesList) {
+				    	%>
+				    		<option value="<%=e.getMail()%>" <%if(e.getMail().equals(mail)){%>selected<%}%>><%=e.getSurname()%> <%=e.getFirstName()%></option>
+				    	<%
+				    	}
+				    	%>
+				    </select>
+		  		</div>
 			    <div>
 			  		<button class="btn btn-primary my-2 my-sm-0" type="submit" name="search">Rechercher</button>
 			  	</div>

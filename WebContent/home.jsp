@@ -96,8 +96,8 @@
          <%}%>
       </main>
       <footer>
-         <p>Days Off Manager est un projet réalisé par Maëlle Heyrendt, Clélia Le van, Nicolas Sueur et Mickaël Tisserand dans le cadre du Projet JEE en IMR2 à l'Enssat.</p>
-         <a class="nav-item nav-link active" href="/DaysOffManager/Help">Aide</a>
+         <p style="margin: 0px; margin-left: 1em;"><i class="far fa-copyright"></i> Days Off Manager est un projet réalisé par Maëlle Heyrendt, Clélia Le van, Nicolas Sueur et Mickaël Tisserand dans le cadre du Projet JEE en IMR2 à l'Enssat.</p>
+         <a style="margin-right: 1em; font-size: 1.5em; " href="/DaysOffManager/Help"><i class="far fa-question-circle"></i> Aide</a>
       </footer>
       <% } %>
    </body>
