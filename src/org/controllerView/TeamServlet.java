@@ -23,12 +23,11 @@ public class TeamServlet extends HttpServlet{
 	
 	private DemandService demandService = new DemandService();
 	private EmployeService employeService = new EmployeService();
-	
 	private ArrayList < Demand > demandsList;
 	private ArrayList < Employe > employeesList;
-	
+    private ArrayList < String > statusList;
+    private ArrayList < String > reasonsList;
 	private JSONArray teamDemandsList = new JSONArray();
-	
 	HttpServlet httpServlet;
 	
 	
@@ -44,6 +43,18 @@ public class TeamServlet extends HttpServlet{
 	
 	protected void doGetOrPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		if(req.getSession().getAttribute("currentUser")!=null) {
+			System.out.println(req.getParameter("employe"));
+			if(req.getParameter("filter") != null) {
+				this.demandsList = (ArrayList < Demand > ) this.demandService.getEmployeDemand(req.getParameter("employe"));
+				req.setAttribute("mail", req.getParameter("employe"));
+			} else {
+				this.demandsList = (ArrayList < Demand > ) this.demandService.getTeamDemands(((Employe) req.getSession().getAttribute("currentUser")).getMail());
+				req.setAttribute("mail", "all");
+			}
+			
+			if(req.getParameter("tableTeamDemand") != null) {
+				req.setAttribute("table", true);
+			}
 			this.doProcess(req, resp);
 		}else {
 			this.getServletContext().getRequestDispatcher("/Home").forward(req, resp);
@@ -51,16 +62,9 @@ public class TeamServlet extends HttpServlet{
 	}
 	
 	protected void doProcess(HttpServletRequest req, HttpServletResponse resp) {
-		System.out.println(req.getParameter("employe"));
-		if(req.getParameter("filter") != null) {
-			this.demandsList = (ArrayList < Demand > ) this.demandService.getEmployeDemand(req.getParameter("employe"));
-			req.setAttribute("mail", req.getParameter("employe"));
-		} else {
-			this.demandsList = (ArrayList < Demand > ) this.demandService.getTeamDemands(((Employe) req.getSession().getAttribute("currentUser")).getMail());
-			req.setAttribute("mail", "all");
-		}
-		
 		this.employeesList = (ArrayList < Employe >) this.employeService.getMyTeam(((Employe)req.getSession().getAttribute("currentUser")).getMail());
+		this.statusList = (ArrayList < String > ) demandService.getStatus();
+		this.reasonsList = (ArrayList < String > ) demandService.getAllReasons();
 		
 		// Build JSON
 		for (Demand d: demandsList) {
@@ -132,6 +136,9 @@ public class TeamServlet extends HttpServlet{
 			req.setAttribute("currentPage", "team");
 			req.setAttribute("teamDemandsList", this.teamDemandsList);
 			req.setAttribute("employeesList", this.employeesList);
+			req.setAttribute("demandsList", this.demandsList);
+			req.setAttribute("statusList", this.statusList);
+			req.setAttribute("reasonsList", this.reasonsList);
 		}
 		
 		try {
