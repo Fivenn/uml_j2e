@@ -173,7 +173,7 @@ public class DemandDAOImpl {
 	}
 	
 	public ArrayList<List<String>> getDaysOffPerTeam(){
-		return this.findNbDemandPerX("SELECT team.name AS team, SUM(demand.duration) AS nbDays FROM (demand NATURAL JOIN employe) LEFT JOIN team ON employe.team GROUP BY employe.team;","nbDays","team");
+		return this.findNbDemandPerX("SELECT team.name AS team, SUM(demand.duration) AS nbDays FROM (demand JOIN employe ON demand.employe = employe.mail) LEFT JOIN team ON employe.team GROUP BY employe.team;","nbDays","team");
 	}
 	//to do
 	public ArrayList<List<String>> getDaysOffPerMonth(){
@@ -185,7 +185,7 @@ public class DemandDAOImpl {
 	}
 	
 	public ArrayList<List<String>> getDaysOffPerJob(){
-		return this.findNbDemandPerX("SELECT fonction, SUM(duration) AS nbDays FROM demand NATURAL JOIN employe GROUP BY fonction;","nbDays","fonction");
+		return this.findNbDemandPerX("SELECT fonction, SUM(duration) AS nbDays FROM demand JOIN employe ON demand.employe = employe.mail GROUP BY fonction;","nbDays","fonction");
 	}
 
 	public boolean hasEnoughDays(String idDemand) {
