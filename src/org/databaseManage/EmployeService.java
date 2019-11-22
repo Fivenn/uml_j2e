@@ -48,4 +48,8 @@ public class EmployeService {
 	public List<Employe> getFilteredEmploye(String poste, String team, String mail) {
 		return employeDao.findFilteredEmploye(poste,team,mail);
 	}
+	
+	public List<String> getAllMail(){
+		return employeDao.findAllMail();
+	}
 }
