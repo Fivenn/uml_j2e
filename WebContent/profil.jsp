@@ -14,14 +14,11 @@
 		<title>Profil</title>
 	</head>
 	<body class="profil-image">
-		<h1>Profil de <%=currentUser.getFirstName() + " " + currentUser.getSurname()%></h1>
-		<div style="display: flex;justify-content: space-between;">
+		<h1 style="border-radius: 1em; text-align: center; padding: 0.5em; background: white; margin: 0 4em 1em 4em;">Profil de <%=currentUser.getFirstName() + " " + currentUser.getSurname()%></h1>
+		<div style="align-items: center; display: flex;justify-content: space-around;">
 			<div style="display: flex;align-items: center;flex-direction: column;justify-content: center;">
 				<div class="card">
 	                <div class="card-body">
-						<div>
-							<label><%=currentUser.getBirthDate()%></label>
-						</div>
 						<div>
 							<% if(currentUser.isRH() && currentUser.isLeader()){ %>
 								<label>Leader Responsable RH de l'équipe <%=currentUser.getNbTeam() %></label>
@@ -34,11 +31,14 @@
 							<% } %>
 						</div>
 						<div>
-							<label><%=currentUser.getMail()%></label>
+							<label><i style="font-weight: bold;">Mail : </i><%=currentUser.getMail()%></label>
+						</div>
+						<div>
+							<label><i style="font-weight: bold;">Né(e) le : </i><%=currentUser.getBirthDate()%></label>
 						</div>
 						<div>
 							<form action="MyProfil" method="post">
-								<label>Adresse postale</label>
+								<label><i style="font-weight: bold;">Adresse postale : </i></label>
 								<div class="form-group">
 									<input type="text" id="addr" name="addr" required size="30" value="<%=currentUser.getAddress()%>">
 		                        </div>
