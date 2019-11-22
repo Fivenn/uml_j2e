@@ -28,6 +28,13 @@ CREATE TRIGGER insertDemand BEFORE INSERT ON demand
 
        	
        	
+DROP TRIGGER insertTeam;
+
+CREATE TRIGGER insertTeam BEFORE INSERT ON Team
+       FOR EACH ROW BEGIN
+       	UPDATE employe SET fonction= 'TeamLeader' where mail = NEW.leader;  
+       	
+       	
 DROP EVENT autoAccept;
 
 DELIMITER $$$
