@@ -49,14 +49,21 @@ public class CalendarServlet extends HttpServlet {
 	protected void doGetOrPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		if(req.getSession().getAttribute("currentUser")!=null) {
 			if(req.getParameter("update") != null) {
+				req.setAttribute("table", true);
 				req.setAttribute("errorAskingForDays", this.isDateValid(req,false));
 		        this.demandsList = (ArrayList <Demand>) this.demandService.getEmployeDemand(((Employe) req.getSession().getAttribute("currentUser")).getMail());
 			} else if(req.getParameter("delete") != null) {
+				req.setAttribute("table", true);
 		        this.demandsList = (ArrayList <Demand>) this.demandService.getEmployeDemand(((Employe) req.getSession().getAttribute("currentUser")).getMail());
 			} else if(req.getParameter("search") != null) {
+				req.setAttribute("table", true);
 				this.demandsList = (ArrayList<Demand>) this.demandService.getFilteredDemand(req.getParameter("statusSearch"), ((Employe) req.getSession().getAttribute("currentUser")).getMail() , "all", false);
 			}else {
 		        this.demandsList = (ArrayList <Demand>) this.demandService.getEmployeDemand(((Employe) req.getSession().getAttribute("currentUser")).getMail());
+			}
+			
+			if(req.getParameter("tableDemand")!= null) {
+				req.setAttribute("table", true);			
 			}
 			
 			this.doProcess(req, resp);

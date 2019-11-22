@@ -14,14 +14,21 @@
 	ArrayList<Demand> demandsList  = request.getAttribute("demandsList") != null ?(ArrayList<Demand>)request.getAttribute("demandsList"): null;
 %>
 <% if(reasonsList != null){ %>
-	<div>
-	   <i style="align-self: center; font-size: 2em; display: inline-block; color: primary;" class="far fa-question-circle" data-toggle="tooltip" data-placement="top" title="En positionant la souris sur un event du calendrier, il est possible d'y voir le commentaire associé."></i>
-	</div>
-	<div>
-	   <a class="btn btn-primary" data-toggle="collapse" href="#collapseForm" role="button" aria-expanded="false" aria-controls="collapseForm">
-	   <i class="fas fa-plus"></i>
-	   </a>
-	   <p style="color: DC3545;"><%=errorAskingForDays %></p>
+
+	<div style="display: flex;border-bottom: 1px solid #110133;margin-bottom: 2em;justify-content: space-between;">
+		<div style="display: flex;justify-content: space-around;">
+			<i style="align-self: center; font-size: 2em; display: inline-block; color: primary;" class="far fa-question-circle" data-toggle="tooltip" data-placement="top" title="En positionant la souris sur un event du calendrier, il est possible d'y voir le commentaire associé."></i>
+			<a style="align-self: center; font-size: 1em;" class="btn btn-primary" data-toggle="collapse" href="#collapseForm" role="button" aria-expanded="false" aria-controls="collapseForm">
+	   			<i class="fas fa-plus"></i>
+	   		</a>
+	   		<p style="color: DC3545;"><%=errorAskingForDays %></p>	
+		</div>	
+		<nav>
+			<form class="form-inline" action="Calendar" method="post">
+             	<button class="nav-button" type="submit">Calendrier</button>
+             	<button class="nav-button" name="tableDemand" type="submit">Tableau</button>            
+          	</form>	
+		</nav>
 	</div>
 	<div class="collapse" id="collapseForm">
 	   <form class="form-co" action="Calendar" method="post">
@@ -52,7 +59,7 @@
 	      </div>
 	   </form>
 	</div>
-	<% if(table){ %>
+	<% if(!table){ %>
 		<div id='calendar'></div>
 		<script>
 		   var today = new Date();
