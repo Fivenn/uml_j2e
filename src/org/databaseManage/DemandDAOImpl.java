@@ -172,7 +172,6 @@ public class DemandDAOImpl {
 		return this.findBy(requete + "order by status;");
 	}
 	
-	
 	public ArrayList<List<String>> getDaysOffPerTeam(){
 		return this.findNbDemandPerX("SELECT team.name AS team, SUM(demand.duration) AS nbDays FROM (demand NATURAL JOIN employe) LEFT JOIN team ON employe.team GROUP BY employe.team;","nbDays","team");
 	}
