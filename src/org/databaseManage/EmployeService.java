@@ -41,6 +41,14 @@ public class EmployeService {
 		employeDao.modifyEmploye(emp,mail);
 	}
 	
+	public void updatePassword(String emp,String pwd) {
+		this.employeDao.updatePassword(emp,pwd);
+	}
+	
+	public void updateAddress(String emp,String addr) {
+		this.employeDao.updateAddress(emp,addr);
+	}
+	
 	public void deleteEmploye(String mail) {
 		employeDao.eraseEmploye(mail);
 	}

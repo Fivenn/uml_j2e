@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.databaseManage.DemandService;
 import org.databaseManage.EmployeService;
+import org.databaseManage.TeamService;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.model.Demand;
@@ -22,6 +23,7 @@ public class TeamServlet extends HttpServlet {
 
 	private DemandService demandService = new DemandService();
 	private EmployeService employeService = new EmployeService();
+	private TeamService teamService = new TeamService();
 	private ArrayList<Demand> demandsList;
 	private ArrayList<Employe> employeesList;
 	private ArrayList<String> statusList;
