@@ -63,20 +63,20 @@ public class EmployeDAOImpl {
 	}
 
 	public Employe findByEmail(String email) {
-		List<Employe> listEmployes = findBy("select * from employe where mail = '" + email + "'");
+		List<Employe> listEmployes = findBy("select * from employe where mail = '" + email + "';");
 		return listEmployes != null ? listEmployes.get(0) : null;
 	}
 
 	public Employe checkCredentials(String email, String password) {
 		List<Employe> listEmployes = findBy(
-				"select * from employe where mail = '" + email + "' and pwd = '" + password + "'");
+				"select * from employe where mail = '" + email + "' and pwd = '" + password + "';");
 		return listEmployes.size() != 0 ? listEmployes.get(0) : null;
 	}
 
 	public List<Employe> findByAll() {
 		// avoid select * queries because of performance issues,
 		// only query the columns you need
-		return findBy("select * from employe");
+		return findBy("select * from employe;");
 	}
 
 	public List<Employe> findByAllButRH() {
@@ -138,7 +138,7 @@ public class EmployeDAOImpl {
 		}
 	}
 
-	public void modifyEmploye(Employe emp) {
+	public void modifyEmploye(Employe emp,String mail) {
 		String function = emp.getTitle();
 		if (emp.isLeader() && !emp.isRH()) {
 			function = "TeamLeader";
@@ -147,10 +147,10 @@ public class EmployeDAOImpl {
 		} else if (!emp.isLeader() && emp.isRH()) {
 			function = "EmployeRH";
 		}
-		String query = "UPDATE employe SET firstName=" + "'" + emp.getFirstName() + "'" + ", surname=" + "'"
+		String query = "UPDATE employe SET mail='"+ emp.getMail()+ "'"+",firstName=" + "'" + emp.getFirstName() + "'" + ", surname=" + "'"
 				+ emp.getSurname() + "'" + ",birthDate=" + "'" + emp.getBirthDate() + "'" + ",address=" + "'"
 				+ emp.getAddress() + "'" + ",nbDays=" + "'" + emp.getNbDays() + "'" + ",fonction=" + "'" + function
-				+ "'" + ",team=" + "'" + emp.getNbTeam() + "'" + "WHERE mail =" + "'" + emp.getMail() + "'" + ";";
+				+ "'" + ",team=" + "'" + emp.getNbTeam() + "'" + "WHERE mail =" + "'" + mail + "'" + ";";
 
 		Connection conn = null;
 		Statement stat = null;
@@ -197,4 +197,21 @@ public class EmployeDAOImpl {
 			}
 		}
 	}
+	
+	public List<Employe> findFilteredEmploye(String poste ,String team,String mail){
+		String requete = "select * from employe where ";
+		if(!mail.equals("all")) {
+			requete += "mail ='"+mail+"'";
+			if(!poste.equals("all")||!team.equals("all"))requete += " and ";
+		}
+		if(!poste.equals("all"))requete += "fonction ='"+poste+"'";
+		if(!team.equals("all") && mail.equals("all"))requete += "mail in(select mail from employe where team='"+ team +"')";
+		
+		if(requete.equals("select * from employe where ")){
+			return (ArrayList<Employe>) findByAll();
+		}
+		System.out.println(requete);
+		return this.findBy(requete + "order by surname;");
+	}
+	
 }

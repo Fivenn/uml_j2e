@@ -2,6 +2,7 @@ package org.databaseManage;
 
 import java.util.List;
 
+import org.model.Demand;
 import org.model.Employe;
 
 public class EmployeService {
@@ -36,11 +37,15 @@ public class EmployeService {
 		employeDao.addEmploye(emp);
 	}
 	
-	public void updateEmploye(Employe emp) {
-		employeDao.modifyEmploye(emp);
+	public void updateEmploye(Employe emp,String mail) {
+		employeDao.modifyEmploye(emp,mail);
 	}
 	
 	public void deleteEmploye(String mail) {
 		employeDao.eraseEmploye(mail);
+	}
+	
+	public List<Employe> getFilteredEmploye(String poste, String team, String mail) {
+		return employeDao.findFilteredEmploye(poste,team,mail);
 	}
 }
