@@ -4,6 +4,8 @@
 
 <%
 	Employe currentUser = (Employe)request.getSession().getAttribute("currentUser");
+
+	String errorUpdatingPwd = request.getAttribute("errorUpdatingPwd")!= null ? (String)request.getAttribute("errorUpdatingPwd") : "";
 %>
 
 <html>
@@ -35,8 +37,13 @@
 							<label><%=currentUser.getMail()%></label>
 						</div>
 						<div>
-							<label for="addr">Adresse postale</label>
-							<input type="text" id="addr" name="addr" required size="30" value="<%=currentUser.getAddress()%>">
+							<form action="MyProfil" method="post">
+								<label>Adresse postale</label>
+								<div class="form-group">
+									<input type="text" id="addr" name="addr" required size="30" value="<%=currentUser.getAddress()%>">
+		                        </div>
+								<center><button type="submit" class="btn btn-primary text-center">Envoyer</button></center>
+							</form>
 						</div>
 					</div>
 				</div>	
@@ -44,7 +51,7 @@
 			<div style="display: flex;flex-direction: column;">
 				<div class="card">
                 	<div class="card-body">
-                		<form action="Connection" method="post">
+                		<form action="MyProfil" method="post">
 	                        <h5>Changer votre mot de passe</h5>
 	                        <div class="form-group">
 	                           <input placeholder="Nouveau mot de passe" type="password" class="form-control" name="new_pwd">
@@ -53,6 +60,7 @@
 	                           <input placeholder="Re-Nouveau mot de passe" type="password" class="form-control" name="re_new_pwd">
 	                        </div>
 	                        <center><button type="submit" class="btn btn-primary text-center">Envoyer</button></center>
+	                        <p style="color: DC3545;"><%=errorUpdatingPwd %></p>
 	                     </form>
 					</div>
 				</div>	
