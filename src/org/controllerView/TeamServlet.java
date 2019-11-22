@@ -51,8 +51,9 @@ public class TeamServlet extends HttpServlet{
 	}
 	
 	protected void doProcess(HttpServletRequest req, HttpServletResponse resp) {
+		System.out.println(req.getParameter("employe"));
 		if(req.getParameter("filter") != null) {
-			this.demandsList = (ArrayList < Demand > ) this.demandService.getTeamDemands(req.getParameter("employe"));
+			this.demandsList = (ArrayList < Demand > ) this.demandService.getEmployeDemand(req.getParameter("employe"));
 			req.setAttribute("mail", req.getParameter("employe"));
 		} else {
 			this.demandsList = (ArrayList < Demand > ) this.demandService.getTeamDemands(((Employe) req.getSession().getAttribute("currentUser")).getMail());
