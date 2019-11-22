@@ -7,9 +7,11 @@
     %>
 <%
    	JSONArray employeDemandsList = (JSONArray) request.getAttribute("employeDemandsList");
+	ArrayList<String> statusList  = request.getAttribute("statusList") != null ?(ArrayList<String>)request.getAttribute("statusList"): null;
    	ArrayList<String> reasonsList  = request.getAttribute("reasonsList") != null ?(ArrayList<String>)request.getAttribute("reasonsList"): null;
    	String errorAskingForDays = request.getAttribute("errorAskingForDays")!= null ? (String)request.getAttribute("errorAskingForDays") : "";
  	Boolean table= request.getAttribute("table")!=null?(Boolean)request.getAttribute("table"):false;
+	ArrayList<Demand> demandsList  = request.getAttribute("demandsList") != null ?(ArrayList<Demand>)request.getAttribute("demandsList"): null;
 %>
 <% if(reasonsList != null){ %>
 	<div>
@@ -50,7 +52,7 @@
 	      </div>
 	   </form>
 	</div>
-	<% if(table) %>
+	<% if(table){ %>
 		<div id='calendar'></div>
 		<script>
 		   var today = new Date();
@@ -88,7 +90,89 @@
 		   });
 		</script>
 	<%}else{ %>
-	
+		<form class="form-co" action="Calendar" method="post">
+			<div class="form-row form-group">
+			    <div class="col-md-3">
+			      <select class="form-control" name="statusSearch">
+			      	<option value="all">Tous les statuts</option>
+			        <% for (String s: statusList) { %>
+			          <option value="<%=s%>"><%=s%></option>
+			        <% }%>
+			      </select>
+			    </div>
+			    <div>
+			  		<button class="btn btn-primary my-2 my-sm-0" type="submit" name="search">Rechercher</button>
+			  	</div>
+			</div>
+		</form>
+		
+		<table class="table table-bordered table-striped">
+		  <thead>
+		    <tr>
+		      <th scope="col">Départ</th>
+		      <th scope="col">Retour</th>
+		      <th scope="col">Durée</th>
+		      <th scope="col">Motif</th>
+		      <th scope="col">Status</th>
+		    </tr>
+		  </thead>
+		  <tbody>
+		    <% for(Demand d : demandsList){ %>
+		      <tr>
+		      	<form class="form form-inline" action="Calendar" method="post">
+			        <td>
+			        	<% if(d.getStatus().equals("pending")){ %>
+			        		<input class="form-control" id="fromDate" name="fromDate" type="date" required value= "<%=d.getStartDate() %>"></input>
+			        	<%} else{ %>
+			        		<%=d.getStartDate()%>
+			        	<%}%>
+			        </td>
+			        <td>
+			        	<% if(d.getStatus().equals("pending")){ %>
+		            		<input class="form-control" id="toDate" name="toDate" type="date" required value = "<%=d.getEndDate() %>"></input>
+			        	<%} else{ %>
+			        		<%=d.getEndDate()%>
+			        	<%}%>
+			        </td>
+			        <td>
+			        	<% if(d.getStatus().equals("pending")){ %>
+		            		<input class="form-control" id="nbDays" name="nbDays" type="text" value="<%= d.getNbDays() %>" required></input>
+			        	<%} else{ %>
+			        		<%=d.getNbDays()%>
+			        	<%}%>
+			        	
+			        </td>
+			        <td>
+			        	<% if(d.getStatus().equals("pending")){ %> 	        	
+		        			<select class="form-control" name="reason">
+				       	 	<% for (String s: reasonsList) { %>
+				        	  	<option value="<%=s%>" <%if(s.equals(d.getMotif())){%>selected<%}%>><%=s%></option>
+				       	 	<%}%>
+			    			</select> 
+			    		<%} else{ %>
+			        		<%=d.getMotif()%>
+			        	<%}%>
+			        </td>
+			        <td>
+			          <% if(d.getStatus().equals("pending")){ %>
+			              <div style="display: flex !important;justify-content: space-around !important;">
+			              		<button class="btn btn-danger" type="submit" name="update" value="<%=d.getId()%>">
+				    				<i class="fa fa-edit" aria-hidden="true"></i>
+				    			</button>
+			              		<button class="btn btn-success" type="submit" name="delete" value="<%=d.getId()%>">
+			              			<i class="fas fa-times" aria-hidden="true"></i>
+			              		</button>
+			              </div>
+			          <%}else{%>
+			            <%=d.getStatus()%>
+			          <%}%>
+			        </td>
+			   </form>
+		      </tr>
+		    <%}%>
+		  </tbody>
+		
+		</table>
 	<%} %>
 <%} %>
 
