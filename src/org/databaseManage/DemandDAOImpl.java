@@ -172,7 +172,6 @@ public class DemandDAOImpl {
 		return this.findBy(requete + "order by status;");
 	}
 	
-	
 	public ArrayList<List<String>> getDaysOffPerTeam(){
 		return this.findNbDemandPerX("SELECT team.name AS team, SUM(demand.duration) AS nbDays FROM (demand NATURAL JOIN employe) LEFT JOIN team ON employe.team GROUP BY employe.team;","nbDays","team");
 	}
@@ -189,4 +188,36 @@ public class DemandDAOImpl {
 		return this.findNbDemandPerX("SELECT fonction, SUM(duration) AS nbDays FROM demand NATURAL JOIN employe GROUP BY fonction;","nbDays","fonction");
 	}
 
+	public boolean hasEnoughDays(String idDemand) {
+		return this.getBoolean("SELECT surname FROM employe JOIN demand ON employe.mail = demand.employe AND demand.id='"+ idDemand +"' AND employe.nbDays>=demand.duration;");
+	}
+
+	private boolean getBoolean(String query) {
+		Connection conn = null;
+		List<Demand> listDemandes = new ArrayList<Demand>();
+		
+		boolean bool = false;
+		
+		Statement stat = null;
+		ResultSet rs = null;
+		
+		try {
+			conn = DBManager.getInstance().getConnection();
+			if (conn != null) {
+				stat = conn.createStatement();
+				rs = stat.executeQuery(query);
+				while (rs.next()) {
+					bool = true;
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (conn != null) {
+				DBManager.getInstance().cleanup(conn, stat, rs);
+			}
+		}
+				
+		return bool;
+	}
 }
