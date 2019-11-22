@@ -14,7 +14,7 @@ use DaysOffManager;
 CREATE TABLE demand (
   id serial NOT NULL,
   employe varchar(255) NOT NULL,
-  status enum('pending', 'canceled', 'approved', 'refused') NOT NULL,
+  status enum('pending', 'approved', 'refused') NOT NULL,
   beginDate date NOT NULL,
   endDate date NOT NULL,
   demandDate dateTime NOT NULL DEFAULT NOW(),
@@ -32,7 +32,6 @@ CREATE TABLE demand (
 --
 
 INSERT INTO demand (employe,status,beginDate,endDate,reason, duration) VALUES ('mheyrend@enssat.fr','pending','2018-02-01','2018-02-02','RTT',1);
-INSERT INTO demand (employe,status,beginDate,endDate,reason, duration) VALUES ('mheyrend@enssat.fr','canceled','2018-02-01','2018-02-02','RTT',2);
 INSERT INTO demand (employe,status,beginDate,endDate,reason, duration) VALUES ('a@a.a','pending','2018-02-01','2018-02-02','RTT',1);
 INSERT INTO demand (employe,status,beginDate,endDate,reason, duration) VALUES ('e@e.e','refused','2018-02-01','2018-02-03','RTT',1);
 INSERT INTO demand (employe,status,beginDate,endDate,reason, duration) VALUES ('e@e.e','pending','2018-02-01','2018-02-02','RTT',1);
