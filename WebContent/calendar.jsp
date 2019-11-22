@@ -50,7 +50,7 @@
 	      </div>
 	   </form>
 	</div>
-	<% if(table) %>
+	<% if(table) {%>
 		<div id='calendar'></div>
 		<script>
 		   var today = new Date();
