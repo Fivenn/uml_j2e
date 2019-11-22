@@ -33,8 +33,10 @@
 	      function drawChartPerMonth() {
 	        var data = google.visualization.arrayToDataTable(getDataPerMonth(dataDaysOffPerMonth));
 	        var options = {
-	          title: 'Nombre de congés par mois (toutes équipes confondues)',
-	          is3D: true,
+        		title: 'Nombre de congés par mois (*)',
+	            width: 600,
+	            height: 400,
+	            legend: { position: 'bottom' },
 	        };
 	
 	        var chart = new google.visualization.ColumnChart(document.getElementById('chartPerMonth'));
@@ -51,8 +53,11 @@
 	      function drawChartPerJob() {
 		        var data = google.visualization.arrayToDataTable(getDataPerJob(dataDaysOffPerJob));
 		        var options = {
-		          title: 'job',
-		          pieHole: 0.4,
+		        	title: 'Nombre de congés par catégorie (*)',
+		        	width: 600,
+		            height: 400,
+		          	pieHole: 0.4,
+		          	legend: { position: 'bottom' },
 		        };
 		
 		        var chart = new google.visualization.PieChart(document.getElementById('chartPerJob'));
@@ -70,8 +75,11 @@
 	      function drawChartPerReason() {
 		        var data = google.visualization.arrayToDataTable(getDataPerReason(dataDaysOffPerReason));
 		        var options = {
-		          title: 'reason',
+		          title: 'Nombre de congés par motif (*)',
+		          width: 600,
+		          height: 400,
 		          pieHole: 0.4,
+		          legend: { position: 'bottom' },
 		        };
 		
 		        var chart = new google.visualization.PieChart(document.getElementById('chartPerReason'));
@@ -88,8 +96,11 @@
 	      function drawChartPerTeam() {
 	        var data = google.visualization.arrayToDataTable(getDataPerTeam(dataDaysOffPerTeam));
 	        var options = {
-	          title: 'team',
+	          title: 'Nombre de congés par équipe (*)',
+	          width: 600,
+	          height: 400,
 	          is3D: true,
+	          legend: { position: 'bottom' },
 	        };
 	
 	        var chart = new google.visualization.PieChart(document.getElementById('chartPerTeam'));
@@ -143,24 +154,34 @@
 			la moyenne de congés par équipe.
 			</p>
 		</div>
-		<div class="card">
-            <div class="card-body">
-				<div id="chartPerMonth" style="width: 600px; height: 400px;"></div>
+		<div style="display: flex;justify-content: center;">
+			<div>
+				<div class="card">
+                	<div class="card-body">
+						<div id="chartPerMonth"></div>
+						<p>(*) Ces nombres de congés ont été calculés pour toutes équipes confondues.</p>
+					</div>
+				</div>
+				<div class="card">
+                	<div class="card-body">
+						<div id="chartPerJob"></div>
+						<p>(*) Ces nombres de congés ont été calculés pour toutes équipes confondues.</p>
+					</div>
+				</div>
 			</div>
-		</div>
-		<div class="card">
-            <div class="card-body">
-				<div id="chartPerJob" style="width: 600px; height: 400px;"></div>
-			</div>
-		</div>
-		<div class="card">
-            <div class="card-body">
-				<div id="chartPerTeam" style="width: 600px; height: 400px;"></div>
-			</div>
-		</div>
-		<div class="card">
-            <div class="card-body">
-				<div id="chartPerReason" style="width: 600px; height: 400px;"></div>
+			<div>
+				<div class="card">
+                	<div class="card-body">
+						<div id="chartPerTeam"></div>
+						<p>(*) Ces nombres de congés ont été calculés pour tous postes confondus.</p>
+					</div>
+				</div>
+				<div class="card">
+                	<div class="card-body">
+						<div id="chartPerReason"></div>
+						<p>(*) Ces nombres de congés ont été calculés pour toutes équipes confondues.</p>
+					</div>
+				</div>
 			</div>
 		</div>
 	</body>

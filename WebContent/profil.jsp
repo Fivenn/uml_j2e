@@ -19,27 +19,31 @@
 		<h1>Profil de <%=currentUser.getFirstName() + " " + currentUser.getSurname()%></h1>
 		<div style="display: flex;justify-content: space-between;">
 			<div style="display: flex;align-items: center;flex-direction: column;justify-content: center;">
-				<div>
-					<label><%=currentUser.getBirthDate()%></label>
-				</div>
-				<div>
-					<% if(currentUser.isRH() && currentUser.isLeader()){ %>
-						<label>Leader Responsable RH de l'équipe <%=currentUser.getNbTeam() %></label>
-					<% } else if (currentUser.isRH()) { %>
-						<label>Responsable RH de l'équipe <%=currentUser.getNbTeam() %></label>
-					<% } else if (currentUser.isLeader()) { %>
-						<label>Leader de l'équipe <%=currentUser.getNbTeam() %></label>
-					<% } else { %>
-						<label>Employé dans l'équipe <%=currentUser.getNbTeam() %></label>
-					<% } %>
-				</div>
-				<div>
-					<label><%=currentUser.getMail()%></label>
-				</div>
-				<div style="display: flex;align-items: center;flex-direction: column;justify-content: center;">
-					<label for="addr">Adresse postale</label>
-					<input type="text" id="addr" name="addr" required size="30" value="<%=currentUser.getAddress()%>">
-				</div>
+				<div class="card">
+	                <div class="card-body">
+						<div>
+							<label><%=currentUser.getBirthDate()%></label>
+						</div>
+						<div>
+							<% if(currentUser.isRH() && currentUser.isLeader()){ %>
+								<label>Leader Responsable RH de l'équipe <%=currentUser.getNbTeam() %></label>
+							<% } else if (currentUser.isRH()) { %>
+								<label>Responsable RH de l'équipe <%=currentUser.getNbTeam() %></label>
+							<% } else if (currentUser.isLeader()) { %>
+								<label>Leader de l'équipe <%=currentUser.getNbTeam() %></label>
+							<% } else { %>
+								<label>Employé dans l'équipe <%=currentUser.getNbTeam() %></label>
+							<% } %>
+						</div>
+						<div>
+							<label><%=currentUser.getMail()%></label>
+						</div>
+						<div>
+							<label for="addr">Adresse postale</label>
+							<input type="text" id="addr" name="addr" required size="30" value="<%=currentUser.getAddress()%>">
+						</div>
+					</div>
+				</div>	
 			</div>
 			<div style="display: flex;flex-direction: column;">
 				<div class="card">
