@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.databaseManage.DemandService;
-import org.databaseManage.TeamService;
+import org.databaseManage.EmployeService;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.model.Demand;
@@ -22,9 +22,10 @@ import org.model.Employe;
 public class TeamServlet extends HttpServlet{
 	
 	private DemandService demandService = new DemandService();
-	private TeamService teamService = new TeamService();
+	private EmployeService employeService = new EmployeService();
 	
 	private ArrayList < Demand > demandsList;
+	private ArrayList < Employe > employeesList;
 	
 	private JSONArray teamDemandsList = new JSONArray();
 	
@@ -50,7 +51,15 @@ public class TeamServlet extends HttpServlet{
 	}
 	
 	protected void doProcess(HttpServletRequest req, HttpServletResponse resp) {
-		this.demandsList = (ArrayList < Demand > ) this.demandService.getTeamDemands(((Employe) req.getSession().getAttribute("currentUser")).getMail());
+		if(req.getParameter("filter") != null) {
+			this.demandsList = (ArrayList < Demand > ) this.demandService.getTeamDemands(req.getParameter("employe"));
+			req.setAttribute("mail", req.getParameter("employe"));
+		} else {
+			this.demandsList = (ArrayList < Demand > ) this.demandService.getTeamDemands(((Employe) req.getSession().getAttribute("currentUser")).getMail());
+			req.setAttribute("mail", "all");
+		}
+		
+		this.employeesList = (ArrayList < Employe >) this.employeService.getMyTeam(((Employe)req.getSession().getAttribute("currentUser")).getMail());
 		
 		// Build JSON
 		for (Demand d: demandsList) {
@@ -118,10 +127,11 @@ public class TeamServlet extends HttpServlet{
                 teamDemandsList.add(teamDemand);
 				break;
 			}
+			
+			req.setAttribute("currentPage", "team");
+			req.setAttribute("teamDemandsList", this.teamDemandsList);
+			req.setAttribute("employeesList", this.employeesList);
 		}
-		
-		req.setAttribute("currentPage", "team");
-		req.setAttribute("teamDemandsList", this.teamDemandsList);
 		
 		try {
             this.getServletContext().getRequestDispatcher("/Home").forward(req, resp);
@@ -133,5 +143,4 @@ public class TeamServlet extends HttpServlet{
 		
 		teamDemandsList.clear();
 	}
-	
 }
