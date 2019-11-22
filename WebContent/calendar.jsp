@@ -53,8 +53,9 @@
 	            <label for="nbDays"> Durée : </label>
 	            <input class="form-control" id="nbDays" name="nbDays" type="text" placeholder="Durée en jours" required></input>
 	         </div>
-	         <div>
-	            <button class="btn btn-primary my-2 my-sm-0" type="submit" name="askDaysOff">Faire la demande</button>
+	         <div class="col-md-3">
+	         	<label for="askDaysOff"> Valider :  </label>
+	            <button id="askDaysOff" class="btn btn-primary my-2 my-sm-0" type="submit" name="askDaysOff">Faire la demande</button>
 	         </div>
 	      </div>
 	   </form>

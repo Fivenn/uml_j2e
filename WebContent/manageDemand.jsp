@@ -14,6 +14,9 @@
  	String status = request.getAttribute("status")!=null?(String)request.getAttribute("status"):"all";
  	
  	Boolean stats = request.getAttribute("stats")!=null?(Boolean)request.getAttribute("stats"):false;
+ 	
+   	String errorAskingForDays = request.getAttribute("errorAskingForDays")!= null ? (String)request.getAttribute("errorAskingForDays") : "";
+
 %>
 <%
 	if(teamsList != null){
@@ -32,6 +35,7 @@
 	
 	
 	<% if(!stats){ %>
+	
 		<form class="form-co" action="ManageDemand" method="post">
 			<div class="form-row form-group">
 				<i style="align-self: center; font-size: 2em; display: inline-block; color: primary;" class="far fa-question-circle" data-toggle="tooltip" data-placement="top" title="Il est possible de ne choisir qu'un employé ou une team. Si les deux sont sélectionnés, l'employé est choisi. Pour modifier le motif d'une demande, choisir le motif et cliquer sur modifier."></i>
@@ -76,6 +80,8 @@
 			  	</div>
 			</div>
 		</form>
+		
+		<p style="color: DC3545;"><%=errorAskingForDays %></p>	
 		
 		<table class="table table-bordered table-striped">
 		  <thead>

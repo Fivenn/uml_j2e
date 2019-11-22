@@ -53,9 +53,9 @@ public class CalendarServlet extends HttpServlet {
 						.getEmployeDemand(((Employe) req.getSession().getAttribute("currentUser")).getMail());
 			} else if (req.getParameter("delete") != null) {
 				req.setAttribute("table", true);
-				this.demandsList = (ArrayList<Demand>) this.demandService
-						.getEmployeDemand(((Employe) req.getSession().getAttribute("currentUser")).getMail());
-			} else if (req.getParameter("search") != null) {
+				this.demandService.deleteDemand(req.getParameter("delete"));
+		        this.demandsList = (ArrayList <Demand>) this.demandService.getEmployeDemand(((Employe) req.getSession().getAttribute("currentUser")).getMail());
+			} else if(req.getParameter("search") != null) {
 				req.setAttribute("table", true);
 				this.demandsList = (ArrayList<Demand>) this.demandService.getFilteredDemand(
 						req.getParameter("statusSearch"),

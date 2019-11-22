@@ -56,12 +56,24 @@ public class ManageDemandServlet extends HttpServlet {
 
 		if(req.getSession().getAttribute("currentUser")!=null && ((Employe)req.getSession().getAttribute("currentUser")).isRH()) {
 			if(req.getParameter("approved")!= null) {
-				this.demandService.changeDemandStatus(req.getParameter("approved"), "approved");
+				if(this.demandService.hasEnoughDays(req.getParameter("approved"))) {
+					this.demandService.changeDemandStatus(req.getParameter("approved"), "approved");
+					req.setAttribute("errorAskingForDays", "Demande approuvée");			
+				}else {
+					req.setAttribute("errorAskingForDays", "Pas assez de jours disponibles pour accepter");					
+				}
 			}else if(req.getParameter("approvedCom")!= null) {
-				this.demandService.changeDemandStatus(req.getParameter("approvedCom"), "approved",req.getParameter("comment"));
+				if(this.demandService.hasEnoughDays(req.getParameter("approvedCom"))) {
+					req.setAttribute("errorAskingForDays", "Demande approuvée");					
+					this.demandService.changeDemandStatus(req.getParameter("approvedCom"), "approved",req.getParameter("comment"));
+				}else {
+					req.setAttribute("errorAskingForDays", "Pas assez de jours disponibles pour accepter");					
+				}
 			}else if(req.getParameter("refused")!= null) {
+				req.setAttribute("errorAskingForDays", "Demande refusée.");					
 				this.demandService.changeDemandStatus(req.getParameter("refused"), "refused",req.getParameter("comment"));
 			}else if(req.getParameter("changeReason") != null) {
+				req.setAttribute("errorAskingForDays", "Demande modifiée");					
 				this.demandService.changeDemandReason(req.getParameter("changeReason"),req.getParameter("reasonsList"));
 			}
 			

@@ -1,5 +1,4 @@
 body{
-
 }
 
 form{
@@ -10,6 +9,35 @@ main{
 	max-width: 90%;
 	margin: auto;
 	margin-top: 2em;
+	padding-bottom: 2vh;
+	min-height: 83%;
+}
+
+footer {
+	position: sticky; 
+	bottom: 0;
+	right: 0;
+	left: 0;
+	background-color: #110133;
+	color: #FFFFFF;
+	z-index: 24;
+	height: 3em;
+	font-size: 0.55em; 
+	justify-content: space-between;
+    display: flex !important;
+    align-items: center;
+}
+
+.profil-image{
+	background-image: url("ressources/profil-image.jpg");
+
+	/* Full height */
+	height: 100%;
+
+	/* Center and scale the image */
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
 }
 
 .btn-outline-primary{
@@ -75,4 +103,3 @@ button.nav-button:hover {
         height: 14.2857vw;
     }
 }
-

@@ -166,6 +166,7 @@ public class EmployeDAOImpl {
 		}
 		return mailList;
 	}
+	
 	public void modifyEmploye(Employe emp,String mail) {
 		String function = emp.getTitle();
 		if (emp.isLeader() && !emp.isRH()) {
@@ -233,13 +234,61 @@ public class EmployeDAOImpl {
 			if(!poste.equals("all")||!team.equals("all"))requete += " and ";
 		}
 		if(!poste.equals("all"))requete += "fonction ='"+poste+"'";
-		if(!team.equals("all") && mail.equals("all"))requete += "mail in(select mail from employe where team='"+ team +"')";
+		if(!team.equals("all") && mail.equals("all"))requete += " and mail in(select mail from employe where team='"+ team +"')";
 		
 		if(requete.equals("select * from employe where ")){
 			return (ArrayList<Employe>) findByAll();
 		}
 		System.out.println(requete);
 		return this.findBy(requete + "order by surname;");
+	}
+	
+	public void updatePassword(String employe, String pwd) {
+		String query = "UPDATE employe SET pwd = '" + pwd + "' where mail = '" + employe + "';";
+
+		Connection conn = null;
+		Statement stat = null;
+		ResultSet rs = null;
+		try {
+			conn = DBManager.getInstance().getConnection();
+			if (conn != null) {
+				stat = conn.createStatement();
+				stat.executeUpdate(query);
+
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		} finally {
+			// always clean up all resources in finally block
+			if (conn != null) {
+				DBManager.getInstance().cleanup(conn, stat, rs);
+			}
+		}
+	}
+	
+	public void updateAddress(String employe, String addr) {
+		String query = "UPDATE employe SET address = '" + addr + "' where mail = '" + employe + "';";
+
+		Connection conn = null;
+		Statement stat = null;
+		ResultSet rs = null;
+		try {
+			conn = DBManager.getInstance().getConnection();
+			if (conn != null) {
+				stat = conn.createStatement();
+				stat.executeUpdate(query);
+
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		} finally {
+			// always clean up all resources in finally block
+			if (conn != null) {
+				DBManager.getInstance().cleanup(conn, stat, rs);
+			}
+		}
 	}
 	
 }

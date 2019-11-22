@@ -65,4 +65,9 @@ public class DemandService {
 		return this.demandDao.deleteDemand(idDemand);
 		
 	}
+
+	public boolean hasEnoughDays(String idDemand) {
+		// TODO Auto-generated method stub
+		return this.demandDao.hasEnoughDays(idDemand);
+	}
 }

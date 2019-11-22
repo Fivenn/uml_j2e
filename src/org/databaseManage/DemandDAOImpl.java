@@ -140,7 +140,7 @@ public class DemandDAOImpl {
 	
 	public List<String> findAllStatus(){
 		List<String> status = new ArrayList<String>();		
-		return new ArrayList<String>(Arrays.asList("approved","refused","canceled","pending"));				
+		return new ArrayList<String>(Arrays.asList("approved","refused","pending"));				
 	}
 	
 	public List<Demand> findAllDemandeFromEmploye(String mail) {
@@ -173,7 +173,7 @@ public class DemandDAOImpl {
 	}
 	
 	public ArrayList<List<String>> getDaysOffPerTeam(){
-		return this.findNbDemandPerX("SELECT team.name AS team, SUM(demand.duration) AS nbDays FROM (demand NATURAL JOIN employe) LEFT JOIN team ON employe.team GROUP BY employe.team;","nbDays","team");
+		return this.findNbDemandPerX("SELECT team.name AS team, SUM(demand.duration) AS nbDays FROM (demand JOIN employe ON demand.employe = employe.mail) LEFT JOIN team ON employe.team GROUP BY employe.team;","nbDays","team");
 	}
 	//to do
 	public ArrayList<List<String>> getDaysOffPerMonth(){
@@ -185,7 +185,39 @@ public class DemandDAOImpl {
 	}
 	
 	public ArrayList<List<String>> getDaysOffPerJob(){
-		return this.findNbDemandPerX("SELECT fonction, SUM(duration) AS nbDays FROM demand NATURAL JOIN employe GROUP BY fonction;","nbDays","fonction");
+		return this.findNbDemandPerX("SELECT fonction, SUM(duration) AS nbDays FROM demand JOIN employe ON demand.employe = employe.mail GROUP BY fonction;","nbDays","fonction");
 	}
 
+	public boolean hasEnoughDays(String idDemand) {
+		return this.getBoolean("SELECT surname FROM employe JOIN demand ON employe.mail = demand.employe AND demand.id='"+ idDemand +"' AND employe.nbDays>=demand.duration;");
+	}
+
+	private boolean getBoolean(String query) {
+		Connection conn = null;
+		List<Demand> listDemandes = new ArrayList<Demand>();
+		
+		boolean bool = false;
+		
+		Statement stat = null;
+		ResultSet rs = null;
+		
+		try {
+			conn = DBManager.getInstance().getConnection();
+			if (conn != null) {
+				stat = conn.createStatement();
+				rs = stat.executeQuery(query);
+				while (rs.next()) {
+					bool = true;
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (conn != null) {
+				DBManager.getInstance().cleanup(conn, stat, rs);
+			}
+		}
+				
+		return bool;
+	}
 }
