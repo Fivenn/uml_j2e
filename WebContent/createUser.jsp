@@ -1,11 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@page import="org.model.Employe"%>
+<%@page import="org.model.Employe,java.util.ArrayList"%>
     
   <%
   	String createTeam = request.getAttribute("teamToCreate") != null ? (String)request.getAttribute("teamToCreate") : "";
   	Employe employe = request.getAttribute("employe") != null ? (Employe)request.getAttribute("employe") : new Employe("","","","","",25,false,false,0);
   	String verifMail = request.getAttribute("verifMail") != null ? (String)request.getAttribute("verifMail") : "";
+  	String verifNameTeam = request.getAttribute("verifNameTeam") != null ? (String)request.getAttribute("verifNameTeam") : "";
+  	ArrayList<String> listLeader = (ArrayList<String>) request.getAttribute("listLeader");
   %>  
 <div style="display: flex; flex-wrap: wrap ;border-bottom: 1px solid #110133;margin-bottom: 2em;justify-content: space-between;">
 <h3>
@@ -30,13 +32,14 @@
         <fieldset class="card-body" style=" max-height: min-content; flex-grow: inherit;">
         	<legend>Informations Team</legend>
         	<label for="nameTeam">Nom:</label>   <input class="form-control mb-2 mr-sm-2 mb-sm-0" id="nameTeam" type="text" name="nameTeam"> 
-            <label  for="description">Description:</label> <input class="form-control mb-2 mr-sm-2 mb-sm-0" id="description" name="description">
+            <label  for="description">Description:</label> <input class="form-control mb-2 mr-sm-2 mb-sm-0" id="description" type="text" name="description">
+            <label  for="teamLeader">teamLeader:</label> <input class="form-control mb-2 mr-sm-2 mb-sm-0" id="teamLeader" type="text" name="teamLeader">
         </fieldset>         
          <button type="submit" class="btn btn-primary text-center" name="createTeam">Ajouter</button>
         </div>
         </div>
 </form>
-<%} %>
+<%}else{ %>
 <form action="CreateUser" method="post">
 <div style="display: flex; flex-wrap: wrap; flex-direction = row; justify-content: space-between;">
 
@@ -74,13 +77,16 @@
         </div>
 </form>
 
-
+<%} %>
 
 <script>
 <%if(verifMail.equals("err")){ %>
 	alert("Insérez un mail valide");
 <%} %>
 <%if(verifMail.equals("no")){ %>
-	alert("Ce mail existe deja");
+	alert("Ce mail existe déjà");
+<%} %>
+<%if(verifNameTeam.equals("err")){ %>
+alert("Veuillez insérer un nom de team");
 <%} %>
 </script>

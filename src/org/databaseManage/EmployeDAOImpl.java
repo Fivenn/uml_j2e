@@ -242,4 +242,33 @@ public class EmployeDAOImpl {
 		return this.findBy(requete + "order by surname;");
 	}
 	
+	public List<String> findAllTeamLeader(){
+		ArrayList<String> employeList = new ArrayList<String>();
+		String query = "select mail from employe where fonction=TeamLeader;";
+		System.out.println(query);
+		Connection conn = null;
+		Statement stat = null;
+		ResultSet rs = null;
+		try {
+			conn = DBManager.getInstance().getConnection();
+			if (conn != null) {
+				stat = conn.createStatement();
+				rs = stat.executeQuery(query);
+				while (rs.next()) {
+					employeList.add(rs.getString("mail"));
+				}
+
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		} finally {
+			// always clean up all resources in finally block
+			if (conn != null) {
+				DBManager.getInstance().cleanup(conn, stat, rs);
+			}
+		}
+		return employeList;
+	}
+	
 }

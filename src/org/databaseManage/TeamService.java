@@ -19,12 +19,20 @@ public class TeamService {
 		return listTeams;
 	}
 	
+	public void ajoutTeam(String name, String description, String leader) {
+		teamDao.addTeam(name,description,leader);
+	}
+	
 	public List<Team> getLeaderTeams(String email) {
 		return teamDao.findByLeader(email);
 	}
 	
 	public Team getEmployeTeam(String mail){
 		return teamDao.findEmployeTeam(mail);
+	}
+	
+	public List<String> getAllNameTeam(){
+		return teamDao.findAllNameTeam();
 	}
 	
 }
