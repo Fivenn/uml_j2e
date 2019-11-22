@@ -65,6 +65,14 @@ public class DemandDAOImpl {
 		return updateDemand("update demand set reason='"+reason+"' where id='"+id+"';");
 	}
 	
+	public boolean changeDemand(String id, String dateFrom, String dateTo, String nbDays ,String reason) {
+		return updateDemand("update demand set reason='"+reason+"', beginDate='"+dateFrom+"', endDate='"+dateTo+"', duration='"+nbDays+"' where id='"+id+"';");
+	}
+	
+	public boolean deleteDemand(String idDemand) {
+		return updateDemand("delete from demand where id='"+idDemand+"';");
+	}
+	
 	private boolean updateDemand(String query) {
 		Connection conn = null;
 		ResultSet rs = null;
@@ -87,6 +95,7 @@ public class DemandDAOImpl {
 		}
 		return a != 0;
 	}
+	
 	
 	public ArrayList<List<String>> findNbDemandPerX(String query,String what,String perWhat){
 		Connection conn = null;
@@ -179,4 +188,5 @@ public class DemandDAOImpl {
 	public ArrayList<List<String>> getDaysOffPerJob(){
 		return this.findNbDemandPerX("SELECT fonction, SUM(duration) AS nbDays FROM demand NATURAL JOIN employe GROUP BY fonction;","nbDays","fonction");
 	}
+
 }

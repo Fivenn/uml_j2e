@@ -21,7 +21,7 @@
 						<p>Avant de déposer une demande de congés, pensez à vérifier le solde de congés dont vous disposez mais aussi les dates
 						de vos réunions afin d'éviter tout conflit avec vos congés. Pour une demande de congés, nous vous rappelons que vous devrez 
 						saisir les dates de début et de fin de votre période de congés, le nombre de jours que celle-ci requiert et le motif de la 
-						demande.
+						demande. Les motifs possibles sont les suivants : RTT, congés annuels, enfants malades et liés à la famille.
 						</p>
 						<p>
 						Vous pouvez également accéder à votre profil et ainsi modifier certaines de vos informations personnelles. Si celles ne 
@@ -38,8 +38,10 @@
 					<p>
 					DaysOffManager vous permet de gérer vos demandes de congés comme tout autre utilisateur. Cependant, vous disposez de
 					fonctionnalités supplémentaires : visualiser les demandes de congés de vos équipes et accéder aux statistiques de vos équipes.
-					Pour ce faire, vous disposez de pages dédiées à ces fonctions. La page "Mon équipe" vous permet de consulter les demandes
-					de congés des membres de vos équipes. Vous pouvez également les filtrer selon les motifs des demandes ou encore par dates. Les statistiques
+					Pour ce faire, vous disposez de pages dédiées à ces fonctions.
+					</p>
+					<p>
+					Le mode "TeamLeader" vous permet de consulter les demandes de congés de vos équipes. Vous pouvez également les filtrer selon les motifs des demandes ou encore par dates. Les statistiques
 					de vos équipes sont consultables afin de vous faire part des informations les plus pertinentes qui ressortent des demandes de congés.
 					</p>
 				</div>
@@ -50,10 +52,12 @@
 					<h5>Utilisateur Responsable des Ressources Humaines</h5>
 					<p>
 					DaysOffManager vous permet de gérer vos demandes de congés comme tout autre utilisateur. Cependant, vous disposez de
-					fonctionnalités supplémentaires : visualiser les demandes de congés de vos équipes et accéder aux statistiques de vos équipes.
-					Pour ce faire, vous disposez de pages dédiées à ces fonctions. La page "Mon équipe" vous permet de consulter les demandes
-					de congés des membres de vos équipes. Vous pouvez également les filtrer selon les motifs des demandes ou encore par dates. Les statistiques
-					de vos équipes sont consultables afin de vous faire part des informations les plus pertinentes qui ressortent des demandes de congés.
+					fonctionnalités supplémentaires : visualiser les demandes de congés des équipes et accéder aux statistiques des équipes.
+					Pour ce faire, vous disposez de pages dédiées à ces fonctions. 
+					</p>
+					<p>
+					Le mode "RH" vous permet de consulter les demandes de congés de vos équipes. Vous pouvez également les filtrer selon les motifs des demandes ou encore par dates. Les statistiques
+					des équipes sont consultables afin de vous faire part des informations les plus pertinentes qui ressortent des demandes de congés.
 					</p>
 				</div>
 			</div>

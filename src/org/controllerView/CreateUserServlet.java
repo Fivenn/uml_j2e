@@ -23,11 +23,13 @@ HttpServlet httpServlet;
 private ArrayList<Employe> employesList;
 private ArrayList<Team> teamsList;
 private ArrayList<String> posteList;
+private ArrayList<String> mailList;
 
 private TeamService teamService = new TeamService();
 private EmployeService employeService = new EmployeService();
 private Employe employe;	
-private String mailBefore;
+private String mailBefore = "";
+private boolean pageVerif;
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		this.doGetOrPost(req, resp);
@@ -43,47 +45,42 @@ private String mailBefore;
 			req.setAttribute("verifMail", "");
 			
 		}else if(req.getParameter("create")!=null){
-			String mail = req.getParameter("mail");
+			if(verifMail(req, resp)) {
 				this.createUser(req.getParameter("prenom"),req.getParameter("nom"),req.getParameter("naissance"),req.getParameter("poste"),req.getParameter("equipe"),req.getParameter("mail"),req.getParameter("chef"),req.getParameter("adresse"));
-				if(mail.equals("")) {
-					req.setAttribute("verifMail", "err");
-				}
-			}			
+				pageVerif = true;	
+			}
+		}
 		
 		else if(req.getParameter("update")!=null) {
 			//Does an employee with the same email exist?
-			String mail = req.getParameter("mail");
-			//Employe employeTmp = this.employeService.getEmploye(mail); Impossible de récupérer une instance de classe
-			if(mail.equals("")) {
-				req.setAttribute("verifMail", "err");
+			pageVerif = false;			
+			if(verifMail(req,resp)) {
+					this.modifyEmploye(req.getParameter("prenom"),req.getParameter("nom"),req.getParameter("naissance"),req.getParameter("poste"),req.getParameter("equipe"),req.getParameter("mail"),req.getParameter("chef"),req.getParameter("adresse"),this.mailBefore);
+					pageVerif = true;					
+				}
+				else {
+					req.setAttribute("employe", this.employe);
+				}
 			}
-			/*
-			else if(employeTmp == null) {
-				req.setAttribute("verifMail", "no");
-			}*/
-			else {
-				this.modifyEmploye(req.getParameter("prenom"),req.getParameter("nom"),req.getParameter("naissance"),req.getParameter("poste"),req.getParameter("equipe"),req.getParameter("mail"),req.getParameter("chef"),req.getParameter("adresse"),this.mailBefore);
-			}
-		}
+		
 		this.doGetOrPost(req, resp);
 		
 	}
 	
 	protected void doProcess(HttpServletRequest req, HttpServletResponse resp) {
-		req.setAttribute("currentMode", "RH");
-		if((req.getParameter("update")!=null || req.getParameter("create")!=null)) {
-			initLists(true);
-			req.setAttribute("currentPage","createUser");	
+	
+		if(pageVerif == true && req.getParameter("modifier") == null) {			
+			initLists(true);				
 			req.setAttribute("employesList",this.employesList);
 			req.setAttribute("teamsList", this.teamsList);
 			req.setAttribute("posteList",this.posteList);
-			
+			req.setAttribute("currentPage","manageUser");
+			pageVerif = false;		
 		}
 		else {
-			req.setAttribute("currentPage","createUser");		
-		}
-		
-		
+			req.setAttribute("currentPage","createUser");	
+		}			
+		req.setAttribute("currentMode", "RH");
 		
 		try {
             this.getServletContext().getRequestDispatcher("/Home").forward(req, resp);
@@ -157,6 +154,37 @@ private String mailBefore;
 				this.posteList.add("RespoRH");
 			}
 		}
-
+		
+		private boolean verifMail(HttpServletRequest req, HttpServletResponse resp) {
+			boolean verif = true;
+			String mail = req.getParameter("mail");
+			if(mail.equals("")) {
+				req.setAttribute("verifMail", "err");
+				verif = false;
+			}
+			else {
+				mailList = (ArrayList<String>) this.employeService.getAllMail();
+				if(req.getParameter("update")!=null) {
+					if(mailList.size() != 0) {
+						for(int i=0; i<mailList.size();i++) {
+							if(mail.contentEquals(mailList.get(i)) && !this.mailBefore.contentEquals(mail)) {
+								verif = false;
+								req.setAttribute("verifMail", "no");
+							}
+						}				
+					}
+				}
+				else {
+					for(int i=0; i<mailList.size();i++) {
+						if(mail.contentEquals(mailList.get(i))) {
+							verif = false;
+							req.setAttribute("verifMail", "no");
+						}
+				}
+			}
+			
+		}
+			return verif;
+		}
 }
 

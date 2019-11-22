@@ -56,4 +56,13 @@ public class DemandService {
 	public List<String> getAllReasons(){
 		return this.reasonDao.findAllReasons();
 	}
+	
+	public boolean changeDemand(String id, String dateFrom, String dateTo , String nbDays ,String reason) {
+		return this.demandDao.changeDemand(id, dateFrom, dateTo, nbDays, reason);
+	}
+
+	public boolean deleteDemand(String idDemand) {
+		return this.demandDao.deleteDemand(idDemand);
+		
+	}
 }

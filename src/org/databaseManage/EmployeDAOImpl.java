@@ -138,6 +138,34 @@ public class EmployeDAOImpl {
 		}
 	}
 
+	public List<String> findAllMail(){
+		List<String> mailList = new ArrayList<String>();
+		String query = "Select mail FROM employe;";
+		System.out.println(query);
+		Connection conn = null;
+		Statement stat = null;
+		ResultSet rs = null;
+		try {
+			conn = DBManager.getInstance().getConnection();
+			if (conn != null) {
+				stat = conn.createStatement();
+				rs = stat.executeQuery(query);
+				while (rs.next()) {
+					mailList.add(rs.getString("mail"));
+				}
+
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		} finally {
+			// always clean up all resources in finally block
+			if (conn != null) {
+				DBManager.getInstance().cleanup(conn, stat, rs);
+			}
+		}
+		return mailList;
+	}
 	public void modifyEmploye(Employe emp,String mail) {
 		String function = emp.getTitle();
 		if (emp.isLeader() && !emp.isRH()) {

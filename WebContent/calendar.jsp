@@ -7,19 +7,28 @@
     %>
 <%
    	JSONArray employeDemandsList = (JSONArray) request.getAttribute("employeDemandsList");
+	ArrayList<String> statusList  = request.getAttribute("statusList") != null ?(ArrayList<String>)request.getAttribute("statusList"): null;
    	ArrayList<String> reasonsList  = request.getAttribute("reasonsList") != null ?(ArrayList<String>)request.getAttribute("reasonsList"): null;
    	String errorAskingForDays = request.getAttribute("errorAskingForDays")!= null ? (String)request.getAttribute("errorAskingForDays") : "";
  	Boolean table= request.getAttribute("table")!=null?(Boolean)request.getAttribute("table"):false;
+	ArrayList<Demand> demandsList  = request.getAttribute("demandsList") != null ?(ArrayList<Demand>)request.getAttribute("demandsList"): null;
 %>
 <% if(reasonsList != null){ %>
-	<div>
-	   <i style="align-self: center; font-size: 2em; display: inline-block; color: primary;" class="far fa-question-circle" data-toggle="tooltip" data-placement="top" title="En positionant la souris sur un event du calendrier, il est possible d'y voir le commentaire associé."></i>
-	</div>
-	<div>
-	   <a class="btn btn-primary" data-toggle="collapse" href="#collapseForm" role="button" aria-expanded="false" aria-controls="collapseForm">
-	   <i class="fas fa-plus"></i>
-	   </a>
-	   <p style="color: DC3545;"><%=errorAskingForDays %></p>
+
+	<div style="display: flex;border-bottom: 1px solid #110133;margin-bottom: 2em;justify-content: space-between;">
+		<div style="display: flex;justify-content: space-around;">
+			<i style="align-self: center; font-size: 2em; display: inline-block; color: primary;" class="far fa-question-circle" data-toggle="tooltip" data-placement="top" title="En positionant la souris sur un event du calendrier, il est possible d'y voir le commentaire associé."></i>
+			<a style="align-self: center; font-size: 1em;" class="btn btn-primary" data-toggle="collapse" href="#collapseForm" role="button" aria-expanded="false" aria-controls="collapseForm">
+	   			<i class="fas fa-plus"></i>
+	   		</a>
+	   		<p style="color: DC3545;"><%=errorAskingForDays %></p>	
+		</div>	
+		<nav>
+			<form class="form-inline" action="Calendar" method="post">
+             	<button class="nav-button" type="submit">Calendrier</button>
+             	<button class="nav-button" name="tableDemand" type="submit">Tableau</button>            
+          	</form>	
+		</nav>
 	</div>
 	<div class="collapse" id="collapseForm">
 	   <form class="form-co" action="Calendar" method="post">
@@ -50,7 +59,7 @@
 	      </div>
 	   </form>
 	</div>
-	<% if(table) {%>
+	<% if(!table){ %>
 		<div id='calendar'></div>
 		<script>
 		   var today = new Date();
@@ -88,7 +97,89 @@
 		   });
 		</script>
 	<%}else{ %>
-	
+		<form class="form-co" action="Calendar" method="post">
+			<div class="form-row form-group">
+			    <div class="col-md-3">
+			      <select class="form-control" name="statusSearch">
+			      	<option value="all">Tous les statuts</option>
+			        <% for (String s: statusList) { %>
+			          <option value="<%=s%>"><%=s%></option>
+			        <% }%>
+			      </select>
+			    </div>
+			    <div>
+			  		<button class="btn btn-primary my-2 my-sm-0" type="submit" name="search">Rechercher</button>
+			  	</div>
+			</div>
+		</form>
+		
+		<table class="table table-bordered table-striped">
+		  <thead>
+		    <tr>
+		      <th scope="col">Départ</th>
+		      <th scope="col">Retour</th>
+		      <th scope="col">Durée</th>
+		      <th scope="col">Motif</th>
+		      <th scope="col">Status</th>
+		    </tr>
+		  </thead>
+		  <tbody>
+		    <% for(Demand d : demandsList){ %>
+		      <tr>
+		      	<form class="form form-inline" action="Calendar" method="post">
+			        <td>
+			        	<% if(d.getStatus().equals("pending")){ %>
+			        		<input class="form-control" id="fromDate" name="fromDate" type="date" required value= "<%=d.getStartDate() %>"></input>
+			        	<%} else{ %>
+			        		<%=d.getStartDate()%>
+			        	<%}%>
+			        </td>
+			        <td>
+			        	<% if(d.getStatus().equals("pending")){ %>
+		            		<input class="form-control" id="toDate" name="toDate" type="date" required value = "<%=d.getEndDate() %>"></input>
+			        	<%} else{ %>
+			        		<%=d.getEndDate()%>
+			        	<%}%>
+			        </td>
+			        <td>
+			        	<% if(d.getStatus().equals("pending")){ %>
+		            		<input class="form-control" id="nbDays" name="nbDays" type="text" value="<%= d.getNbDays() %>" required></input>
+			        	<%} else{ %>
+			        		<%=d.getNbDays()%>
+			        	<%}%>
+			        	
+			        </td>
+			        <td>
+			        	<% if(d.getStatus().equals("pending")){ %> 	        	
+		        			<select class="form-control" name="reason">
+				       	 	<% for (String s: reasonsList) { %>
+				        	  	<option value="<%=s%>" <%if(s.equals(d.getMotif())){%>selected<%}%>><%=s%></option>
+				       	 	<%}%>
+			    			</select> 
+			    		<%} else{ %>
+			        		<%=d.getMotif()%>
+			        	<%}%>
+			        </td>
+			        <td>
+			          <% if(d.getStatus().equals("pending")){ %>
+			              <div style="display: flex !important;justify-content: space-around !important;">
+			              		<button class="btn btn-danger" type="submit" name="update" value="<%=d.getId()%>">
+				    				<i class="fa fa-edit" aria-hidden="true"></i>
+				    			</button>
+			              		<button class="btn btn-success" type="submit" name="delete" value="<%=d.getId()%>">
+			              			<i class="fas fa-times" aria-hidden="true"></i>
+			              		</button>
+			              </div>
+			          <%}else{%>
+			            <%=d.getStatus()%>
+			          <%}%>
+			        </td>
+			   </form>
+		      </tr>
+		    <%}%>
+		  </tbody>
+		
+		</table>
 	<%} %>
 <%} %>
 

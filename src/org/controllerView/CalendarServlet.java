@@ -13,20 +13,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.databaseManage.DemandService;
-import org.databaseManage.EmployeService;
-import org.model.Demand;
-import org.model.Employe;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.model.Demand;
+import org.model.Employe;
 
 
+@SuppressWarnings("serial")
 public class CalendarServlet extends HttpServlet {
 
     private DemandService demandService = new DemandService();
-    private EmployeService employeService = new EmployeService();
-    
     private ArrayList < Demand > demandsList;
     private ArrayList < String > reasonsList = (ArrayList < String > ) demandService.getAllReasons();
+    private ArrayList < String > statusList = (ArrayList < String > ) demandService.getStatus();
 
     private JSONArray employeDemandsList = new JSONArray();
 
@@ -41,7 +40,7 @@ public class CalendarServlet extends HttpServlet {
         if (req.getParameter("goToRHMode") != null) {
             req.setAttribute("currentMode", "employe");
         } else if (req.getParameter("askDaysOff") != null) {
-    		req.setAttribute("errorAskingForDays", this.isDateValid(req));
+    		req.setAttribute("errorAskingForDays", this.isDateValid(req,true));
         }
         this.doGetOrPost(req, resp);
     }
@@ -49,6 +48,24 @@ public class CalendarServlet extends HttpServlet {
     
 	protected void doGetOrPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		if(req.getSession().getAttribute("currentUser")!=null) {
+			if(req.getParameter("update") != null) {
+				req.setAttribute("table", true);
+				req.setAttribute("errorAskingForDays", this.isDateValid(req,false));
+		        this.demandsList = (ArrayList <Demand>) this.demandService.getEmployeDemand(((Employe) req.getSession().getAttribute("currentUser")).getMail());
+			} else if(req.getParameter("delete") != null) {
+				req.setAttribute("table", true);
+		        this.demandsList = (ArrayList <Demand>) this.demandService.getEmployeDemand(((Employe) req.getSession().getAttribute("currentUser")).getMail());
+			} else if(req.getParameter("search") != null) {
+				req.setAttribute("table", true);
+				this.demandsList = (ArrayList<Demand>) this.demandService.getFilteredDemand(req.getParameter("statusSearch"), ((Employe) req.getSession().getAttribute("currentUser")).getMail() , "all", false);
+			}else {
+		        this.demandsList = (ArrayList <Demand>) this.demandService.getEmployeDemand(((Employe) req.getSession().getAttribute("currentUser")).getMail());
+			}
+			
+			if(req.getParameter("tableDemand")!= null) {
+				req.setAttribute("table", true);			
+			}
+			
 			this.doProcess(req, resp);
 		}else {
 			this.getServletContext().getRequestDispatcher("/Home").forward(req, resp);
@@ -56,9 +73,8 @@ public class CalendarServlet extends HttpServlet {
 	}
 	
 
+	@SuppressWarnings("unchecked")
 	protected void doProcess(HttpServletRequest req, HttpServletResponse resp) {
-        this.demandsList = (ArrayList < Demand > ) this.demandService.getEmployeDemand(((Employe) req.getSession().getAttribute("currentUser")).getMail());
-
         // Build JSON
         for (Demand d: demandsList) {
             JSONObject employeDemand = new JSONObject();
@@ -129,6 +145,8 @@ public class CalendarServlet extends HttpServlet {
 
         req.setAttribute("currentPage", "calendar");
         req.setAttribute("reasonsList", this.reasonsList);
+        req.setAttribute("statusList", this.statusList);
+        req.setAttribute("demandsList", this.demandsList);
         req.setAttribute("employeDemandsList", this.employeDemandsList);
 
         try {
@@ -142,7 +160,7 @@ public class CalendarServlet extends HttpServlet {
         employeDemandsList.clear();
     }
 	
-	private String isDateValid(HttpServletRequest req) {
+	private String isDateValid(HttpServletRequest req, boolean insert) {
     	String message = "";
     	try {
         	if(((Employe) req.getSession().getAttribute("currentUser")).getNbDays()<Integer.parseInt(req.getParameter("nbDays"))){
@@ -156,8 +174,14 @@ public class CalendarServlet extends HttpServlet {
         	}
         	
         	if(message.contentEquals("")) {
-        		if(this.demandService.insertIntoDemand(((Employe) req.getSession().getAttribute("currentUser")).getMail(), req.getParameter("fromDate"), req.getParameter("toDate"), req.getParameter("reason"), req.getParameter("nbDays"))) {
-            		message = "Demande envoyée au service RH. Elle sera traitée dans les meilleurs délais.";
+        		if(insert) {
+	        		if(this.demandService.insertIntoDemand(((Employe) req.getSession().getAttribute("currentUser")).getMail(), req.getParameter("fromDate"), req.getParameter("toDate"), req.getParameter("reason"), req.getParameter("nbDays"))) {
+	            		message = "Demande envoyée au service RH. Elle sera traitée dans les meilleurs délais.";
+	        		}
+        		}else {
+        			if(this.demandService.changeDemand(req.getParameter("update"), req.getParameter("fromDate"), req.getParameter("toDate"), req.getParameter("nbDays") , req.getParameter("reason"))) {
+	            		message = "Demande modifiée";
+	        		}
         		}
         	}
     	}catch(Exception e){
@@ -166,5 +190,6 @@ public class CalendarServlet extends HttpServlet {
     	return message;
 		
 	}
+	
     
 }
