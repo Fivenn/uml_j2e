@@ -140,7 +140,7 @@ public class DemandDAOImpl {
 	
 	public List<String> findAllStatus(){
 		List<String> status = new ArrayList<String>();		
-		return new ArrayList<String>(Arrays.asList("approved","refused","canceled","pending"));				
+		return new ArrayList<String>(Arrays.asList("approved","refused","pending"));				
 	}
 	
 	public List<Demand> findAllDemandeFromEmploye(String mail) {
