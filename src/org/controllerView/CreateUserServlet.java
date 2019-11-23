@@ -81,7 +81,6 @@ public class CreateUserServlet extends HttpServlet {
 
 		if (pageVerif == true && (req.getParameter("modifier") == null || req.getParameter("createNewTeam") == null)) {
 			pageVerif = false;
-			System.out.println("coucou ta mere");
 			initLists(true);
 			req.setAttribute("employesList", this.employesList);
 			req.setAttribute("teamsList", this.teamsList);
@@ -90,12 +89,14 @@ public class CreateUserServlet extends HttpServlet {
 			
 		} else if (req.getParameter("createNewTeam") != null) {
 			req.setAttribute("teamToCreate", "yes");
+			initLists(true);
+			req.setAttribute("employesList", this.employesList);
 			req.setAttribute("currentPage", "createUser");
 		} else {
 			System.out.println(pageVerif);
 			if(req.getParameter("createTeam") != null) {
 				req.setAttribute("teamToCreate", "yes");
-				
+				req.setAttribute("employesList", this.employesList);
 			}
 			req.setAttribute("currentPage", "createUser");
 		}
@@ -182,10 +183,10 @@ public class CreateUserServlet extends HttpServlet {
 	private boolean verifMail(HttpServletRequest req, HttpServletResponse resp) {
 		boolean verif = true;
 		String mail = req.getParameter("mail");
-		if (mail.equals("")) {
+		if (mail.equals("") || isValidEmail(mail) == false ) {
 			req.setAttribute("verifMail", "err");
 			verif = false;
-		} else {
+		}else {
 			mailList = (ArrayList<String>) this.employeService.getAllMail();
 			if (req.getParameter("update") != null) {
 				if (mailList.size() != 0) {
@@ -220,13 +221,18 @@ public class CreateUserServlet extends HttpServlet {
 			req.setAttribute("verifNameTeam", "err");
 			verif = false;
 		} else {
-			List<String> listeNomTeam = teamService.getAllNameTeam();
+			List<String> listeNomTeam = this.teamService.getAllNameTeam();
 			for (String l : listeNomTeam) {
 				if (l.equals(name)) {
+					req.setAttribute("verifNameTeam", "no");
 					verif = false;
 				}
 			}
 		}
 		return verif;
+	}
+	
+	private boolean isValidEmail(String email){
+		return email != null && email.matches("([^.@]+)(\\.[^.@]+)*@([^.@]+\\.)+([^.@]+)");
 	}
 }

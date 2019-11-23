@@ -20,8 +20,6 @@
 		<form action="CreateUser" method="post">
 			<button class="nav-button" type="submit">Créer un nouvel
 				employé</button>
-		</form>
-		<form action="CreateUser" method="post">
 			<button class="nav-button" type="submit" name="createNewTeam">Créer
 				une nouvelle team</button>
 		</form>
@@ -41,7 +39,7 @@
 			style="align-self: center; font-size: 2em; display: inline-block; color: primary;"
 			class="far fa-question-circle" data-toggle="tooltip"
 			data-placement="top"
-			title="Il est possible de ne choisir qu'un employé ou une team. Si les deux sont sélectionnés, l'employé est choisi. Pour modifier le motif d'une demande, choisir le motif et cliquer sur modifier."></i>
+			title="Il est possible de ne choisir qu'un employé, une team ou un poste. Si les trois sont sélectionnés, l'employé est choisi. Pour modifier un employé, cliquez sur l'icône modifier et remplissez le formulaire. Vous pouvez également supprimer un employé via le bouton supprimer"></i>
 
 		<div class="col-md-3">
 			<select class="form-control" name="team">
