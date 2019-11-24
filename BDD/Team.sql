@@ -26,3 +26,7 @@ CREATE TABLE IF NOT EXISTS team (
 --
 
 INSERT INTO team (name, leader, description) VALUES ('Les bests', 'mheyrend@enssat.fr','La team des bests');
+INSERT INTO team (name, leader, description) VALUES ('Les RHs', 'clevan@enssat.fr','La respo rh');
+
+UPDATE employe SET team = 2 WHERE fonction = 'EmployeRH';
+UPDATE employe SET team = 1 WHERE fonction = 'Employe';

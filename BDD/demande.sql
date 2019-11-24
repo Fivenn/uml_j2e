@@ -1,6 +1,4 @@
 
-DROP TABLE demand;
-
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
 use DaysOffManager;
@@ -10,6 +8,7 @@ use DaysOffManager;
 --
 -- Structure de la table 'demand'
 --
+DROP TABLE demand;
 
 CREATE TABLE demand (
   id serial NOT NULL,

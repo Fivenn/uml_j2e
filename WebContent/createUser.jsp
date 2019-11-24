@@ -15,7 +15,6 @@
 	String verifNameTeam = request.getAttribute("verifNameTeam") != null
 			? (String) request.getAttribute("verifNameTeam")
 			: "";
-	ArrayList<String> listLeader = (ArrayList<String>) request.getAttribute("listLeader");
 	ArrayList<Employe> employesList = (ArrayList<Employe>) request.getAttribute("employesList");
 %>
 <div
@@ -80,8 +79,7 @@
 	} else {
 %>
 <form action="CreateUser" method="post">
-	<div
-		style="display: flex; flex-wrap: wrap; flex-direction = row; justify-content: space-between;">
+	<div style="display: flex; flex-wrap: wrap; flex-direction = row; justify-content: space-around;">
 
 		<div class="card" style="display: flex;">
 			<fieldset class="card-body"
@@ -97,6 +95,8 @@
 					class="form-control mb-2 mr-sm-2 mb-sm-0" id="birthDate"
 					type="text" name="naissance" value="<%=employe.getBirthDate()%>">
 			</fieldset>
+		</div>
+		<div class="card">
 			<fieldset class="card-body"
 				style="max-height: min-content; flex-grow: inherit;">
 				<legend>Métier</legend>

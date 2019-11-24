@@ -10,6 +10,8 @@ use DaysOffManager;
 -- Structure de la table 'reason'
 --
 
+DROP TABLE reason;
+
 CREATE TABLE IF NOT EXISTS reason (
   name varchar(255) NOT NULL,
   description varchar(255) NOT NULL,
