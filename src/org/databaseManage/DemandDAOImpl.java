@@ -173,19 +173,19 @@ public class DemandDAOImpl {
 	}
 	
 	public ArrayList<List<String>> getDaysOffPerTeam(){
-		return this.findNbDemandPerX("SELECT team.name AS team, SUM(demand.duration) AS nbDays FROM (demand JOIN employe ON demand.employe = employe.mail) LEFT JOIN team ON employe.team GROUP BY employe.team;","nbDays","team");
+		return this.findNbDemandPerX("SELECT team.name AS team, SUM(demand.duration) AS nbDays FROM (demand JOIN employe ON demand.employe = employe.mail) LEFT JOIN team ON employe.team WHERE demand.status = 'approved' GROUP BY employe.team;","nbDays","team");
 	}
 	//to do
 	public ArrayList<List<String>> getDaysOffPerMonth(){
-		return this.findNbDemandPerX("SELECT MONTH(beginDate) AS month, SUM(duration) AS nbDays  FROM demand GROUP BY MONTH(beginDate);","nbDays","month");
+		return this.findNbDemandPerX("SELECT MONTH(beginDate) AS month, SUM(duration) AS nbDays  FROM demand WHERE demand.status = 'approved' GROUP BY MONTH(beginDate);","nbDays","month");
 	}
 	
 	public ArrayList<List<String>> getDaysOffPerReason(){
-		return this.findNbDemandPerX("SELECT reason, SUM(duration) AS nbDays  FROM demand GROUP BY reason;","nbDays","reason");
+		return this.findNbDemandPerX("SELECT reason, SUM(duration) AS nbDays  FROM demand WHERE demand.status = 'approved' GROUP BY reason;","nbDays","reason");
 	}
 	
 	public ArrayList<List<String>> getDaysOffPerJob(){
-		return this.findNbDemandPerX("SELECT fonction, SUM(duration) AS nbDays FROM demand JOIN employe ON demand.employe = employe.mail GROUP BY fonction;","nbDays","fonction");
+		return this.findNbDemandPerX("SELECT fonction, SUM(duration) AS nbDays FROM demand JOIN employe ON demand.employe = employe.mail WHERE demand.status = 'approved' GROUP BY fonction;","nbDays","fonction");
 	}
 
 	public boolean hasEnoughDays(String idDemand) {

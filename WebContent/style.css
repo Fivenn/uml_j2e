@@ -103,3 +103,8 @@ button.nav-button:hover {
         height: 14.2857vw;
     }
 }
+
+#calendar{
+	width: 90%;
+    margin: auto;
+}
