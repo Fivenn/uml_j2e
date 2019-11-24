@@ -74,14 +74,8 @@
 		</div>
 	</form>
 </div>
-<%
-if(!teamDemandsList.isEmpty()) {%>
 <div id='calendar'></div>
-<%} else {
-	%>
-	<p>Pas de team</p>
 <%
-}
 	if (!table) {
 %>
 <script>
