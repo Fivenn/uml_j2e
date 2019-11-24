@@ -43,7 +43,6 @@ public class TeamServlet extends HttpServlet {
 
 	protected void doGetOrPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		if (req.getSession().getAttribute("currentUser") != null) {
-			System.out.println(req.getParameter("employe"));
 			if (req.getParameter("filter") != null) {
 				this.demandsList = (ArrayList<Demand>) this.demandService.getEmployeDemand(req.getParameter("employe"));
 				req.setAttribute("mail", req.getParameter("employe"));
@@ -134,14 +133,14 @@ public class TeamServlet extends HttpServlet {
 				teamDemandsList.add(teamDemand);
 				break;
 			}
-
-			req.setAttribute("currentPage", "team");
-			req.setAttribute("teamDemandsList", this.teamDemandsList);
-			req.setAttribute("employeesList", this.employeesList);
-			req.setAttribute("demandsList", this.demandsList);
-			req.setAttribute("statusList", this.statusList);
-			req.setAttribute("reasonsList", this.reasonsList);
 		}
+		
+		req.setAttribute("currentPage", "team");
+		req.setAttribute("reasonsList", this.reasonsList);
+		req.setAttribute("statusList", this.statusList);
+		req.setAttribute("demandsList", this.demandsList);
+		req.setAttribute("employeesList", this.employeesList);
+		req.setAttribute("teamDemandsList", this.teamDemandsList);
 
 		try {
 			this.getServletContext().getRequestDispatcher("/Home").forward(req, resp);
