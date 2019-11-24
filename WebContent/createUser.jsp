@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@page import="org.model.Employe,java.util.ArrayList"%>
+<%@page import="org.model.Employe,java.util.ArrayList,org.model.Team"%>
 
 <%
 	String createTeam = request.getAttribute("teamToCreate") != null
@@ -9,6 +9,7 @@
 	Employe employe = request.getAttribute("employe") != null
 			? (Employe) request.getAttribute("employe")
 			: new Employe("", "", "", "", "", 25, false, false, 0);
+	ArrayList<Team>  teamsList= (ArrayList<Team>) request.getAttribute("teamsList");
 	String verifMail = request.getAttribute("verifMail") != null
 			? (String) request.getAttribute("verifMail")
 			: "";
@@ -99,15 +100,23 @@
 			<fieldset class="card-body"
 				style="max-height: min-content; flex-grow: inherit;">
 				<legend>Métier</legend>
+				
 				<label for="function">Poste:</label><input
 					class="form-control mb-2 mr-sm-2 mb-sm-0" id="function" type="text"
-					name="poste"> <label for="nbteam">Equipe:</label><input
-					class="form-control mb-2 mr-sm-2 mb-sm-0" id="nbteam" type="number"
-					name="equipe" value="<%=employe.getNbTeam()%>"> <label>Chef
-					d'equipe</label> <select class="form-control" name="chef">
-					<option value="oui">oui</option>
-					<option value="non">non</option>
-				</select>
+					name="poste"> 
+			
+			<label for="team">Equipe:</label>
+			<select id="team" class="form-control" name="equipe">
+				<option value="0">aucune</option>
+				<%
+					for (Team t : teamsList) {
+				%>
+				<option value="<%=t.getNoTeam()%>"><%=t.getName()%></option>
+				<%
+					}
+				%>
+			</select>
+		
 			</fieldset>
 		</div>
 		<div>

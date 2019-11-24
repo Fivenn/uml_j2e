@@ -96,11 +96,7 @@ public class EmployeDAOImpl {
 		// add a default password
 		String query = "";
 		String fonction = emp.getTitle();
-		if (emp.isLeader() && !emp.isRH()) {
-			fonction = "TeamLeader";
-		} else if (emp.isLeader() && emp.isRH()) {
-			fonction = "RespoRH";
-		} else if (!emp.isLeader() && emp.isRH()) {
+		if (emp.isRH()) {
 			fonction = "EmployeRH";
 		}
 		String pwd = emp.getFirstName().toLowerCase().charAt(0) + "" + emp.getSurname().toLowerCase().charAt(0);

@@ -54,8 +54,7 @@ public class CreateUserServlet extends HttpServlet {
 		} else if (req.getParameter("create") != null) {
 			if (verifMail(req, resp)) {
 				this.createUser(req.getParameter("prenom"), req.getParameter("nom"), req.getParameter("naissance"),
-						req.getParameter("poste"), req.getParameter("equipe"), req.getParameter("mail"),
-						req.getParameter("chef"), req.getParameter("adresse"));
+						req.getParameter("poste"), req.getParameter("equipe"), req.getParameter("mail"),req.getParameter("adresse"));
 				pageVerif = true;
 			}
 		}
@@ -94,11 +93,13 @@ public class CreateUserServlet extends HttpServlet {
 			req.setAttribute("currentPage", "createUser");
 		} else {
 			System.out.println(pageVerif);
+			initLists(true);
 			if(req.getParameter("createTeam") != null) {
 				req.setAttribute("teamToCreate", "yes");
 				req.setAttribute("employesList", this.employesList);
 			}
 			req.setAttribute("currentPage", "createUser");
+			req.setAttribute("teamsList", this.teamsList);
 		}
 		
 		
@@ -124,17 +125,14 @@ public class CreateUserServlet extends HttpServlet {
 	}
 
 	protected void createUser(String firstName, String Surname, String BirthDate, String poste, String team,
-			String mail, String teamleader, String address) {
+			String mail,String address) {
 		int nbteam;
 		boolean RH = false;
 		boolean TL = false;
 		if (poste.contains("RH") || poste.contains("rh") || poste.contains("Rh") || poste.contains("rH")) {
 			RH = true;
 		}
-		if (teamleader.equals("oui")) {
-			TL = true;
-		}
-		if (team.equals("")) {
+		if (team.equals("0")) {
 			nbteam = 0;
 
 		} else {
