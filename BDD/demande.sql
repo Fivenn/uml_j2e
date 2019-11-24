@@ -31,9 +31,9 @@ CREATE TABLE demand (
 -- Contenu de la table 'demand'
 --
 
-INSERT INTO demand (employe,status,beginDate,endDate,reason, duration) VALUES ('mheyrend@enssat.fr','pending','2018-02-01','2018-02-02','RTT',1);
-INSERT INTO demand (employe,status,beginDate,endDate,reason, duration) VALUES ('a@a.a','pending','2018-02-01','2018-02-02','RTT',1);
-INSERT INTO demand (employe,status,beginDate,endDate,reason, duration) VALUES ('e@e.e','refused','2018-02-01','2018-02-03','RTT',1);
-INSERT INTO demand (employe,status,beginDate,endDate,reason, duration) VALUES ('e@e.e','pending','2018-02-01','2018-02-02','RTT',1);
-INSERT INTO demand (employe,status,beginDate,endDate,reason, duration) VALUES ('e@e.e','pending','2018-02-01','2018-02-02','RTT',1);
-INSERT INTO demand (employe,status,beginDate,endDate,reason, duration) VALUES ('e@e.e','pending','2018-02-01','2018-02-02','RTT',1);
+INSERT INTO demand (employe,status,beginDate,endDate,reason, duration) VALUES ('mheyrend@enssat.fr','pending','2020-02-01','2020-02-02','RTT',1);
+INSERT INTO demand (employe,status,beginDate,endDate,reason, duration) VALUES ('a@a.a','approved','2018-02-01','2018-02-02','RTT',1);
+INSERT INTO demand (employe,status,beginDate,endDate,reason, duration) VALUES ('e@e.e','refused','2020-02-01','2018-02-03','RTT',1);
+INSERT INTO demand (employe,status,beginDate,endDate,reason, duration) VALUES ('e@e.e','pending','2020-02-01','2020-02-02','RTT',1);
+INSERT INTO demand (employe,status,beginDate,endDate,reason, duration) VALUES ('e@e.e','pending','2020-02-01','2020-02-02','RTT',1);
+INSERT INTO demand (employe,status,beginDate,endDate,reason, duration) VALUES ('e@e.e','pending','2020-02-01','2020-02-02','RTT',1);

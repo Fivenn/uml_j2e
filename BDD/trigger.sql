@@ -33,7 +33,8 @@ DROP TRIGGER insertTeam;
 DELIMITER $$
 CREATE TRIGGER insertTeam BEFORE INSERT ON team
        FOR EACH ROW BEGIN
-       	UPDATE employe SET fonction= 'TeamLeader' where mail = NEW.leader;  
+       	UPDATE employe SET fonction= 'TeamLeader' where mail = NEW.leader && fonction = 'Employe';  
+        UPDATE employe SET fonction= 'RespoRH' where mail = NEW.leader && fonction = 'EmployeRH';  
        END$$
 DELIMITER ;    
        	
