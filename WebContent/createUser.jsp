@@ -46,8 +46,7 @@
 	if (createTeam.equals("yes") && request.getAttribute("employe") == null) {
 %>
 <form action="CreateUser" method="post">
-	<div
-		style="display: flex; flex-wrap: wrap; flex-direction = row; justify-content: space-between;">
+	<div style="display: flex; flex-wrap: wrap;margin: 1em; padding: 0.5em;justify-content: space-around;">
 		<div class="card"
 			style="max-height: min-content; /*! flex-grow: inherit; */ flex-wrap: nowrap; height: max-content;">
 			<fieldset class="card-body"
@@ -70,7 +69,7 @@
 				</select>
 
 			</fieldset>
-			<button type="submit" class="btn btn-primary text-center"
+			<button style="margin: 1em; padding: 0.5em;" type="submit" class="btn btn-primary text-center"
 				name="createTeam">Ajouter</button>
 		</div>
 	</div>
@@ -79,9 +78,9 @@
 	} else {
 %>
 <form action="CreateUser" method="post">
-	<div style="display: flex; flex-wrap: wrap; flex-direction = row; justify-content: space-around;">
+	<div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-around;">
 
-		<div class="card" style="display: flex;">
+		<div class="card" style="display: flex; margin: 1em; padding: 0.5em;">
 			<fieldset class="card-body"
 				style="max-height: min-content; flex-grow: inherit;">
 				<legend>Identité</legend>
@@ -96,7 +95,7 @@
 					type="text" name="naissance" value="<%=employe.getBirthDate()%>">
 			</fieldset>
 		</div>
-		<div class="card">
+		<div class="card" style="display: flex; margin: 1em; padding: 0.5em;">
 			<fieldset class="card-body"
 				style="max-height: min-content; flex-grow: inherit;">
 				<legend>Métier</legend>
@@ -111,31 +110,27 @@
 				</select>
 			</fieldset>
 		</div>
+		<div>
+			<div class="card"
+				style="display: flex; margin: 1em; padding: 0.5em;">
+				<fieldset class="card-body"
+					style="max-height: min-content; flex-grow: inherit;">
+					<legend>Coordonnées</legend>
+					<label for="mail">mail:</label> <input placeholder="dofm@example.dofm" type="text" class="form-control" id="mail" type="text"
+						name="mail" value="<%=employe.getMail()%>"> <label
+						for="address">Adresse:</label> <input
+						class="form-control mb-2 mr-sm-2 mb-sm-0" id="address"
+						name="adresse" value="<%=employe.getAddress()%>">
+				</fieldset>
 
-		<div class="card"
-			style="max-height: min-content; /*! flex-grow: inherit; */ flex-wrap: nowrap; height: max-content;">
-			<fieldset class="card-body"
-				style="max-height: min-content; flex-grow: inherit;">
-				<legend>Coordonnées</legend>
-				<label for="mail">mail:</label> <input placeholder="dofm@example.dofm" type="text" class="form-control" id="mail" type="text"
-					name="mail" value="<%=employe.getMail()%>"> <label
-					for="address">Adresse:</label> <input
-					class="form-control mb-2 mr-sm-2 mb-sm-0" id="address"
-					name="adresse" value="<%=employe.getAddress()%>">
-			</fieldset>
-			<%
-				if (request.getAttribute("employe") == null) {
-			%>
-			<button type="submit" class="btn btn-primary text-center"
-				name="create">Ajouter</button>
-			<%
-				} else {
-			%>
-			<button type="submit" class="btn btn-primary text-center"
-				name="update">Modifier</button>
-			<%
-				}
-			%>
+			</div>
+			<div class="card" style="display: flex; margin: 1em; padding: 0.5em;">
+				<% if (request.getAttribute("employe") == null) { %>
+					<button type="submit" class="btn btn-primary text-center" name="create">Ajouter</button>
+				<% } else { %>
+					<button type="submit" class="btn btn-primary text-center" name="update">Modifier</button>
+				<% } %>
+			</div>
 		</div>
 	</div>
 </form>
