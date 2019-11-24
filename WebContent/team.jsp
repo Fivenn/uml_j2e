@@ -12,12 +12,6 @@
 	ArrayList<Demand> demandsList = request.getAttribute("demandsList") != null
 			? (ArrayList<Demand>) request.getAttribute("demandsList")
 			: null;
-	ArrayList<String> statusList = request.getAttribute("statusList") != null
-			? (ArrayList<String>) request.getAttribute("statusList")
-			: null;
-	ArrayList<String> reasonsList = request.getAttribute("reasonsList") != null
-			? (ArrayList<String>) request.getAttribute("reasonsList")
-			: null;
 %>
 <div
 	style="display: flex; border-bottom: 1px solid #110133; margin-bottom: 2em; justify-content: space-between;">
