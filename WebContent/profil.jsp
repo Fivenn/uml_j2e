@@ -37,6 +37,9 @@
 							<label><i style="font-weight: bold;">Né(e) le : </i><%=currentUser.getBirthDate()%></label>
 						</div>
 						<div>
+							<label><i style="font-weight: bold;">Nombre de jours : </i><%=currentUser.getNbDays()%></label>
+						</div>
+						<div>
 							<form action="MyProfil" method="post">
 								<label><i style="font-weight: bold;">Adresse postale : </i></label>
 								<div class="form-group">

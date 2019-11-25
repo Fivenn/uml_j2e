@@ -20,10 +20,9 @@ CREATE TABLE demand (
   reason varchar(255) NOT NULL,
   duration int(11) NOT NULL,
   comment varchar(255),
-  PRIMARY KEY (id),
-    FOREIGN KEY (employe)
-        REFERENCES employe(mail),
-  CONSTRAINT demandUK UNIQUE (id)
+  CONSTRAINT fkEmpl FOREIGN KEY (employe) REFERENCES employe(mail) ON DELETE CASCADE,
+  CONSTRAINT fkReason FOREIGN KEY (reason) REFERENCES reason(name) ON DELETE CASCADE,
+  PRIMARY KEY id
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
