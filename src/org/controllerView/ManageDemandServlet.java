@@ -17,13 +17,14 @@ import org.databaseManage.TeamService;
 import org.model.Demand;
 import org.model.Employe;
 import org.model.Team;
-
+//Cette classe gére la page de gestion des demandes.
 public class ManageDemandServlet extends HttpServlet {
 	private EmployeService employeService = new EmployeService();
 	private TeamService teamService = new TeamService();
 	private DemandService demandService = new DemandService();
 	private StatsService statService = new StatsService();
 	
+	//Tableau permettant de réaliser des filtres et d'afficher les demandes.
 	private ArrayList<Employe> employesList;
 	private ArrayList<Team> teamsList;
 	private ArrayList<String> statusList;
@@ -52,37 +53,39 @@ public class ManageDemandServlet extends HttpServlet {
 		this.doGetOrPost(req, resp);
 	}
 	
+	//Fonction récupérant le get et le post
 	protected void doGetOrPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-		if(req.getSession().getAttribute("currentUser")!=null && ((Employe)req.getSession().getAttribute("currentUser")).isRH()) {
-			if(req.getParameter("approved")!= null) {
-				if(this.demandService.hasEnoughDays(req.getParameter("approved"))) {
-					this.demandService.changeDemandStatus(req.getParameter("approved"), "approved");
-					req.setAttribute("errorAskingForDays", "Demande approuvée");			
+		if(req.getSession().getAttribute("currentUser")!=null && ((Employe)req.getSession().getAttribute("currentUser")).isRH()) { //SI l'utilisateur est bien connecté et abilité à voir la page
+			if(req.getParameter("approved")!= null) { //Si il a validé une demande
+				if(this.demandService.hasEnoughDays(req.getParameter("approved"))) { // Si l'utilisateur a assez de jours
+					this.demandService.changeDemandStatus(req.getParameter("approved"), "approved"); //On change le statut de la demande
+					req.setAttribute("errorAskingForDays", "Demande approuvée"); 	//On fait savoir ce qu'il se passe à l'utilisateur		
 				}else {
-					req.setAttribute("errorAskingForDays", "Pas assez de jours disponibles pour accepter");					
+					req.setAttribute("errorAskingForDays", "Pas assez de jours disponibles pour accepter");		//On fait savoir ce qu'il se passe à l'utilisateur				
 				}
-			}else if(req.getParameter("approvedCom")!= null) {
-				if(this.demandService.hasEnoughDays(req.getParameter("approvedCom"))) {
-					req.setAttribute("errorAskingForDays", "Demande approuvée");					
-					this.demandService.changeDemandStatus(req.getParameter("approvedCom"), "approved",req.getParameter("comment"));
+			}else if(req.getParameter("approvedCom")!= null) { // Si l'utilisateur a accepté une demande et a mis un commentaire
+				if(this.demandService.hasEnoughDays(req.getParameter("approvedCom"))) { // Si l'utilisateur a assez de jours
+					req.setAttribute("errorAskingForDays", "Demande approuvée"); //On fait savoir ce qu'il se passe à l'utilisateur		
+					this.demandService.changeDemandStatus(req.getParameter("approvedCom"), "approved",req.getParameter("comment")); //On change le statut de la demande
 				}else {
-					req.setAttribute("errorAskingForDays", "Pas assez de jours disponibles pour accepter");					
+					req.setAttribute("errorAskingForDays", "Pas assez de jours disponibles pour accepter");		//On fait savoir ce qu'il se passe à l'utilisateur					
 				}
-			}else if(req.getParameter("refused")!= null) {
-				req.setAttribute("errorAskingForDays", "Demande refusée.");					
-				this.demandService.changeDemandStatus(req.getParameter("refused"), "refused",req.getParameter("comment"));
-			}else if(req.getParameter("changeReason") != null) {
-				req.setAttribute("errorAskingForDays", "Demande modifiée");					
-				this.demandService.changeDemandReason(req.getParameter("changeReason"),req.getParameter("reasonsList"));
+			}else if(req.getParameter("refused")!= null) { // Si l'utilisateur refuse la demande
+				req.setAttribute("errorAskingForDays", "Demande refusée.");		//On fait savoir ce qu'il se passe à l'utilisateur					
+				this.demandService.changeDemandStatus(req.getParameter("refused"), "refused",req.getParameter("comment")); // On refuse la demande
+			}else if(req.getParameter("changeReason") != null) { // SI l'utilisateur veut changer la raison
+				req.setAttribute("errorAskingForDays", "Demande modifiée");		//On fait savoir ce qu'il se passe à l'utilisateur					
+				this.demandService.changeDemandReason(req.getParameter("changeReason"),req.getParameter("reasonsList")); //On change la raison
 			}
 			
-			if(req.getParameter("statsDemand")!= null) {
-				req.setAttribute("stats", true);
+			if(req.getParameter("statsDemand")!= null) { // Si la page de stats est appelée
+				req.setAttribute("stats", true); //On dit à la page que c'est des stats
 				
-				this.initStats();
+				this.initStats(); // ON initialise les tableaux 
 				
-				req.setAttribute("daysOffPerTeam", this.daysOffPerTeam);
+				//On les ajoute à la requète
+				req.setAttribute("daysOffPerTeam", this.daysOffPerTeam); 
 				req.setAttribute("daysOffPerJob", this.daysOffPerJob);
 				req.setAttribute("daysOffPerMonth", this.daysOffPerMonth);
 				req.setAttribute("daysOffPerReason", this.daysOffPerReason);
@@ -90,34 +93,39 @@ public class ManageDemandServlet extends HttpServlet {
 			}
 			this.doProcess(req, resp);
 		}else {
+			//Sinon on redirige au home pour qu'il gère le fait que l'utilisateur ne soit pas connecté
 			this.getServletContext().getRequestDispatcher("/Home").forward(req, resp);
 		}
 	}
 	
 	protected void doProcess(HttpServletRequest req, HttpServletResponse resp) {
-		if(req.getParameter("search")!= null) {
-			this.reloadDemands(((Employe) req.getSession().getAttribute("currentUser")).isLeader(), req.getParameter("status"), req.getParameter("employe"), req.getParameter("team"));
+		if(req.getParameter("search")!= null) { // SI l'utilisateur cherche à filtrer les demandes
+			this.reloadDemands(((Employe) req.getSession().getAttribute("currentUser")).isLeader(), req.getParameter("status"), req.getParameter("employe"), req.getParameter("team")); //On trie en fonction de l'utilisateur et ed ses désirs
+			//On renvoie les paramètres de la demande
 			req.setAttribute("mail", req.getParameter("employe"));
 			req.setAttribute("status", req.getParameter("status"));
 			req.setAttribute("team", req.getParameter("team"));
 		}else {
+			//Sinon on initialise avec tout
 			this.initLists(((Employe) req.getSession().getAttribute("currentUser")).isLeader());
 			req.setAttribute("mail", "all");
 			req.setAttribute("status", "all");
 			req.setAttribute("team", "all");
 		}
 		
+		// On ajoute tout les tableaux à la requète
 		req.setAttribute("employesList", this.employesList);
 		req.setAttribute("teamsList", this.teamsList);
 		req.setAttribute("statusList", this.statusList);
 		req.setAttribute("demandsList", this.demandsList);
 		req.setAttribute("reasonsList", this.reasonsList);
 		
+		//On modifie la page actuelle et on confirme le mode RH
 		req.setAttribute("currentPage", "manageDemand");
 		req.setAttribute("currentMode", "RH");
 		
 		try {
-            this.getServletContext().getRequestDispatcher("/Home").forward(req, resp);
+            this.getServletContext().getRequestDispatcher("/Home").forward(req, resp); // ON renvoie au home pour qu'il créé le template
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (ServletException e) {
@@ -125,14 +133,14 @@ public class ManageDemandServlet extends HttpServlet {
 		}
 	}
 
-	
+	//Fonction permettant d'initialiser les tableaux de données
 	private void initLists(boolean isRespoRH) {
-
-		if(isRespoRH) {
+		
+		if(isRespoRH) { // SI l'utilisteur est Respo RH on peut lui confier la liste de toutes les demandes de tous les employés
 			this.employesList = (ArrayList<Employe>) this.employeService.getAllEmployes();
 			this.teamsList = (ArrayList<Team>) this.teamService.getAllTeams();
 			this.demandsList = (ArrayList<Demand>) this.demandService.getAllDemands();
-		}else {
+		}else { // Sinon les demandes RH ne sont pas affichées
 			this.employesList = (ArrayList<Employe>) this.employeService.getAllEmployesButRH();	
 			this.teamsList = (ArrayList<Team>) this.teamService.getAllTeamsButRH();
 			this.demandsList = (ArrayList<Demand>) this.demandService.getAllDemandsButRH();
@@ -143,16 +151,15 @@ public class ManageDemandServlet extends HttpServlet {
 		this.statusList = this.demandService.getStatus();
 		this.reasonsList = (ArrayList<String>) this.demandService.getAllReasons();
 	}
-	
+	// FOnction permettant d'initialiser les tableaux de stats
 	private void initStats() {
 		this.daysOffPerJob = this.statService.getDaysOffPerJob();
 		this.daysOffPerMonth = this.statService.getDaysOffPerMonth();
 		this.daysOffPerReason = this.statService.getDaysOffPerReasons();
 		this.daysOffPerTeam = this.statService.getDaysOffPerTeam();
 	}
-	
+	//Fonction qui met à jour les demandes en fonction de la recherche.
 	private void reloadDemands(boolean isRespoRH, String status, String mail, String team) {
-		System.out.println(status + mail + team);
 		this.demandsList = (ArrayList<Demand>) this.demandService.getFilteredDemand(status, mail, team, isRespoRH);
 	}
 }

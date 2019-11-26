@@ -16,6 +16,7 @@ public class TeamDAOImpl {
 	 *            the SQL query to use
 	 * @return a list of Employes built from the SQL query
 	 */
+	//Fonction permettant de trouver toutes les teams selon une requète
 	private List<Team> findBy(String query) {
 		Connection conn = null;
 		List<Team> listTeams = new ArrayList<Team>();
@@ -42,30 +43,32 @@ public class TeamDAOImpl {
 		return listTeams;
 	}
 
+	//Fonction permettant de trouver les teams d'un leader
 	public List<Team> findByLeader(String email) {
 		List<Team> listTeam = findBy("select * from team where leader = '" + email + "'");
 		return listTeam;
 	}
-	
+	//Fonction permettant de trouver toutes les teams
 	public List<Team> findAllTeams() {
 		// avoid select * queries because of performance issues,
 		// only query the columns you need
 		return findBy("select * from team");
 	}
-
+	//Fonction permettant de trouver les teams sauf la rh
 	public List<Team> findAllTeamsButRH() {
 		// avoid select * queries because of performance issues,
 		// only query the columns you need
 		return findBy("select * from team where leader NOT IN (select mail from employe where fonction = 'RespoRH');");
 	}
 	
+	//Fonction permettant de trouver la team d'un employé
 	public Team findEmployeTeam(String mail) {
 		// avoid select * queries because of performance issues,
 		// only query the columns you need
 		List<Team> listTeams= findBy("select * from team where noTeam=(select noTeam from employe where mail ='"+mail+"');");
 		return listTeams.size()!=0?listTeams.get(0):null;
 	}
-	
+	//Fonction permettant de trouver tous les noms des teams
 	public List<String> findAllNameTeam() {
 		// avoid select * queries because of performance issues,
 		// only query the columns you need
@@ -96,6 +99,7 @@ public class TeamDAOImpl {
 		return listTeams;
 	}
 	
+	//Fonction permettant d'ajotuer une team 
 	public void addTeam(String name, String description, String leader) {
 		// add a default password
 		String query = "";
