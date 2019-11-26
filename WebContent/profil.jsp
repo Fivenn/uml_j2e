@@ -3,8 +3,9 @@
  <%@page import="java.util.ArrayList,org.model.Employe,org.model.Team,org.model.Demand"%>
 
 <%
+	//user en cours d'utilisation de l'application
 	Employe currentUser = (Employe)request.getSession().getAttribute("currentUser");
-
+	//Message d'erreur initialisé uniquement si besoin
 	String errorUpdatingPwd = request.getAttribute("errorUpdatingPwd")!= null ? (String)request.getAttribute("errorUpdatingPwd") : "";
 %>
 
@@ -20,6 +21,7 @@
 				<div class="card">
 	                <div class="card-body">
 						<div>
+							<!--  Affichage du rôle et de l'equipe du user -->
 							<% if(currentUser.isRH() && currentUser.isLeader()){ %>
 								<label>Leader Responsable RH de l'équipe <%=currentUser.getNbTeam() %></label>
 							<% } else if (currentUser.isRH()) { %>
@@ -40,6 +42,7 @@
 							<label><i style="font-weight: bold;">Nombre de jours : </i><%=currentUser.getNbDays()%></label>
 						</div>
 						<div>
+						<!--  Form permettant de modifier l'adresse postale -->
 							<form action="MyProfil" method="post">
 								<label><i style="font-weight: bold;">Adresse postale : </i></label>
 								<div class="form-group">
@@ -54,6 +57,7 @@
 			<div style="display: flex;flex-direction: column;">
 				<div class="card">
                 	<div class="card-body">
+                		<!-- Form permettant de modifier le mot de passe -->
                 		<form action="MyProfil" method="post">
 	                        <h5>Changer votre mot de passe</h5>
 	                        <div class="form-group">

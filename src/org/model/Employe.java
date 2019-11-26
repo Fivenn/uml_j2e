@@ -1,5 +1,5 @@
 package org.model;
-
+//Classe faisant le lien avec la table employe de la base de données
 public class Employe {
 	private String mail;
 	private String firstName;
@@ -24,7 +24,7 @@ public class Employe {
 		this.setNbTeam(nbTeam);
 	}
 	
-	
+	//Getters et setters pour les différents paramètres
 	public int getNbTeam() {
 		return nbTeam;
 	}

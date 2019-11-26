@@ -1,5 +1,6 @@
 package org.model;
 
+//Classe gérant les demandes, faisant le lien avec la base de données
 public class Demand {
 	private int id;
 	private Employe employe;
@@ -10,7 +11,8 @@ public class Demand {
 	private String motif;
 	private int nbDays;
 	private String commentary;
-
+	
+	//Deux controleurs afin de pouvoir créer la demande avec les paramètres dont on a besoin
 	public Demand(int id,String status, String startDate,String endDate,String requestDate, String motif, int nbDays, String commentary) {
 		this.setStatus(status);
 		this.setStartDate(startDate);
@@ -34,7 +36,8 @@ public class Demand {
 		this.setId(id);
 		this.setCommentary(commentary);
 	}
-
+	
+	//Getter et setters pour les différents paramètres.
 	public int getId() {
 		return id;
 	}

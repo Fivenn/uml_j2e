@@ -4,7 +4,7 @@ body{
 form{
 	margin: 0px;
 }
-
+/* Style de la page insérée dans le templaet*/
 main{
 	max-width: 90%;
 	margin: auto;
@@ -12,7 +12,7 @@ main{
 	padding-bottom: 2vh;
 	min-height: 83%;
 }
-
+/* le footer */
 footer {
 	position: sticky; 
 	bottom: 0;
@@ -27,7 +27,7 @@ footer {
     display: flex !important;
     align-items: center;
 }
-
+/* L'image de profil */
 .profil-image{
 	background-image: url("ressources/profil-image.jpg");
 
@@ -39,7 +39,7 @@ footer {
 	background-repeat: no-repeat;
 	background-size: cover;
 }
-
+/* Les boutons bootstrap */
 .btn-outline-primary{
 	color: #110133;
 	border-color: #110133;
@@ -67,6 +67,8 @@ button.nav-button:hover {
 	border-color: #5dd599;
 }
 
+
+/* L'image de la page de connection */
 .connection-image {
 	/* Image used */
 	background-image: url("ressources/connection-image.jpg");

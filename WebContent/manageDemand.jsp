@@ -3,24 +3,30 @@
 <%@page import="java.util.ArrayList,org.model.Employe,org.model.Team,org.model.Demand"%>
 
 <%
+	//Array list permettant de faire les filtres de demandes
 	ArrayList<Team> teamsList = (ArrayList<Team>)request.getAttribute("teamsList");
 	ArrayList<Employe> employesList  = (ArrayList<Employe>)request.getAttribute("employesList");
  	ArrayList<String> statusList  = (ArrayList<String>)request.getAttribute("statusList");
  	ArrayList<String> reasonsList  = (ArrayList<String>)request.getAttribute("reasonsList");
  	ArrayList<Demand> demandsList  = (ArrayList<Demand>)request.getAttribute("demandsList");
- 	 
+ 	
+ 	//variables permettant de garder les attributs de la recherche
  	String mail = request.getAttribute("mail")!= null ? (String)request.getAttribute("mail") : "all";
  	int team = request.getAttribute("team")!=null &&  !request.getAttribute("team").equals("all")?Integer.parseInt(((String) request.getAttribute("team"))):-1;
  	String status = request.getAttribute("status")!=null?(String)request.getAttribute("status"):"all";
  	
+ 	//variable permettant de savoir si l'utilisateur veut ou non afficher les stats
  	Boolean stats = request.getAttribute("stats")!=null?(Boolean)request.getAttribute("stats"):false;
  	
+ 	//Variable initialisée en cas d'erreur
    	String errorAskingForDays = request.getAttribute("errorAskingForDays")!= null ? (String)request.getAttribute("errorAskingForDays") : "";
 
 %>
 <%
+	//si la liste de team a été initialisée
 	if(teamsList != null){
 %>
+		<!--  Le header permettant de changer de mode stats ou tableau -->
 		<div style="display: flex;border-bottom: 1px solid #110133;margin-bottom: 2em;justify-content: space-between;">
 			<h3>
 				Gestion des demandes
@@ -34,8 +40,8 @@
 		</div>
 	
 	
-	<% if(!stats){ %>
-	
+	<% if(!stats){ //Si l'utilisateur souhaite voir le tableau%>
+		<!--  Le filtre des demandes -->
 		<form class="form-co" action="ManageDemand" method="post">
 			<div class="form-row form-group">
 				<i style="align-self: center; font-size: 2em; display: inline-block; color: primary;" class="far fa-question-circle" data-toggle="tooltip" data-placement="top" title="Il est possible de ne choisir qu'un employé ou une team. Si les deux sont sélectionnés, l'employé est choisi. Pour modifier le motif d'une demande, choisir le motif et cliquer sur modifier."></i>
@@ -82,7 +88,7 @@
 		</form>
 		
 		<p style="color: DC3545;"><%=errorAskingForDays %></p>	
-		
+		<!--  Le tableau des demandes -->
 		<table class="table table-bordered table-striped">
 		  <thead>
 		    <tr>
@@ -105,7 +111,8 @@
 		        <td><%=d.getStartDate()%></td>
 		        <td><%=d.getEndDate()%></td>
 		        <td><%=d.getNbDays()%></td>
-		        <td> 	        	
+		        <td> 	
+		        <!-- Formulaire permettant de modifier le motif de la demande -->        	
 		        	<form class="form form-inline" action="ManageDemand" method="post">
 		        		<select class="form-control" name="reasonsList">
 				       	 <% for (String s: reasonsList) { %>
@@ -118,6 +125,7 @@
 		        	</form>   
 		        </td>
 		        <td>
+		        <!--  Lorsque la demande est en attente, le rh peut accepter avec ou sans commentaire ou refuser -->
 		          <% if(d.getStatus().equals("pending")){ %>
 		              <div style="display: flex !important;justify-content: space-around !important;">
 		              	<form class="form form-inline" action="ManageDemand" method="post">

@@ -3,6 +3,7 @@
  <%@page import="java.util.ArrayList,java.util.List,org.model.Employe,org.model.Team,org.model.Demand"%>
 
 <%
+	//Array de données pour les statistiques.
 	ArrayList<List<String>>daysOffPerTeam = (ArrayList<List<String>>)request.getAttribute("daysOffPerTeam");
 	ArrayList<List<String>> daysOffPerReason = (ArrayList<List<String>>)request.getAttribute("daysOffPerReason");
 	ArrayList<List<String>> daysOffPerMonth = (ArrayList<List<String>>)request.getAttribute("daysOffPerMonth");
@@ -13,16 +14,20 @@
 <head>
 	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
+   		//Script permettant d'afficher les différents google chart, qui sont des diagrammes représentant les stats.
      google.charts.load("current", {packages:["corechart"]});
      google.charts.setOnLoadCallback(drawChartPerMonth);
      google.charts.setOnLoadCallback(drawChartPerTeam);
      google.charts.setOnLoadCallback(drawChartPerReason);
      google.charts.setOnLoadCallback(drawChartPerJob);
+     
+     //Différents tableaux de données pour les stats, initialisés avec les labels.
      var dataDaysOffPerMonth = [['Month','NbDays']];
      var dataDaysOffPerTeam = [['Team','NbDays']];
      var dataDaysOffPerReason = [['Reason','NbDays']];
      var dataDaysOffPerJob = [['Fonction','NbDays']];
      
+     //Fonction permettant de construire le diagramme des mois
      function drawChartPerMonth() {
        var data = google.visualization.arrayToDataTable(getDataPerMonth(dataDaysOffPerMonth));
        var options = {
@@ -36,6 +41,7 @@
        chart.draw(data, options);
      }
      
+     //Fonction permettant de mettre en forme les données pour les mois
      function getDataPerMonth(dataPerMonth){
       for(let i of <%=daysOffPerMonth%>){
     	 dataPerMonth.push([getMonth(i[0]), i[1]]);
@@ -43,6 +49,7 @@
       return dataPerMonth;
      }
      
+     //Fonction permettant de construire le diagramme des métiers
      function drawChartPerJob() {
         var data = google.visualization.arrayToDataTable(getDataPerJob(dataDaysOffPerJob));
         var options = {
@@ -57,14 +64,16 @@
         chart.draw(data, options);
       }
      
+     //Fonction permettant de mettre en forme les données pour les métiers
      function getDataPerJob(dataPerJob){
       <% for(int i=0;i<daysOffPerJob.size();i++){%>
     	 dataPerJob.push([getFonction("<%=daysOffPerJob.get(i).get(0).toString()%>"),<%=daysOffPerJob.get(i).get(1)%>]);
       <%}%>
     	 //dataPerJob.push([getFonction(i[0]), i[1]]);
-    return dataPerJob;
+    	return dataPerJob;
      }
      
+     //Fonction permettant d'afficher le graph pour les motifs
      function drawChartPerReason() {
         var data = google.visualization.arrayToDataTable(getDataPerReason(dataDaysOffPerReason));
         var options = {
@@ -79,13 +88,16 @@
         chart.draw(data, options);
       }
      
+     //Fonction permettant de mettre en forme les données pour les motifs
      function getDataPerReason(dataPerReason){
       <% for(int i=0;i<daysOffPerReason.size();i++){%>
+      //Cast obligatoire pour ne pas que le js interprète en tant que variable.
     	 dataPerReason.push(["<%=daysOffPerReason.get(i).get(0).toString()%>",<%=daysOffPerReason.get(i).get(1)%>]);
       <%}%>
       return dataPerReason;
      }
      
+   	//Fonction permettant d'afficher le graph pour les motifs
      function drawChartPerTeam() {
        var data = google.visualization.arrayToDataTable(getDataPerTeam(dataDaysOffPerTeam));
        var options = {
@@ -100,13 +112,16 @@
        chart.draw(data, options);
      }
      
+     //Fonction permettant de mettre en forme les données pour les équipes
      function getDataPerTeam(dataPerTeam){
       <% for(int i=0;i<daysOffPerTeam.size();i++){%>
+      //Cast obligatoire pour ne pas que le js interprète en tant que variable.
       	dataPerTeam.push(["<%=daysOffPerTeam.get(i).get(0)!= null ? daysOffPerTeam.get(i).get(0).toString() : "Sans team"%>",<%=daysOffPerTeam.get(i).get(1)%>]);
       <%}%>
       return dataPerTeam;
      }
      
+     //Fonction qui renvoie le mois en français 
      function getMonth(numMois){
    	  let b = "";
    	  switch(numMois){
@@ -125,7 +140,7 @@
          }
    	  return b;
      }
-     
+     //Fonction qui renvoie le poste de l'utilisateur
      function getFonction(fonction){
    	  let b = "";
    	  switch(fonction){

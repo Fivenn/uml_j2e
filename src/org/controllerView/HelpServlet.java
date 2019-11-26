@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 import org.databaseManage.EmployeService;
 import org.model.Employe;
 
+//Classe permettant d'afficher l'aide
 public class HelpServlet extends HttpServlet {
 HttpServlet httpServlet;
 	
@@ -27,7 +28,7 @@ HttpServlet httpServlet;
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		this.doGetOrPost(req, resp);
 	}
-	
+	//Fonction permettant d'acceder à la page en vérifiant que la session est bien en cours
 	protected void doGetOrPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		if(req.getSession().getAttribute("currentUser")!=null) {
 			this.doProcess(req, resp);

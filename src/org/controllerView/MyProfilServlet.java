@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.databaseManage.EmployeService;
 import org.model.Employe;
-
+//Fonction permettant d'afficher le profil
 public class MyProfilServlet extends HttpServlet {
 HttpServlet httpServlet;
 	
@@ -27,15 +27,16 @@ HttpServlet httpServlet;
 	
 	protected void doGetOrPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		if(req.getSession().getAttribute("currentUser")!=null) {
-			
+			//Si l'utilisateur souhaite changer de mot de passe, plusieurs vérification sont effectuées
 			if (req.getParameter("new_pwd") != null && req.getParameter("re_new_pwd") != null && (req.getParameter("new_pwd").equals("") || req.getParameter("re_new_pwd").equals(""))) {
-	    		req.setAttribute("errorUpdatingPwd", "Veuillez saisir votre mot de passe.");
+	    		req.setAttribute("errorUpdatingPwd", "Veuillez saisir votre mot de passe."); //On previent l'utilisateur qu'un des mdp n'est pas saisi
 			} else if (req.getParameter("new_pwd") != null && req.getParameter("re_new_pwd") != null && req.getParameter("new_pwd")==req.getParameter("re_new_pwd")) {
-				this.employeService.updatePassword(((Employe)req.getSession().getAttribute("currentUser")).getMail(), req.getParameter("new_pwd"));
+				this.employeService.updatePassword(((Employe)req.getSession().getAttribute("currentUser")).getMail(), req.getParameter("new_pwd")); // On change le mot de passe si tout va bien
 	        } else if (req.getParameter("new_pwd") != null && req.getParameter("re_new_pwd") != null && !req.getParameter("new_pwd").equals(req.getParameter("re_new_pwd"))) {
-	    		req.setAttribute("errorUpdatingPwd", "Les deux mots de passe saisis ne concordent pas.");
+	    		req.setAttribute("errorUpdatingPwd", "Les deux mots de passe saisis ne concordent pas."); //Sinon on previent que les deux sont différents
 	        }
 			
+			//Si il souhaite changer d'adresse on la change directement
 			if (req.getParameter("addr")!=null) {
 				this.employeService.updateAddress(((Employe)req.getSession().getAttribute("currentUser")).getMail(), req.getParameter("addr"));
 			}

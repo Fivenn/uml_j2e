@@ -1,12 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
+<!--  Page permettant l'affichage de l'aide. Plusieurs paragraphes selon le role sont disponibles. -->
 <div>
 	<h1>Bienvenue dans l'assistance DaysOffManager !</h1>
 	<div style="display: flex;justify-content: space-around;margin-top: 5em;">
 		<div style="display: flex;flex-direction: column;align-items: center;text-align: justify;">
 			<i class="fas fa-user-circle" style="font-size: 2em;align-items: center;"></i>
 			<h5>Utilisateur de DaysOffManager</h5>
+			<!--  Pour un utilisateur lambda -->
 			<div>
 				<p>Cette application a pour vocation de faciliter la demande ainsi que la gestion de vos congés. Vos demandes sont
 				consultables via un calendrier ou via un tableau selon ce qui vous convient. A partir de ces derniers, vous pouvez déposer
@@ -28,6 +29,7 @@
 	<div style="display: flex;justify-content: space-around;margin-top: 5em;">
 		<div style="display: flex;flex-direction: column;align-items: center;text-align: justify;">
 			<i class="fas fa-users" style="font-size: 2em;align-items: center;"></i>
+			<!--  Pour un chef d'équipe -->
 			<h5>Utilisateur Chef d'équipe</h5>
 			<p>
 			DaysOffManager vous permet de gérer vos demandes de congés comme tout autre utilisateur. Cependant, vous disposez de
@@ -43,7 +45,8 @@
 	<div style="display: flex;justify-content: space-around;margin-top: 5em;">
 		<div style="display: flex;flex-direction: column;align-items: center;text-align: justify;">
 			<i class="fas fa-id-badge" style="font-size: 2em;align-items: center;"></i>
-			<h5>Utilisateur Responsable des Ressources Humaines</h5>
+			<!--  Pour un RH -->
+			<h5>Utilisateur Employé des Ressources Humaines</h5>
 			<p>
 			DaysOffManager vous permet de gérer vos demandes de congés comme tout autre utilisateur. Cependant, vous disposez de
 			fonctionnalités supplémentaires : visualiser les demandes de congés des équipes et accéder aux statistiques des équipes.
