@@ -6,15 +6,36 @@
    page import="java.util.List, org.model.Employe, org.model.Demand, java.util.ArrayList, org.json.simple.JSONArray"
     %>
 <%
+	/**
+	* Liste des demandes d'un employé au format JSONArray
+	* pour le script du calendrier.
+	*/
    	JSONArray employeDemandsList = (JSONArray) request.getAttribute("employeDemandsList");
+	/**
+	* Liste des status possibles pour une demande.
+	*/
 	ArrayList<String> statusList  = request.getAttribute("statusList") != null ?(ArrayList<String>)request.getAttribute("statusList"): null;
-   	ArrayList<String> reasonsList  = request.getAttribute("reasonsList") != null ?(ArrayList<String>)request.getAttribute("reasonsList"): null;
+	/**
+	* Liste des raisons possibles pour une demande.
+	*/
+	ArrayList<String> reasonsList  = request.getAttribute("reasonsList") != null ?(ArrayList<String>)request.getAttribute("reasonsList"): null;
+	/**
+	* Message d'erreur dans le cadre d'une demande de congés invalide.
+	*/
    	String errorAskingForDays = request.getAttribute("errorAskingForDays")!= null ? (String)request.getAttribute("errorAskingForDays") : "";
- 	Boolean table= request.getAttribute("table")!=null?(Boolean)request.getAttribute("table"):false;
+	/**
+	* Booleén permettant de savoir sur quelle vue on se situe (calendrier ou tableau).
+	*/
+   	Boolean table= request.getAttribute("table")!=null?(Boolean)request.getAttribute("table"):false;
+	/**
+	* Liste des demandes d'un employé.
+	*/
 	ArrayList<Demand> demandsList  = request.getAttribute("demandsList") != null ?(ArrayList<Demand>)request.getAttribute("demandsList"): null;
 %>
+<!--  Si la liste de raison n'est pas vide -->
 <% if(reasonsList != null){ %>
 
+	<!-- Menu de la page d'accueil -->
 	<div style="display: flex;border-bottom: 1px solid #110133;margin-bottom: 2em;justify-content: space-between;">
 		<div style="display: flex;justify-content: space-around;">
 			<i style="align-self: center; font-size: 2em; display: inline-block; color: primary;" class="far fa-question-circle" data-toggle="tooltip" data-placement="top" title="En positionant la souris sur un event du calendrier, il est possible d'y voir le commentaire associé."></i>
@@ -30,6 +51,9 @@
           	</form>	
 		</nav>
 	</div>
+	<!-- Fin menu de la page d'accueil -->
+	
+	<!-- Formulaire de création d'une demande de congés -->
 	<div class="collapse" id="collapseForm">
 	   <form class="form-co" action="Calendar" method="post">
 	      <div class="form-row form-group">
@@ -60,7 +84,11 @@
 	      </div>
 	   </form>
 	</div>
+	<!-- FIn du formulaire de création d'une demande de congés -->
+	
+	<!-- Si on est sur la partie calendrier -->
 	<% if(!table){ %>
+	<!-- Affichage et configuration du calendrier avec les événements d'un employé -->
 		<div id='calendar'></div>
 		<script>
 		   var today = new Date();
@@ -97,7 +125,11 @@
 		       calendar.render();
 		   });
 		</script>
+		<!-- Fin affichage et configuration du calendrier avec les événements d'un employé -->
+		
+		<!-- Dans le cas où l'on est sur la partie tableau de la page d'accueil -->
 	<%}else{ %>
+		<!-- Affichage du tableau des demandes d'un empoyé -->
 		<form class="form-co" action="Calendar" method="post">
 			<div class="form-row form-group">
 			    <div class="col-md-3">
@@ -125,6 +157,9 @@
 		    </tr>
 		  </thead>
 		  <tbody>
+		  <!-- Pour chaque demande de la liste des demandes d'un employé, on l'affiche dans le tableau.
+		  Si une ou plusieurs demandes sont dans l'état "pending", alors on rend éditable les différents champs
+		  d'une demande. -->
 		    <% for(Demand d : demandsList){ %>
 		      <tr>
 		      	<form class="form form-inline" action="Calendar" method="post">
@@ -181,6 +216,7 @@
 		  </tbody>
 		
 		</table>
+		<!-- Fin affichage du tableau des demandes d'un empoyé -->
 	<%} %>
 <%} %>
 
