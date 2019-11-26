@@ -18,16 +18,41 @@ import org.json.simple.JSONObject;
 import org.model.Demand;
 import org.model.Employe;
 
-@SuppressWarnings("serial")
+/**
+ * Calendar Servlet est la classe représentant le controlleur
+ *  de la page d'accueil du site (calendrier).
+ */
 public class CalendarServlet extends HttpServlet {
 
+	/**
+	 * Service permettant d'effectuer différentes requêtes
+	 * relatif à la base de données.
+	 * 
+	 * @see DemandService
+	 */
 	private DemandService demandService = new DemandService();
+	/**
+	 * Liste des demandes d'un employé.
+	 * 
+	 * @see Demand
+	 */
 	private ArrayList<Demand> demandsList;
+	/*
+	 * Liste des différents types de congés possibles
+	 */
 	private ArrayList<String> reasonsList = (ArrayList<String>) demandService.getAllReasons();
-	private ArrayList<String> statusList = (ArrayList<String>) demandService.getStatus();
-
-	private JSONArray employeDemandsList = new JSONArray();
-
+	/**
+	 * Liste des différents types de status possible 
+	 * pour une demande de congés.
+	 */
+	private ArrayList<String> statusList = (ArrayList<String>) demandService.getStatus(); 
+	/**
+	 * JSONArray comportant les différentes demandes
+	 * d'un employé à passer au script JavaScript
+	 * du calendrier.
+	 */
+	private JSONArray employeDemandsList = new JSONArray(); 
+	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		this.doGetOrPost(req, resp);
@@ -77,70 +102,64 @@ public class CalendarServlet extends HttpServlet {
 
 	@SuppressWarnings("unchecked")
 	protected void doProcess(HttpServletRequest req, HttpServletResponse resp) {
-		// Build JSON
 		for (Demand d : demandsList) {
+			/**
+			 * JSONObject contenant une demande d'un employé.
+			 */
 			JSONObject employeDemand = new JSONObject();
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-			Calendar c = Calendar.getInstance();
-			String endDate = d.getEndDate();
+			/**
+			 * String contenant le status de la demande.
+			 */
 			String status = d.getStatus();
 
+			/*
+			 * On modifie la vue d'une demande dans le calendrier 
+			 * en fonction de son status.
+			 */
 			switch (status) {
 			case "pending":
-				// add one day to the end date
-				try {
-					c.setTime(sdf.parse(endDate));
-				} catch (ParseException e) {
-					e.printStackTrace();
-				}
-				c.add(Calendar.DATE, 1);
-				endDate = sdf.format(c.getTime());
-
+				/*
+				 * Le titre d'un événement est une concaténation entre l'email, 
+				 * la raison (getMotif) 
+				 * et le status d'une demande.
+				 */
 				employeDemand.put("title", ((Employe) req.getSession().getAttribute("currentUser")).getMail() + " - "
 						+ d.getMotif() + " - " + d.getStatus());
 				employeDemand.put("start", d.getStartDate());
-				employeDemand.put("end", endDate.toString());
-				employeDemand.put("color", "#007bff");
+				employeDemand.put("end", d.getEndDate());
+				employeDemand.put("color", "#007bff"); // colore l'événement en bleu.
 				employeDemand.put("textColor", "#FFFFFF");
 
 				employeDemandsList.add(employeDemand);
 				break;
 			case "approved":
-				// add one day to the end date
-				try {
-					c.setTime(sdf.parse(endDate));
-				} catch (ParseException e) {
-					e.printStackTrace();
-				}
-				c.add(Calendar.DATE, 1);
-				endDate = sdf.format(c.getTime());
-
+				/*
+				 * Le titre d'un événement est une concaténation entre l'email, 
+				 * la raison (getMotif) 
+				 * et le status d'une demande.
+				 */
 				employeDemand.put("title", ((Employe) req.getSession().getAttribute("currentUser")).getMail() + " - "
 						+ d.getMotif() + " - " + d.getStatus());
 				employeDemand.put("description", d.getCommentary());
 				employeDemand.put("start", d.getStartDate());
-				employeDemand.put("end", endDate.toString());
-				employeDemand.put("color", "#28a745");
+				employeDemand.put("end", d.getEndDate());
+				employeDemand.put("color", "#28a745"); // colore l'événement en vert.
 				employeDemand.put("textColor", "#FFFFFF");
 
 				employeDemandsList.add(employeDemand);
 				break;
 			case "refused":
-				// add one day to the end date
-				try {
-					c.setTime(sdf.parse(endDate));
-				} catch (ParseException e) {
-					e.printStackTrace();
-				}
-				c.add(Calendar.DATE, 1);
-				endDate = sdf.format(c.getTime());
-
+				/*
+				 * Le titre d'un événement est une concaténation entre l'email, 
+				 * la raison (getMotif) 
+				 * et le status d'une demande.
+				 */
 				employeDemand.put("title", ((Employe) req.getSession().getAttribute("currentUser")).getMail() + " - "
 						+ d.getMotif() + " - " + d.getStatus());
 				employeDemand.put("description", d.getCommentary());
 				employeDemand.put("start", d.getStartDate());
-				employeDemand.put("end", endDate.toString());
-				employeDemand.put("color", "#dc3545");
+				employeDemand.put("end", d.getEndDate());
+				employeDemand.put("color", "#dc3545"); // colore l'événement en rouge.
 				employeDemand.put("textColor", "#FFFFFF");
 
 				employeDemandsList.add(employeDemand);
@@ -165,6 +184,15 @@ public class CalendarServlet extends HttpServlet {
 		employeDemandsList.clear();
 	}
 
+	/**
+	 * Cette fonction permet de vérifier que la date de début et de fin d'une demande sont cohérentes
+	 * ainsi que de vérifier que l'employé possède encore assez de jours de congés.
+	 * 
+	 * @param req Un objet HttpServletRequest qui contient la requête que le client a faite depuis la servlet.
+
+	 * @param insert Un booléen permettant de savoir si la demande doit être ajoutée ou modifiée.
+	 * @return Une String permettant d'informer l'employé de l'état de sa requête.
+	 */
 	private String isDateValid(HttpServletRequest req, boolean insert) {
 		String message = "";
 		try {
