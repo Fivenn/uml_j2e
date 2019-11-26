@@ -24,7 +24,7 @@ public class CalendarServlet extends HttpServlet {
 
 	/**
 	 * Service permettant d'effectuer différentes requêtes
-	 * relatif à la base de données.
+	 * relatives à la base de données.
 	 * 
 	 * @see DemandService
 	 */
@@ -143,7 +143,7 @@ public class CalendarServlet extends HttpServlet {
 				employeDemand.put("color", "#007bff"); // colore l'événement en bleu.
 				employeDemand.put("textColor", "#FFFFFF"); // couleur du texte en blanc
 
-				employeDemandsList.add(employeDemand);
+				employeDemandsList.add(employeDemand); // ajout du JSONObject dans la JSONArray
 				break;
 			case "approved":
 				/*
@@ -159,7 +159,7 @@ public class CalendarServlet extends HttpServlet {
 				employeDemand.put("color", "#28a745"); // colore l'événement en vert.
 				employeDemand.put("textColor", "#FFFFFF"); // couleur du texte en blanc
 
-				employeDemandsList.add(employeDemand);
+				employeDemandsList.add(employeDemand); // ajout du JSONObject dans la JSONArray
 				break;
 			case "refused":
 				/*
@@ -175,7 +175,7 @@ public class CalendarServlet extends HttpServlet {
 				employeDemand.put("color", "#dc3545"); // colore l'événement en rouge.
 				employeDemand.put("textColor", "#FFFFFF"); // couleur du texte en blanc
 
-				employeDemandsList.add(employeDemand);
+				employeDemandsList.add(employeDemand); // ajout du JSONObject dans la JSONArray
 				break;
 			}
 		}
@@ -197,6 +197,10 @@ public class CalendarServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 
+		/*
+		 * On vide la JSONArray pour éviter des problèmes de
+		 * duplication d'objets.
+		 */
 		employeDemandsList.clear();
 	}
 
