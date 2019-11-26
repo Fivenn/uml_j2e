@@ -3,34 +3,40 @@
 <%@page import="org.model.Employe,java.util.ArrayList,org.model.Team"%>
 
 <%
+	//Cette variable permet d'afficher ou non le formulaire de création d'une team
 	String createTeam = request.getAttribute("teamToCreate") != null
 			? (String) request.getAttribute("teamToCreate")
 			: "";
+	//Récupération de l'employé à modifier
 	Employe employe = request.getAttribute("employe") != null
 			? (Employe) request.getAttribute("employe")
 			: new Employe("", "", "", "", "", 25, false, false, 0);
+	//Récupération de la liste des teams pour les formulaires de création et modification employés
 	ArrayList<Team>  teamsList= (ArrayList<Team>) request.getAttribute("teamsList");
+	//Attribut permettant d'afficher un message d'erreur si le mail est invalide
 	String verifMail = request.getAttribute("verifMail") != null
 			? (String) request.getAttribute("verifMail")
 			: "";
+	//Attribut permettant d'afficher un message d'erreur si le nom de team est invalide
 	String verifNameTeam = request.getAttribute("verifNameTeam") != null
 			? (String) request.getAttribute("verifNameTeam")
 			: "";
+	//List d'employé. Permet de choisir le chef d'équipe pour la team à créer
 	ArrayList<Employe> employesList = (ArrayList<Employe>) request.getAttribute("employesList");
 %>
 <div
 	style="display: flex; flex-wrap: wrap; border-bottom: 1px solid #110133; margin-bottom: 2em; justify-content: space-between;">
 	<h3>
 		<%
-			if (request.getAttribute("employe") == null && createTeam.equals("")) {
+			if (request.getAttribute("employe") == null && createTeam.equals("")) {//Création d'un employé
 		%>
 		Création d'un employé
 		<%
-			} else if (createTeam.equals("yes") && request.getAttribute("employe") == null) {
+			} else if (createTeam.equals("yes") && request.getAttribute("employe") == null) {//Création d'une team
 		%>
 		Création d'une team
 		<%
-			} else if (request.getAttribute("employe") != null) {
+			} else if (request.getAttribute("employe") != null) {//Modification d'un employé
 		%>
 		Modification d'un employé
 		<%
@@ -44,8 +50,10 @@
 	</nav>
 </div>
 <%
+
 	if (createTeam.equals("yes") && request.getAttribute("employe") == null) {
 %>
+<!-- Affichage du formulaire de création d'un employé -->
 <form action="CreateUser" method="post">
 	<div style="display: flex; flex-wrap: wrap;margin: 1em; padding: 0.5em;justify-content: space-around;">
 		<div class="card"
@@ -78,6 +86,7 @@
 <%
 	} else {
 %>
+<!-- Affichage du formulaire Création ou Modification d'un employé -->
 <form action="CreateUser" method="post">
 	<div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-around;">
 
@@ -134,9 +143,9 @@
 
 			</div>
 			<div class="card" style="display: flex; margin: 1em; padding: 0.5em;">
-				<% if (request.getAttribute("employe") == null) { %>
+				<% if (request.getAttribute("employe") == null) { //Création d'un employé%>
 					<button type="submit" class="btn btn-primary text-center" name="create">Ajouter</button>
-				<% } else { %>
+				<% } else { //Modification d'un employé%>
 					<button type="submit" class="btn btn-primary text-center" name="update">Modifier</button>
 				<% } %>
 			</div>

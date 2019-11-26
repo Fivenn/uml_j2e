@@ -2,17 +2,20 @@
 	pageEncoding="UTF-8"%>
 <%@page import="java.util.ArrayList,org.model.Employe,org.model.Team"%>
 <%
+	//Liste des employés, teams et postes qui permettent de filtrer la liste des employés à afficher
 	ArrayList<Employe> employesList = (ArrayList<Employe>) request.getAttribute("employesList");
 	ArrayList<Team> teamsList = (ArrayList<Team>) request.getAttribute("teamsList");
 	ArrayList<String> posteList = (ArrayList<String>) request.getAttribute("posteList");
 
+	//Ces attributs permettent de garder les mêmes valeurs affichées lorsqu'une recherche a été effectuée
 	String mail = request.getAttribute("mail") != null ? (String) request.getAttribute("mail") : "all";
 	int team = request.getAttribute("team") != null && !request.getAttribute("team").equals("all")
 			? Integer.parseInt(((String) request.getAttribute("team")))
 			: -1;
 	String poste = request.getAttribute("poste") != null ? (String) request.getAttribute("poste") : "all";
-%>
 
+//formulaires de redirection vers la création d'un employé ou d'une team
+%>
 <div
 	style="display: flex; border-bottom: 1px solid #110133; margin-bottom: 2em; justify-content: space-between;">
 	<h3>Gestion des employés</h3>
@@ -30,9 +33,10 @@
 
 
 <%
+	//On affiche les éléments html suivants si la liste des employés n'est pas vide
 	if (employesList != null) {
+//On affiche le formulaire de recherche d'un employé
 %>
-
 <form class="form-co" action="ManageUser" method="post">
 	<div class="form-row form-group">
 		<i
@@ -45,6 +49,7 @@
 			<select class="form-control" name="team">
 				<option value="all">Toutes les équipes</option>
 				<%
+					//On défini chaque élément de la liste team en option possible
 					for (Team t : teamsList) {
 				%>
 				<option value="<%=t.getNoTeam()%>" <%if (t.getNoTeam() == team) {%>
@@ -58,6 +63,7 @@
 			<select class="form-control" name="poste">
 				<option value="all">Tous les postes</option>
 				<%
+					//On défini chaque élément de la liste team en option possible
 					for (String s : posteList) {
 				%>
 				<option value="<%=s%>" <%if (s.equals(poste)) {%> selected <%}%>><%=s%></option>
@@ -70,6 +76,7 @@
 			<select class="form-control" name="employe">
 				<option value="all">Tous les employés</option>
 				<%
+					//On défini chaque élément de la liste team en option possible
 					for (Employe e : employesList) {
 				%>
 				<option value="<%=e.getMail()%>" <%if (e.getMail().equals(mail)) {%>
@@ -87,7 +94,7 @@
 	</div>
 </form>
 
-
+<!-- Ce tableau permet d'afficher une liste d'employés qui peut dépendre de la recherche effectuée-->
 <table class="table table-bordered table-striped">
 	<thead>
 		<tr>
@@ -109,6 +116,7 @@
 			<td><%=e.getFirstName()%></td>
 			<td><%=e.getMail()%></td>
 			<%
+				//Cas où l'employé n'a pas de team, sinon afficher le numéro de la team
 				if (e.getNbTeam() == 0) {
 			%>
 			<td>aucune</td>
@@ -120,6 +128,7 @@
 				}
 			%>
 			<%
+				//Si l'employé est Responsable RH
 				if (e.isRH() && e.isLeader()) {
 			%>
 			<td>RespoRH</td>
@@ -127,6 +136,7 @@
 				}
 			%>
 			<%
+				//Si l'employé est chef d'équipe
 				if (!e.isRH() && e.isLeader()) {
 			%>
 			<td>TeamLeader</td>
@@ -134,6 +144,7 @@
 				}
 			%>
 			<%
+				//Si c'est un employé RH
 				if (e.isRH() && !e.isLeader()) {
 			%>
 			<td>EmployeRH</td>
@@ -141,6 +152,7 @@
 				}
 			%>
 			<%
+				//Si c'est un employé
 				if (!e.isRH() && !e.isLeader()) {
 			%>
 			<td>Employe</td>
@@ -148,6 +160,7 @@
 				}
 			%>
 			<td>
+			<!-- Formulaire de demande de modification d'un employé -->
 				<div
 					style="display: flex !important; justify-content: space-around !important;">
 					<form class="form form-inline" action="CreateUser" method="post">
@@ -159,6 +172,7 @@
 				</div>
 			</td>
 			<td>
+			<!-- Formulaire de demande de suppression d'un employé -->
 				<div
 					style="display: flex !important; justify-content: space-around !important;">
 					<form class="form-inline" action="ManageUser" method="post"
