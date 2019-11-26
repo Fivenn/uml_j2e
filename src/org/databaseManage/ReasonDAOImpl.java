@@ -9,7 +9,7 @@ import java.util.Arrays;
 import java.util.List;
 import org.databaseManage.EmployeService;
 
-
+//Fonction permettant de récupérer la liste des motifs ( rtt, ... )
 public class ReasonDAOImpl {
 	/**
 	 * common method used to query DB
@@ -18,6 +18,7 @@ public class ReasonDAOImpl {
 	 *            the SQL query to use
 	 * @return a list of Demandes built from the SQL query
 	 */
+	//Fonction faisant une requète à la base de données donnant toutes les raisons
 	public List<String> findAllReasons() {
 		Connection conn = null;
 		List<String> listReason = new ArrayList<String>();
@@ -26,13 +27,13 @@ public class ReasonDAOImpl {
 		ResultSet rs = null;
 		
 		try {
-			conn = DBManager.getInstance().getConnection();
+			conn = DBManager.getInstance().getConnection(); //Connection à la BDD
 			if (conn != null) {
 				stat = conn.createStatement();
-				rs = stat.executeQuery("Select * from reason;");
+				rs = stat.executeQuery("Select * from reason;"); //Sélectionner toutes les raisons
 				while (rs.next()) {
-					listReason.add(rs.getString("name"));
-				}
+					listReason.add(rs.getString("name")); //Les ajouter à la liste
+				} 
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
