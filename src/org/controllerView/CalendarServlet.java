@@ -1,11 +1,9 @@
 package org.controllerView;
 
 import java.io.IOException;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Calendar;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -61,7 +59,7 @@ public class CalendarServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		System.out.println("Mode : " + req.getParameter("goToRHMode"));
-		if (req.getParameter("goToRHMode") != null) {
+		if (req.getParameter("goToRHMode") != null) { 
 			req.setAttribute("currentMode", "employe");
 		} else if (req.getParameter("askDaysOff") != null) {
 			req.setAttribute("errorAskingForDays", this.isDateValid(req, true));
@@ -70,22 +68,37 @@ public class CalendarServlet extends HttpServlet {
 	}
 
 	protected void doGetOrPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		if (req.getSession().getAttribute("currentUser") != null) {
+		/*
+		 * Si un employé est connecté sur la plateforme.
+		 */
+		if (req.getSession().getAttribute("currentUser") != null) { 
 			if (req.getParameter("update") != null) {
-				req.setAttribute("table", true);
+				req.setAttribute("table", true); // sélectionne la vue de la page d'accueil sur le tableau.
 				req.setAttribute("errorAskingForDays", this.isDateValid(req, false));
 				this.demandsList = (ArrayList<Demand>) this.demandService
 						.getEmployeDemand(((Employe) req.getSession().getAttribute("currentUser")).getMail());
+			/*
+			 * Si on appuie sur le bouton supprimer du tableau des demandes.
+			 */
 			} else if (req.getParameter("delete") != null) {
 				req.setAttribute("table", true);
 				this.demandService.deleteDemand(req.getParameter("delete"));
 		        this.demandsList = (ArrayList <Demand>) this.demandService.getEmployeDemand(((Employe) req.getSession().getAttribute("currentUser")).getMail());
+		        /*
+		         * Si on appuie sur le bouton rechercher du tableau des demandes.
+		         */
 			} else if(req.getParameter("search") != null) {
 				req.setAttribute("table", true);
+				/*
+				 * On filtre les demandes d'un employé en fonction du type choisi.
+				 */
 				this.demandsList = (ArrayList<Demand>) this.demandService.getFilteredDemand(
 						req.getParameter("statusSearch"),
 						((Employe) req.getSession().getAttribute("currentUser")).getMail(), "all", false);
 			} else {
+				/*
+				 * On affiche toutes les demandes de l'employé.
+				 */
 				this.demandsList = (ArrayList<Demand>) this.demandService
 						.getEmployeDemand(((Employe) req.getSession().getAttribute("currentUser")).getMail());
 			}
@@ -125,10 +138,10 @@ public class CalendarServlet extends HttpServlet {
 				 */
 				employeDemand.put("title", ((Employe) req.getSession().getAttribute("currentUser")).getMail() + " - "
 						+ d.getMotif() + " - " + d.getStatus());
-				employeDemand.put("start", d.getStartDate());
-				employeDemand.put("end", d.getEndDate());
+				employeDemand.put("start", d.getStartDate()); // date de début saisi par l'employé
+				employeDemand.put("end", d.getEndDate()); // date de fin saisi par l'employé
 				employeDemand.put("color", "#007bff"); // colore l'événement en bleu.
-				employeDemand.put("textColor", "#FFFFFF");
+				employeDemand.put("textColor", "#FFFFFF"); // couleur du texte en blanc
 
 				employeDemandsList.add(employeDemand);
 				break;
@@ -140,11 +153,11 @@ public class CalendarServlet extends HttpServlet {
 				 */
 				employeDemand.put("title", ((Employe) req.getSession().getAttribute("currentUser")).getMail() + " - "
 						+ d.getMotif() + " - " + d.getStatus());
-				employeDemand.put("description", d.getCommentary());
-				employeDemand.put("start", d.getStartDate());
-				employeDemand.put("end", d.getEndDate());
+				employeDemand.put("description", d.getCommentary()); // commentaire optionnel et relatif à la demande
+				employeDemand.put("start", d.getStartDate()); // date de début saisi par l'employé
+				employeDemand.put("end", d.getEndDate()); // date de fin saisi par l'employé
 				employeDemand.put("color", "#28a745"); // colore l'événement en vert.
-				employeDemand.put("textColor", "#FFFFFF");
+				employeDemand.put("textColor", "#FFFFFF"); // couleur du texte en blanc
 
 				employeDemandsList.add(employeDemand);
 				break;
@@ -156,17 +169,20 @@ public class CalendarServlet extends HttpServlet {
 				 */
 				employeDemand.put("title", ((Employe) req.getSession().getAttribute("currentUser")).getMail() + " - "
 						+ d.getMotif() + " - " + d.getStatus());
-				employeDemand.put("description", d.getCommentary());
-				employeDemand.put("start", d.getStartDate());
-				employeDemand.put("end", d.getEndDate());
+				employeDemand.put("description", d.getCommentary()); // commentaire optionnel et relatif à la demande
+				employeDemand.put("start", d.getStartDate()); // date de début saisi par l'employé
+				employeDemand.put("end", d.getEndDate()); // date de fin saisi par l'employé
 				employeDemand.put("color", "#dc3545"); // colore l'événement en rouge.
-				employeDemand.put("textColor", "#FFFFFF");
+				employeDemand.put("textColor", "#FFFFFF"); // couleur du texte en blanc
 
 				employeDemandsList.add(employeDemand);
 				break;
 			}
 		}
 
+		/*
+		 * Envoie des différents attributs à la page JSP.
+		 */
 		req.setAttribute("currentPage", "calendar");
 		req.setAttribute("reasonsList", this.reasonsList);
 		req.setAttribute("statusList", this.statusList);
@@ -197,32 +213,46 @@ public class CalendarServlet extends HttpServlet {
 		String message = "";
 		try {
 			if (((Employe) req.getSession().getAttribute("currentUser")).getNbDays() < Integer
-					.parseInt(req.getParameter("nbDays"))) {
+					.parseInt(req.getParameter("nbDays"))) { // si le nombre de jours d'un employé est inférieur au nombre de jour que l'on souhaite poser
 				message = "Le nombre de jours est insuffisant, il n'en reste que "
-						+ ((Employe) req.getSession().getAttribute("currentUser")).getNbDays() + ".";
+						+ ((Employe) req.getSession().getAttribute("currentUser")).getNbDays() + "."; // On notifie l'employé qu'il ne possède pas assez de jours de congés
 
 			} else if (new SimpleDateFormat("yyyy-MM-dd").parse(req.getParameter("fromDate"))
-					.after(new SimpleDateFormat("yyyy-MM-dd").parse(req.getParameter("toDate")))) {
-				message = "La première date doit être inférieure à la deuxième.";
+					.after(new SimpleDateFormat("yyyy-MM-dd").parse(req.getParameter("toDate")))) { // Sinon si la date de début est après la date de fin
+				message = "La première date doit être inférieure à la deuxième."; // On notifie l'employé que les dates de fin et de début ne sont pas cohérentes
 
-			} else if (LocalDate.parse(req.getParameter("fromDate")).isBefore(LocalDate.now().plusDays(2))
+				/*
+				 * Si l'utilisateur fait une demande de congés avec une date de début inférieure à deux jours
+				 * par rapport à la date actuelle et que la raison de la demande est différente
+				 * de "Enfants malades" ou "Raisons familiales"
+				 */
+			} else if (LocalDate.parse(req.getParameter("fromDate")).isBefore(LocalDate.now().plusDays(2)) 
 					&& !req.getParameter("reason").equals("Enfants malades")
 					&& !req.getParameter("reason").equals("Raisons familiales")) {
-				message = "Il faut au minimum 48h pour poser des congés.";
+				message = "Il faut au minimum 48h pour poser des congés."; // On notifie l'employé 
 			}
 
+			/*
+			 * S'il n'y a pas de condition de refus
+			 */
 			if (message.contentEquals("")) {
-				if (insert) {
+				if (insert) { // Si on insère une demande dans la table
+					/*
+					 * On exécute la requête d'insertion d'une demande dans la base de données
+					 */
 					if (this.demandService.insertIntoDemand(
 							((Employe) req.getSession().getAttribute("currentUser")).getMail(),
 							req.getParameter("fromDate"), req.getParameter("toDate"), req.getParameter("reason"),
 							req.getParameter("nbDays"))) {
-						message = "Demande envoyée au service RH. Elle sera traitée dans les meilleurs délais.";
+						message = "Demande envoyée au service RH. Elle sera traitée dans les meilleurs délais."; // On notifie l'employé
 					}
-				} else {
+					/*
+					 * On modifie la requête 
+					 */
+				} else { // Sinon on modifie une demande dans la base de données
 					if (this.demandService.changeDemand(req.getParameter("update"), req.getParameter("fromDate"),
 							req.getParameter("toDate"), req.getParameter("nbDays"), req.getParameter("reason"))) {
-						message = "Demande modifiée";
+						message = "Demande modifiée"; // On notifie l'employé
 					}
 				}
 			}
