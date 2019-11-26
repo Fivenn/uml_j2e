@@ -8,7 +8,7 @@ import java.sql.Statement;
 import java.util.Enumeration;
 import java.util.Properties;
 import java.util.ResourceBundle;
-
+//Classe fournie, non modifiée.
 public class DBManager {
 
 	private static DBManager instance;
@@ -16,7 +16,8 @@ public class DBManager {
 	private ResourceBundle properties;
 
 	private static String resourceBundle = "config";
-
+	
+	
 	private DBManager() {
 		properties = ResourceBundle.getBundle(resourceBundle);
 

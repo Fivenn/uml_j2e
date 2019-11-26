@@ -15,6 +15,7 @@ public class EmployeDAOImpl {
 	 * @param query the SQL query to use
 	 * @return a list of Employes built from the SQL query
 	 */
+	//Fonction permettant de renvoyer une liste d'employé selon une requète
 	private List<Employe> findBy(String query) {
 		Connection conn = null;
 		List<Employe> listEmployes = new ArrayList<Employe>();
@@ -26,6 +27,7 @@ public class EmployeDAOImpl {
 				stat = conn.createStatement();
 				rs = stat.executeQuery(query);
 				while (rs.next()) {
+					//Selon la fonction, le type d'employé créé est différent
 					switch (rs.getString("fonction")) {
 					case "EmployeRH":
 						listEmployes.add(new Employe(rs.getString("mail"), rs.getString("firstName"),
@@ -62,32 +64,34 @@ public class EmployeDAOImpl {
 		return listEmployes;
 	}
 
+	//Fonction permettant de renvoyer un employé via son mail
 	public Employe findByEmail(String email) {
 		List<Employe> listEmployes = findBy("select * from employe where mail = '" + email + "';");
 		return listEmployes != null ? listEmployes.get(0) : null;
 	}
-
+	//Fonction permettant de verifier que l'employé peut se connecter car ses identifiants sont corrects
 	public Employe checkCredentials(String email, String password) {
 		List<Employe> listEmployes = findBy(
 				"select * from employe where mail = '" + email + "' and pwd = '" + password + "';");
 		return listEmployes.size() != 0 ? listEmployes.get(0) : null;
 	}
 
+	//Fonction permettant de renvoyer la liste d'employés
 	public List<Employe> findByAll() {
 		// avoid select * queries because of performance issues,
 		// only query the columns you need
 		return findBy("select * from employe;");
 	}
 
+	//Fonction permettant de renvoyer la liste d'employés sauf les rh
 	public List<Employe> findByAllButRH() {
 		// avoid select * queries because of performance issues,
 		// only query the columns you need
 		return findBy("select * from employe where fonction != 'EmployeRH' && fonction != 'RespoRH'");
 	}
 
+	//Fonction permettant de renvoyer la liste d'employés d'une team en fonction du leader
 	public List<Employe> findMyTeam(String mail) {
-		// avoid select * queries because of performance issues,
-		// only query the columns you need
 		return findBy("	select * from employe where team=(select noTeam from team where leader ='" + mail + "');");
 	}
 
@@ -100,7 +104,7 @@ public class EmployeDAOImpl {
 			fonction = "EmployeRH";
 		}
 		String pwd = emp.getFirstName().toLowerCase().charAt(0) + "" + emp.getSurname().toLowerCase().charAt(0);
-		System.out.println("Le password par d�faut est:" + pwd);
+		System.out.println("Le password par défaut est:" + pwd);
 		if (emp.getNbTeam() == 0) {
 			query = "INSERT INTO employe (mail, firstName, surname, birthDate, address, nbDays, fonction, pwd) VALUES ("
 					+ "'" + emp.getMail() + "'" + "," + "'" + emp.getFirstName() + "'" + "," + "'" + emp.getSurname()
@@ -134,6 +138,7 @@ public class EmployeDAOImpl {
 		}
 	}
 
+	//Fonction permettant de renvoyer la liste des mails des employés
 	public List<String> findAllMail(){
 		List<String> mailList = new ArrayList<String>();
 		String query = "Select mail FROM employe;";
@@ -163,6 +168,7 @@ public class EmployeDAOImpl {
 		return mailList;
 	}
 	
+	//Fonction permettant de modifier un employé
 	public void modifyEmploye(Employe emp,String mail) {
 		String function = emp.getTitle();
 		if (emp.isLeader() && !emp.isRH()) {
@@ -197,7 +203,7 @@ public class EmployeDAOImpl {
 			}
 		}
 	}
-
+	//Fonction permettant de supprimer un employé selon son mail
 	public void eraseEmploye(String mail) {
 
 		String query = "DELETE FROM employe WHERE mail=" + "'" + mail + "';";
@@ -223,6 +229,7 @@ public class EmployeDAOImpl {
 		}
 	}
 	
+	//Fonction permettant de filtrer les employés selon le poste, l'équipe ou le mail
 	public List<Employe> findFilteredEmploye(String poste ,String team,String mail){
 		String requete = "select * from employe where ";
 		if(!mail.equals("all")) {
@@ -238,7 +245,7 @@ public class EmployeDAOImpl {
 		System.out.println(requete);
 		return this.findBy(requete + "order by surname;");
 	}
-	
+	//Fonction permettant de mettre à jour le mot de passe d'un employé
 	public void updatePassword(String employe, String pwd) {
 		String query = "UPDATE employe SET pwd = '" + pwd + "' where mail = '" + employe + "';";
 
@@ -262,7 +269,7 @@ public class EmployeDAOImpl {
 			}
 		}
 	}
-	
+	//FOnction permettant de mettre à jour une adresse
 	public void updateAddress(String employe, String addr) {
 		String query = "UPDATE employe SET address = '" + addr + "' where mail = '" + employe + "';";
 
@@ -287,6 +294,7 @@ public class EmployeDAOImpl {
 		}
 	}
 	
+	//Fonction permettant de trouver tous les employés leader
 	public List<String> findAllTeamLeader(){
 		ArrayList<String> employeList = new ArrayList<String>();
 		String query = "select mail from employe where fonction=TeamLeader;";
