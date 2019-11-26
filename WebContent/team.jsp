@@ -5,20 +5,40 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%
+	/**
+	* Liste des demandes des employés d'une équipe au format JSONArray
+	* pour le script du calendrier.
+	*/
 	JSONArray teamDemandsList = (JSONArray) request.getAttribute("teamDemandsList");
+	/**
+	* Liste des employés d'une équipe.
+	*/
 	ArrayList<Employe> employeesList = (ArrayList<Employe>) request.getAttribute("employeesList");
+	/**
+	* Chaine de caractères contenant soit le mail d'une personne d'une équipe
+	* soit la chaine "all" pour tous les membre d'une équipe.
+	*/
 	String mail = request.getAttribute("mail") != null ? (String) request.getAttribute("mail") : "all";
+	/**
+	* Booléen permettant de savoir sur quelle vue on se situe (calendrier ou tableau).
+	*/
 	Boolean table = request.getAttribute("table") != null ? (Boolean) request.getAttribute("table") : false;
+	/**
+	* Liste des demandes des employés d'une équipe.
+	*/
 	ArrayList<Demand> demandsList = request.getAttribute("demandsList") != null
 			? (ArrayList<Demand>) request.getAttribute("demandsList")
 			: null;
 %>
 <div
 	style="display: flex; border-bottom: 1px solid #110133; margin-bottom: 2em; justify-content: space-between;">
-
+	
+	<!-- Si on ne situe pas sur la vue du tableau d'équipe -->
 	<%
 		if (!table) {
 	%>
+	<!-- Menu de la page d'équipe -->
+	<!--  On affiche le bouton "Filter par employé" dans le menu de la vue. -->
 	<div style="display: flex; justify-content: space-around;">
 		<i
 			style="align-self: center; font-size: 2em; display: inline-block; color: primary;"
@@ -31,6 +51,7 @@
 			class="fas">Filter par employé</i>
 		</a>
 	</div>
+	<!--  Fin on affiche le bouton "Filter par employé" dans le menu de la vue. -->
 	<%
 		}
 	%>
@@ -41,6 +62,9 @@
 		</form>
 	</nav>
 </div>
+<!-- Fin menu de la page d'équipe -->
+
+<!-- Filtrage employé pour calendrier -->
 <div class="collapse" id="collapseForm">
 	<form class="form-co" action="Team" method="post">
 		<div class="form-row form-group">
@@ -68,10 +92,12 @@
 		</div>
 	</form>
 </div>
-<div id='calendar'></div>
+<!-- Filtrage employé pour calendrier -->
 <%
 	if (!table) {
 %>
+<!-- Affichage et configuration du calendrier avec les événements d'un employé -->
+<div id='calendar'></div>
 <script>
 	var today = new Date();
 	var dd = String(today.getDate()).padStart(2, '0');
@@ -111,10 +137,11 @@
 	);
 	});
 </script>
+<!-- Fin affichage et configuration du calendrier avec les événements d'un employé -->
 <%
 	} else {
 %>
-
+<!-- Affichage du tableau des demandes des employés d'une équipe -->
 <table class="table table-bordered table-striped">
 	<thead>
 		<tr>
@@ -143,6 +170,7 @@
 		%>
 	</tbody>
 </table>
+<!-- Fin affichage du tableau des demandes des employés d'une équipe -->
 <%
 	}
 %>
