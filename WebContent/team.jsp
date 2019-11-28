@@ -67,10 +67,9 @@
 <!-- Filtrage employé pour calendrier -->
 <div class="collapse" id="collapseForm">
 	<form class="form-co" action="Team" method="post">
-		<div class="form-row form-group">
-			<div class="col-md-2">
-				<label for="reason"> Motif : </label> <select class="form-control"
-					name="employe">
+		<div class="form-row form-group" style="align-items: baseline;margin-left:3em;">
+				<label for="reason"> Employé : </label> 
+				<select class="form-control" name="employe" style="width: 50%;">
 					<option value="all">Tous les employés</option>
 					<%
 						for (Employe e : employeesList) {
@@ -84,7 +83,6 @@
 						}
 					%>
 				</select>
-			</div>
 			<div>
 				<button class="btn btn-primary my-2 my-sm-0" type="submit"
 					name="filter">Filter</button>
