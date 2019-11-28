@@ -111,8 +111,4 @@
 	  <welcome-file>home.jsp</welcome-file>
 	</welcome-file-list>
 	
-	<servlet-mapping>
-   	 	<servlet-name>CalendarServlet</servlet-name>
-   	 	<url-pattern>/</url-pattern>
-	</servlet-mapping>
 </web-app>
