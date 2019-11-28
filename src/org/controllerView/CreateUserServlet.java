@@ -70,7 +70,7 @@ public class CreateUserServlet extends HttpServlet {
 				//On modifie l'employé
 				this.modifyEmploye(req.getParameter("prenom"), req.getParameter("nom"), req.getParameter("naissance"),
 						req.getParameter("poste"), req.getParameter("equipe"), req.getParameter("mail"),
-						req.getParameter("chef"), req.getParameter("adresse"), this.mailBefore);
+						 req.getParameter("adresse"), this.mailBefore);
 				pageVerif = true;
 			} else {
 				req.setAttribute("employe", this.employe);
@@ -149,17 +149,13 @@ public class CreateUserServlet extends HttpServlet {
 	}
 	//Cette méthode permet de créer un utilisateur dans la base de données
 	protected void modifyEmploye(String firstName, String surName, String birthDate, String function, String team,
-			String mail, String teamleader, String address, String mailBefore) {
+			String mail, String address, String mailBefore) {
 		int nbteam;
 		boolean RH = false;
 		boolean TL = false;
 		//Le nouveau poste concerné est-il un poste rh?
 		if (function.contains("RH") || function.contains("rh") || function.contains("Rh") || function.contains("rH")) {
 			RH = true;
-		}
-		//L'employé est-il un chef d'équipe
-		if (teamleader.equals("oui")) {
-			TL = true;
 		}
 		if (team.equals("")) {//L'employé n'appartient à aucune team
 			nbteam = 0;
