@@ -3,7 +3,13 @@
   <display-name>DaysOffManager</display-name>
   	<session-config> 
 		<session-timeout>300</session-timeout>
+		
 	</session-config>
+		<servlet-mapping>
+   	 	<servlet-name>CalendarServlet</servlet-name>
+   	 	<url-pattern>/</url-pattern>
+	</servlet-mapping>
+	
   	<servlet>
 		<display-name>HomeServlet</display-name>
 		<servlet-name>HomeServlet</servlet-name>
@@ -12,11 +18,6 @@
 	<servlet-mapping>
 		<servlet-name>HomeServlet</servlet-name>
 		<url-pattern>/Home</url-pattern>
-	</servlet-mapping>
-	
-	<servlet-mapping>
-   	 	<servlet-name>CalendarServlet</servlet-name>
-   	 	<url-pattern>/</url-pattern>
 	</servlet-mapping>
 	
   	<servlet>
@@ -109,13 +110,7 @@
 		<url-pattern>/CreateUser</url-pattern>
 	</servlet-mapping>
 	
-		
 	<welcome-file-list>
-	  <welcome-file>index.html</welcome-file>
-	  <welcome-file>index.htm</welcome-file>
-	  <welcome-file>index.jsp</welcome-file>
-	  <welcome-file>default.html</welcome-file>
-	  <welcome-file>default.htm</welcome-file>
-	  <welcome-file>default.jsp</welcome-file>
+	  <welcome-file>home.jsp</welcome-file>
 	</welcome-file-list>
 </web-app>

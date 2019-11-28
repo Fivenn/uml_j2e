@@ -28,6 +28,8 @@ footer {
     align-items: center;
 }
 /* L'image de profil */
+
+
 .profil-image{
 	background-image: url("ressources/profil-image.jpg");
 
