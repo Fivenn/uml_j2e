@@ -1,7 +1,10 @@
 package org.controllerView;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -124,6 +127,19 @@ public class TeamServlet extends HttpServlet {
 		// Build JSON
 		for (Demand d : demandsList) {
 			/*
+			 * Variable contenant le pattern de la date de fin
+			 */
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			/*
+			 * Instance de la classe Calendar
+			 */
+			Calendar c = Calendar.getInstance();
+			/*
+			 * On récupère la date de fin d'une demande
+			 * au format d'une chaine de caractère.
+			 */
+			String endDate = d.getEndDate();
+			/*
 			 * JSONObject contenant les demandes des employés
 			 * d'une équipe.
 			 */
@@ -141,13 +157,26 @@ public class TeamServlet extends HttpServlet {
 			switch (status) {
 			case "pending":
 				/*
+				 * On ajoute un jour à la date de fin 
+				 * pour palier au problème du dernier jour
+				 * compté comme travaillé.
+				 */
+				try {
+					c.setTime(sdf.parse(endDate));
+				} catch (ParseException e) {
+					e.printStackTrace();
+				}
+				c.add(Calendar.DATE, 1);
+				endDate = sdf.format(c.getTime());
+				
+				/*
 				 * Le titre d'un événement est une concaténation entre l'email,
 				 * la raison (getMotif)
 				 * et le status d'une demande.
 				 */
 				teamDemand.put("title", d.getEmploye().getMail() + " - " + d.getMotif() + " - " + d.getStatus());
 				teamDemand.put("start", d.getStartDate()); // date de début saisi par l'employé
-				teamDemand.put("end", d.getEndDate()); // date de fin saisi par l'employé
+				teamDemand.put("end", endDate); // date de fin saisi par l'employé
 				teamDemand.put("color", "#007bff"); // colore l'événement en bleu
 				teamDemand.put("textColor", "#FFFFFF"); // couleur du texte en blanc
 
@@ -155,20 +184,17 @@ public class TeamServlet extends HttpServlet {
 				break;
 			case "approved":
 				/*
-				 * Le titre d'un événement est une concaténation entre l'email,
-				 * la raison (getMotif)
-				 * et le status d'une demande.
+				 * On ajoute un jour à la date de fin 
+				 * pour palier au problème du dernier jour
+				 * compté comme travaillé.
 				 */
-				teamDemand.put("title", d.getEmploye().getMail() + " - " + d.getMotif() + " - " + d.getStatus());
-				teamDemand.put("description", d.getCommentary());
-				teamDemand.put("start", d.getStartDate()); // date de début saisi par l'employé
-				teamDemand.put("end", d.getEndDate()); // date de fin saisi par l'employé
-				teamDemand.put("color", "#28a745"); // colore l'événement en vert
-				teamDemand.put("textColor", "#FFFFFF"); // couleur du texte en blanc
-
-				teamDemandsList.add(teamDemand); // ajout du JSONObject dans la JSONArray
-				break;
-			case "refused":
+				try {
+					c.setTime(sdf.parse(endDate));
+				} catch (ParseException e) {
+					e.printStackTrace();
+				}
+				c.add(Calendar.DATE, 1);
+				endDate = sdf.format(c.getTime());
 				/*
 				 * Le titre d'un événement est une concaténation entre l'email,
 				 * la raison (getMotif)
@@ -177,7 +203,34 @@ public class TeamServlet extends HttpServlet {
 				teamDemand.put("title", d.getEmploye().getMail() + " - " + d.getMotif() + " - " + d.getStatus());
 				teamDemand.put("description", d.getCommentary());
 				teamDemand.put("start", d.getStartDate()); // date de début saisi par l'employé
-				teamDemand.put("end", d.getEndDate()); // date de fin saisi par l'employé
+				teamDemand.put("end", endDate); // date de fin saisi par l'employé
+				teamDemand.put("color", "#28a745"); // colore l'événement en vert
+				teamDemand.put("textColor", "#FFFFFF"); // couleur du texte en blanc
+
+				teamDemandsList.add(teamDemand); // ajout du JSONObject dans la JSONArray
+				break;
+			case "refused":
+				/*
+				 * On ajoute un jour à la date de fin 
+				 * pour palier au problème du dernier jour
+				 * compté comme travaillé.
+				 */
+				try {
+					c.setTime(sdf.parse(endDate));
+				} catch (ParseException e) {
+					e.printStackTrace();
+				}
+				c.add(Calendar.DATE, 1);
+				endDate = sdf.format(c.getTime());
+				/*
+				 * Le titre d'un événement est une concaténation entre l'email,
+				 * la raison (getMotif)
+				 * et le status d'une demande.
+				 */
+				teamDemand.put("title", d.getEmploye().getMail() + " - " + d.getMotif() + " - " + d.getStatus());
+				teamDemand.put("description", d.getCommentary());
+				teamDemand.put("start", d.getStartDate()); // date de début saisi par l'employé
+				teamDemand.put("end", endDate); // date de fin saisi par l'employé
 				teamDemand.put("color", "#dc3545"); // colore de l'événement en rouge
 				teamDemand.put("textColor", "#FFFFFF"); // couleur du texte en blanc
 
