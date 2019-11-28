@@ -13,7 +13,12 @@
 		<servlet-name>HomeServlet</servlet-name>
 		<url-pattern>/Home</url-pattern>
 	</servlet-mapping>
-
+	
+	<servlet-mapping>
+   	 	<servlet-name>CalendarServlet</servlet-name>
+   	 	<url-pattern>/</url-pattern>
+	</servlet-mapping>
+	
   	<servlet>
 		<display-name>ConnectionServlet</display-name>
 		<servlet-name>ConnectionServlet</servlet-name>
