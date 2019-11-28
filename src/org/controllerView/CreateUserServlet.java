@@ -157,6 +157,9 @@ public class CreateUserServlet extends HttpServlet {
 		if (function.contains("RH") || function.contains("rh") || function.contains("Rh") || function.contains("rH")) {
 			RH = true;
 		}
+		if(function.contains("leader") || function.contains("Leader")) {
+			TL = true;
+		}
 		if (team.equals("")) {//L'employé n'appartient à aucune team
 			nbteam = 0;
 
