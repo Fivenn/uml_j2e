@@ -61,12 +61,15 @@
                 		<form action="MyProfil" method="post">
 	                        <h5>Changer votre mot de passe</h5>
 	                        <div class="form-group">
+	                           <input placeholder="Ancien mot de passe" type="password" class="form-control" name="old_pwd">
+	                        </div>
+	                        <div class="form-group">
 	                           <input placeholder="Nouveau mot de passe" type="password" class="form-control" name="new_pwd">
 	                        </div>
 	                        <div class="form-group">
 	                           <input placeholder="Re-Nouveau mot de passe" type="password" class="form-control" name="re_new_pwd">
 	                        </div>
-	                        <center><button type="submit" class="btn btn-primary text-center">Envoyer</button></center>
+	                        <center><button type="submit" class="btn btn-primary text-center" name="submit_pwd">Envoyer</button></center>
 	                        <p style="color: DC3545;"><%=errorUpdatingPwd %></p>
 	                     </form>
 					</div>

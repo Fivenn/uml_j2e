@@ -150,7 +150,7 @@
 		  <thead>
 		    <tr>
 		      <th scope="col">Départ</th>
-		      <th scope="col">Retour</th>
+		      <th scope="col">Fin</th>
 		      <th scope="col">Durée</th>
 		      <th scope="col">Motif</th>
 		      <th scope="col">Status</th>
@@ -199,15 +199,17 @@
 			        <td>
 			          <% if(d.getStatus().equals("pending")){ %>
 			              <div style="display: flex !important;justify-content: space-around !important;">
-			              		<button class="btn btn-danger" type="submit" name="update" value="<%=d.getId()%>">
+			              		<button class="btn btn-success" type="submit" name="update" value="<%=d.getId()%>">
 				    				<i class="fa fa-edit" aria-hidden="true"></i>
 				    			</button>
-			              		<button class="btn btn-success" type="submit" name="delete" value="<%=d.getId()%>">
+			              		<button class="btn btn-danger" type="submit" name="delete" value="<%=d.getId()%>">
 			              			<i class="fas fa-times" aria-hidden="true"></i>
 			              		</button>
 			              </div>
-			          <%}else{%>
-			            <%=d.getStatus()%>
+			          <%}else if(d.getStatus().equals("approved")){%>
+			            Accepté
+			          <%}else if(d.getStatus().equals("refused")){%>
+			            Refusé
 			          <%}%>
 			        </td>
 			   </form>
