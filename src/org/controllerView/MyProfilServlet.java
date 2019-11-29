@@ -26,15 +26,21 @@ HttpServlet httpServlet;
 	}
 	
 	protected void doGetOrPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		if(req.getSession().getAttribute("currentUser")!=null) {
-			//Si l'utilisateur souhaite changer de mot de passe, plusieurs vérification sont effectuées
-			if (req.getParameter("new_pwd") != null && req.getParameter("re_new_pwd") != null && (req.getParameter("new_pwd").equals("") || req.getParameter("re_new_pwd").equals(""))) {
-	    		req.setAttribute("errorUpdatingPwd", "Veuillez saisir votre mot de passe."); //On previent l'utilisateur qu'un des mdp n'est pas saisi
-			} else if (req.getParameter("new_pwd") != null && req.getParameter("re_new_pwd") != null && req.getParameter("new_pwd")==req.getParameter("re_new_pwd")) {
-				this.employeService.updatePassword(((Employe)req.getSession().getAttribute("currentUser")).getMail(), req.getParameter("new_pwd")); // On change le mot de passe si tout va bien
-	        } else if (req.getParameter("new_pwd") != null && req.getParameter("re_new_pwd") != null && !req.getParameter("new_pwd").equals(req.getParameter("re_new_pwd"))) {
-	    		req.setAttribute("errorUpdatingPwd", "Les deux mots de passe saisis ne concordent pas."); //Sinon on previent que les deux sont différents
-	        }
+		if(req.getSession().getAttribute("currentUser")!=null) {	
+			
+			//Si l'utilisateur souhaite changer de mdp
+			if(req.getParameter("submit_pwd") != null) {
+				if (req.getParameter("new_pwd").equals("") || req.getParameter("re_new_pwd").equals("") || req.getParameter("old_pwd").equals("")) {
+					req.setAttribute("errorUpdatingPwd", "Veuillez saisir votre mot de passe."); //On previent l'utilisateur qu'un des mdp n'est pas saisi
+				}else if (!req.getParameter("new_pwd").equals(req.getParameter("re_new_pwd"))) {
+		    		req.setAttribute("errorUpdatingPwd", "Les deux mots de passe saisis ne concordent pas."); //Sinon on previent que les deux sont différents
+			    }else if(this.employeService.checkCredentials(((Employe)req.getSession().getAttribute("currentUser")).getMail(),req.getParameter("old_pwd"))!= null) {
+					this.employeService.updatePassword(((Employe)req.getSession().getAttribute("currentUser")).getMail(), req.getParameter("new_pwd")); // On change le mot de passe si tout va bien
+			    	req.setAttribute("errorUpdatingPwd", "Mot de passe modifié"); //On previent l'utilisateur que le mdp est modifié				
+			    }else {
+					req.setAttribute("errorUpdatingPwd", "L'ancien mot de passe est faux"); //On previent l'utilisateur l'ancien mdp est faux
+				}
+			}
 			
 			//Si il souhaite changer d'adresse on la change directement
 			if (req.getParameter("addr")!=null) {

@@ -96,7 +96,7 @@
 		      <th scope="col">Nom</th>
 		      <th scope="col">Prenom</th>
 		      <th scope="col">Départ</th>
-		      <th scope="col">Retour</th>
+		      <th scope="col">Fin</th>
 		      <th scope="col">Durée</th>
 		      <th scope="col">Motif</th>
 		      <th scope="col">Status</th>
@@ -152,8 +152,10 @@
 					  	</form>
 					  </div>
 		            
-		          <%}else{%>
-		            <%=d.getStatus()%>
+		          <%}else if(d.getStatus().equals("approved")){%>
+		            Accepté
+		          <%}else if(d.getStatus().equals("refused")){%>
+		            Refusé
 		          <%}%>
 		        </td>
 		      </tr>

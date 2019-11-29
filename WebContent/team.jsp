@@ -161,7 +161,12 @@
 			<td><%=d.getEndDate()%></td>
 			<td><%=d.getNbDays()%></td>
 			<td><%=d.getMotif()%></td>
-			<td><%=d.getStatus()%></td>
+			<td><% if(d.getStatus().equals("approved")){%>
+			      Accepté
+			    <%}else if(d.getStatus().equals("refused")){%>
+			      Refusé
+			    <%}%>
+			</td>
 		</tr>
 		<%
 			}
