@@ -20,6 +20,8 @@ Afin de tester les différents rôles, vous pouvez vous connecter avec ses coupl
 	Employe RH : c@c.c / c
 	Employe : a@a.a / a
 	Leader : mheyrend@enssat.fr / mh
+	
+Un fichier WAR est présent à la racine du projet (optimisé pour Tomcat 9)
 
 Une page d'aide résumant les droit de chacun est disponible dans le footer de l'application. Chaque page est aussi décrite dans le rapport.
 
